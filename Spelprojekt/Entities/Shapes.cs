@@ -6,16 +6,18 @@ namespace Spelprojekt
 {
 
 
-    public abstract class Shapes
+    public abstract class Shape
     {
         public ShapeColor ShapeColor { get; set; }
         public List<Block> Blocks { get; set; }
+        public bool InPlay { get; set; }
 
         public int OffsetX { get; set; }
         public int OffsetY { get; set; }
+
     }
 
-    public class IShape : Shapes
+    public class IShape : Shape
     {
         public IShape()
         {
@@ -34,33 +36,33 @@ namespace Spelprojekt
 
     }
 
-    public class JShape : Shapes
+    public class JShape : Shape
     {
 
 
     }
 
-    public class LShape : Shapes
+    public class LShape : Shape
     {
 
     }
 
-    public class OShape : Shapes
+    public class OShape : Shape
     {
 
     }
 
-    public class SShape : Shapes
+    public class SShape : Shape
     {
 
     }
 
-    public class TShape : Shapes
+    public class TShape : Shape
     {
 
     }
 
-    public class ZShape : Shapes
+    public class ZShape : Shape
     {
 
     }

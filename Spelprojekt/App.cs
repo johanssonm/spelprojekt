@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Spelprojekt.Entities;
 using Spelprojekt.Services;
 using TetrisUI;
 
@@ -7,9 +8,9 @@ namespace Spelprojekt
 {
     public partial class App : GameBoard
     {
-        public delegate void GameUpdatedEventHandler(object source, EventArgs e);
+        // public delegate void GameUpdatedEventHandler(object source, EventArgs e);
 
-        public event GameUpdatedEventHandler GameUpdated;
+        public event EventHandler<EventArgs> GameUpdated;
 
         protected virtual void OnGameUpdated()
         {
@@ -23,7 +24,21 @@ namespace Spelprojekt
 
         public App() : base(1000)
         {
-            
+            var game = new Game();
+
+            var shapes = new List<Shape>
+            {
+                new IShape()
+            };
+
+            var block = new Block(4, 0);
+
+
+            var gameService = new GameService();
+            var shapeService = new ShapeService();
+
+            GameUpdated += gameService.OnGameUpdated;
+            GameUpdated += shapeService.OnGameUpdated;
 
 
         }
