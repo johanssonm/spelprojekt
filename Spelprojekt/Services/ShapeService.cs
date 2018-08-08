@@ -5,6 +5,12 @@ namespace Spelprojekt.Services
 {
     class ShapeService
     {
+        public int ShapeInPlayX { get; set; }
+        public int ShapeInPlayY { get; set; }
+        public int ShapeInPlayState { get; set; }
+        public int ShapeInPlayType { get; set; }
+
+
         public enum Rotations
         {
             Default,
@@ -13,20 +19,34 @@ namespace Spelprojekt.Services
             Right
         }
 
+        public Shape UpdatePositionOfShape(Shape shape, int X, int Y)
+        {
+
+            shape.OffsetX = X;
+            shape.OffsetY = Y;
+
+            return shape;
+
+        }
+
+        public Shape UpdateShapeState(Shape shape, bool inplay)
+        {
+            shape.InPlay = inplay;
+
+            return shape;
+
+        }
+
         public void OnGameUpdated(object source, EventArgs e)
         {
             var message = "Shapeservice";
             MessageBox.Show(message);
-
-
-
         }
 
-        public Shape FallDown(Shape shape)
-        {
-            shape.OffsetY += 1;
 
-            return shape;
+        public int MoveDown(int y)
+        {
+            return y += 1;
         }
 
 

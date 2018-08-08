@@ -13,19 +13,11 @@ namespace Spelprojekt.Services
 
         public void OnGameUpdated(object source, EventArgs e)
         {
-            var message = "Gameservice";
-            MessageBox.Show(message);
+            //var message = "Gameservice";
+            //MessageBox.Show(message);
 
         }
 
-        public Shape UpdateActiveShapeYPosition(Shape shape)
-        {
-
-            shape.OffsetY += 1;
-
-            return shape;
-
-        }
 
     }
 }
