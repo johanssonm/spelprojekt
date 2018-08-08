@@ -8,6 +8,7 @@ namespace Spelprojekt
 
     public abstract class Shape
     {
+        public int ID { get; set; }
         public ShapeColor ShapeColor { get; set; }
         public List<Block> Blocks { get; set; }
         public bool InPlay { get; set; }
@@ -22,10 +23,10 @@ namespace Spelprojekt
         {
             var blocks = new List<Block>()
             {
-                new Block(1,0),
-                new Block(2,0),
-                new Block(3,0),
-                new Block(4,0)
+                new Block(1,0,ShapeColor.Cyan),
+                new Block(2,0,ShapeColor.Cyan),
+                new Block(3,0,ShapeColor.Cyan),
+                new Block(4,0,ShapeColor.Cyan)
             };
 
             Blocks = blocks;

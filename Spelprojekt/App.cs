@@ -14,6 +14,8 @@ namespace Spelprojekt
 
         private GameService _gameService;
 
+        private Game _game;
+
         public delegate void GameUpdatedEventHandler(object source, EventArgs e);
 
         public event GameUpdatedEventHandler GameUpdated;
@@ -32,23 +34,18 @@ namespace Spelprojekt
 
         public App() : base(1000)
         {
-            var game = new Game();
-
+            _game = new Game();
 
             _shapeService = new ShapeService();
+            _shapeService.ShapeInPlayState = true;
 
-            game.Shapes = new List<Shape>
+            _game.Blocks = new List<Block>
             {
-                new IShape()
+                new Block(5, 4, ShapeColor.Blue),
+                new Block(5, 5, ShapeColor.Red),
+                new Block(5, 6, ShapeColor.Green)
             };
 
-            var block = new Block(4, 0);
-
-
-            var gameService = new GameService();
-            var shapeService = new ShapeService();
-
-            GameUpdated += gameService.OnGameUpdated;
             GameUpdated += MoveDown;
 
 
@@ -67,6 +64,11 @@ namespace Spelprojekt
         {
             if(_shapeService.ShapeInPlayY < 19)
             _shapeService.ShapeInPlayY += 1;
+
+            if (_shapeService.ShapeInPlayY == 19)
+            {
+                _shapeService.ShapeInPlayState = false;
+            }
         }
 
         protected void CheckShapeForValidState(object source, EventArgs e)
@@ -77,10 +79,18 @@ namespace Spelprojekt
 
         protected override void Render(IRender render)
         {
-            var block = new Block(4,0);
+            var usedBlocks = _game.Blocks;
 
+            var block = new Block(4,0, ShapeColor.Purple);
 
-            render.Draw(block.XPosition + _shapeService.ShapeInPlayX, block.YPosition + _shapeService.ShapeInPlayY, ShapeColor.Green);
+            foreach (var b in usedBlocks)
+            {
+                render.Draw(b.XPosition, b.YPosition, b.ShapeColor);
+            }
+           
+            render.Draw(block.XPosition + _shapeService.ShapeInPlayX, block.YPosition + _shapeService.ShapeInPlayY, block.ShapeColor);
+           
+            
             //var i = 0;
 
             //render.Draw(0, 1 + i, ShapeColor.Cyan);
@@ -109,6 +119,7 @@ namespace Spelprojekt
             //MessageBox.Show(message);
 
             _shapeService.ShapeInPlayY = 19;
+            _shapeService.ShapeInPlayState = false;
 
             //  throw new NotImplementedException();
         }
@@ -117,8 +128,10 @@ namespace Spelprojekt
         {
             //var message = "Move left";
             //MessageBox.Show(message);
-            if(_shapeService.ShapeInPlayX > -4)
-            _shapeService.ShapeInPlayX -= 1;
+            if (_shapeService.ShapeInPlayX > -4 && _shapeService.ShapeInPlayState == true)
+            {
+                _shapeService.ShapeInPlayX -= 1;
+            }
 
             // throw new NotImplementedException();
         }
@@ -127,11 +140,16 @@ namespace Spelprojekt
         {
             //var message = "Move right";
             //MessageBox.Show(message);
+            if (_shapeService.ShapeInPlayX < 5 && _shapeService.ShapeInPlayState == true)
+            {
+                _shapeService.ShapeInPlayX += 1;
+            }
 
-            if(_shapeService.ShapeInPlayX < 5)
-            _shapeService.ShapeInPlayX += 1;
+            else
+            {
+                _shapeService.ShapeInPlayX = _shapeService.ShapeInPlayX;
+            }
 
-            // throw new NotImplementedException();
         }
     }
 }

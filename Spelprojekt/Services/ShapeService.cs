@@ -7,8 +7,7 @@ namespace Spelprojekt.Services
     {
         public int ShapeInPlayX { get; set; }
         public int ShapeInPlayY { get; set; }
-        public int ShapeInPlayState { get; set; }
-        public int ShapeInPlayType { get; set; }
+        public bool ShapeInPlayState { get; set; }
 
 
         public enum Rotations

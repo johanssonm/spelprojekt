@@ -6,7 +6,7 @@ namespace Spelprojekt.Entities
     {
         public int ID { get; set; }
         public bool InPlay { get; set; }
-        public List<Shape> Shapes { get; set; }
+        public List<Block> Blocks { get; set; }
     }
 
 

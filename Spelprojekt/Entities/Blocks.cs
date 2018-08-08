@@ -1,4 +1,6 @@
-﻿namespace Spelprojekt
+﻿using TetrisUI;
+
+namespace Spelprojekt
 {
     public class Block
     {
@@ -7,11 +9,15 @@
 
         public int YPosition { get; set; }
 
-        public Block(int x, int y)
+        public ShapeColor ShapeColor { get; set; }
+
+
+        public Block(int x, int y, ShapeColor shapecolor)
         {
+
             XPosition = x;
             YPosition = y;
-
+            ShapeColor = shapecolor;
         }
     }
 }
