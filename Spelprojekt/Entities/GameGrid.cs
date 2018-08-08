@@ -13,6 +13,7 @@ namespace Spelprojekt.Entities
         public int Y { get; set; }
 
 
+
         public static void InBounds(int x, int y)
         {
 

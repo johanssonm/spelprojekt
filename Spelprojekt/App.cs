@@ -41,14 +41,12 @@ namespace Spelprojekt
 
             _game.Blocks = new List<Block>
             {
-                new Block(5, 4, ShapeColor.Blue),
-                new Block(5, 5, ShapeColor.Red),
-                new Block(5, 6, ShapeColor.Green)
+                new Block(4, 0, ShapeColor.Blue),
+                new Block(4, 0, ShapeColor.Red),
+                new Block(4, 0, ShapeColor.Green)
             };
 
             GameUpdated += MoveDown;
-
-
 
         }
 
@@ -68,6 +66,7 @@ namespace Spelprojekt
             if (_shapeService.ShapeInPlayY == 19)
             {
                 _shapeService.ShapeInPlayState = false;
+                
             }
         }
 
@@ -79,10 +78,11 @@ namespace Spelprojekt
 
         protected override void Render(IRender render)
         {
+            
             var usedBlocks = _game.Blocks;
 
             var block = new Block(4,0, ShapeColor.Purple);
-
+            
             foreach (var b in usedBlocks)
             {
                 render.Draw(b.XPosition, b.YPosition, b.ShapeColor);

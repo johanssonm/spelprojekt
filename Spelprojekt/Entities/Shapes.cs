@@ -9,12 +9,25 @@ namespace Spelprojekt
     public abstract class Shape
     {
         public int ID { get; set; }
-        public ShapeColor ShapeColor { get; set; }
         public List<Block> Blocks { get; set; }
         public bool InPlay { get; set; }
 
         public int OffsetX { get; set; }
         public int OffsetY { get; set; }
+    }
+
+    public class TestShape : Shape
+    {
+        public TestShape()
+        {
+            var blocks = new List<Block>()
+            {
+                new Block(1,0,ShapeColor.Green)
+            };
+
+            Blocks = blocks;
+        }
+
     }
 
     public class IShape : Shape
@@ -30,8 +43,6 @@ namespace Spelprojekt
             };
 
             Blocks = blocks;
-            ShapeColor = ShapeColor.Cyan;
-
         }
 
     }
