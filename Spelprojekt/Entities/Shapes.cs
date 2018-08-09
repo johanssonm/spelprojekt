@@ -9,6 +9,7 @@ namespace Spelprojekt
     public abstract class Shape
     {
         public int ID { get; set; }
+        public ShapeColor ShapeColor { get; set; }
         public List<Block> Blocks { get; set; }
         public bool InPlay { get; set; }
 
@@ -26,6 +27,7 @@ namespace Spelprojekt
         }
     }
 
+<<<<<<< HEAD
     public class TestShape : Shape
     {
         public TestShape()
@@ -41,6 +43,8 @@ namespace Spelprojekt
 
     }
 
+=======
+>>>>>>> parent of b6a97b5... Fungerande primitiv med blocks
     public class IShape : Shape
     {
         public IShape()
@@ -54,6 +58,8 @@ namespace Spelprojekt
             };
 
             Blocks = blocks;
+            ShapeColor = ShapeColor.Cyan;
+
         }
 
     }

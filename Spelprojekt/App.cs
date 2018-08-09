@@ -41,12 +41,14 @@ namespace Spelprojekt
 
             _game.Blocks = new List<Block>
             {
-                new Block(4, 0, ShapeColor.Blue),
-                new Block(4, 0, ShapeColor.Red),
-                new Block(4, 0, ShapeColor.Green)
+                new Block(5, 4, ShapeColor.Blue),
+                new Block(5, 5, ShapeColor.Red),
+                new Block(5, 6, ShapeColor.Green)
             };
 
             GameUpdated += MoveDown;
+
+
 
         }
 
@@ -66,12 +68,12 @@ namespace Spelprojekt
             if (_shapeService.ShapeInPlayY == 19)
             {
                 _shapeService.ShapeInPlayState = false;
-                
             }
         }
 
         protected override void Render(IRender render)
         {
+<<<<<<< HEAD
             
             var game = _game.Blocks;
 
@@ -81,6 +83,16 @@ namespace Spelprojekt
             //{
             //    render.Draw(b.XPosition, b.YPosition, b.ShapeColor);
             //}
+=======
+            var usedBlocks = _game.Blocks;
+
+            var block = new Block(4,0, ShapeColor.Purple);
+
+            foreach (var b in usedBlocks)
+            {
+                render.Draw(b.XPosition, b.YPosition, b.ShapeColor);
+            }
+>>>>>>> parent of b6a97b5... Fungerande primitiv med blocks
            
            render.Draw(shape.XPosition + _shapeService.ShapeInPlayX, shape.YPosition + _shapeService.ShapeInPlayY, block.ShapeColor);
            
