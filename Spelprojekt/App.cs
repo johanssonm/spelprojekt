@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Spelprojekt.Entities;
+using Spelprojekt.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
-using Spelprojekt.Entities;
-using Spelprojekt.Services;
+using System.Runtime.CompilerServices;
 using TetrisUI;
 
 namespace Spelprojekt
@@ -35,16 +35,13 @@ namespace Spelprojekt
         public App() : base(1000)
         {
             _game = new Game();
-
             _shapeService = new ShapeService();
-            _shapeService.ShapeInPlayState = true;
 
-            _game.Blocks = new List<Block>
-            {
-                new Block(4, 0, ShapeColor.Blue),
-                new Block(4, 0, ShapeColor.Red),
-                new Block(4, 0, ShapeColor.Green)
-            };
+            var shape = new IShape();
+
+
+            _shapeService.ShapeInPlayState = shape;
+            _shapeService.ShapeInPlayState.InPlay = true;
 
             GameUpdated += MoveDown;
 
@@ -53,63 +50,62 @@ namespace Spelprojekt
         protected override void UpdateGame()
         {
 
-
             OnGameUpdated();
 
         }
 
         protected void MoveDown(object source, EventArgs e)
         {
-            if(_shapeService.ShapeInPlayY < 19)
-            _shapeService.ShapeInPlayY += 1;
-
-            if (_shapeService.ShapeInPlayY == 19)
+            if (_shapeService.ShapeInPlayState.InPlay)
             {
-                _shapeService.ShapeInPlayState = false;
-                
+                _shapeService.ShapeInPlayState.PositionY++;
             }
+
         }
 
         protected override void Render(IRender render)
         {
-            
-            var usedBlocks = _game.Blocks;
+            var shape = _shapeService.ShapeInPlayState;
 
-            var block = new Block(4,0,ShapeColor.Green);
-
-            var shape = new ZShape();
-            
-            //foreach (var b in shape.Blocks)
-            //{
-            //    render.Draw(b.XPosition, b.YPosition, b.ShapeColor);
-            //}
-           
-           render.Draw(block.XPosition + _shapeService.ShapeInPlayX, block.YPosition + _shapeService.ShapeInPlayY, block.ShapeColor);
-           
+            foreach (var block in shape.Blocks)
+            {
+                render.Draw(block.XPosition + shape.PositionX,block.YPosition + shape.PositionY ,block.ShapeColor);
+            }
+      
         }
 
         protected override void Rotate()
         {
-
-
+            RotateShape(_shapeService.ShapeInPlayState);
         }
+
+        protected Shape RotateShape(Shape shape)
+        {
+            int x = (int)Math.Sqrt(shape.Width);
+            int y = (int)Math.Sqrt(shape.Height);
+
+           
+            return shape;
+        }
+
+
 
         protected override void Drop()
         {
 
-            _shapeService.ShapeInPlayY = 19;
-            _shapeService.ShapeInPlayState = false;
+            _shapeService.ShapeInPlayState.PositionY = 20 - _shapeService.ShapeInPlayState.Height;
+            _shapeService.ShapeInPlayState.InPlay = false;
 
         }
 
         protected override void MoveLeft()
         {
-            if (_shapeService.ShapeInPlayX > -4 && _shapeService.ShapeInPlayState == true)
+            if (_shapeService.ShapeInPlayState.PositionX > 0 && _shapeService.ShapeInPlayState.InPlay)
             {
-                _shapeService.ShapeInPlayX -= 1;
+                _shapeService.ShapeInPlayState.PositionX--;
             }
 
-                        else
+            else
             {
                 _shapeService.ShapeInPlayX = _shapeService.ShapeInPlayX;
             }
@@ -118,10 +114,11 @@ namespace Spelprojekt
 
         protected override void MoveRight()
         {
+            var shape = _shapeService.ShapeInPlayState;
 
-            if (_shapeService.ShapeInPlayX < 5 && _shapeService.ShapeInPlayState == true)
+            if (shape.PositionX < 10 - shape.Width && shape.InPlay)
             {
-                _shapeService.ShapeInPlayX += 1;
+                _shapeService.ShapeInPlayState.PositionX++;
             }
 
             else

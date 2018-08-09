@@ -5,78 +5,19 @@ using TetrisUI;
 
 namespace Spelprojekt.Services
 {
-    class ShapeService
+    public class ShapeService
     {
+        private readonly IShapeRotator _shaperotator;
+
         public int ShapeInPlayX { get; set; }
         public int ShapeInPlayY { get; set; }
-        public bool ShapeInPlayState { get; set; }
+        public Shape ShapeInPlayState { get; set; }
 
         public Shape UpdatePositionOfShape(Shape shape, int X, int Y)
         {
 
-            shape.OffsetX = X;
-            shape.OffsetY = Y;
-
-            return shape;
-
-        }
-
-        public Shape RotateShape(Shape shape)
-        {
-
-            shape.Blocks.Clear();
-
-            if (shape is IShape)
-            {
-                if (shape.RotationState == Shape.Rotation.Default)
-                {
-                    shape.Blocks = new List<Block>
-                    {
-                        new Block(3,0,ShapeColor.Cyan),
-                        new Block(3,1,ShapeColor.Cyan),
-                        new Block(3,2,ShapeColor.Cyan),
-                        new Block(3,3,ShapeColor.Cyan)
-                    };
-
-                }
-
-                if (shape.RotationState == Shape.Rotation.Right)
-                {
-                    shape.Blocks = new List<Block>
-                    {
-                        new Block(3,0,ShapeColor.Cyan),
-                        new Block(3,1,ShapeColor.Cyan),
-                        new Block(3,2,ShapeColor.Cyan),
-                        new Block(3,3,ShapeColor.Cyan)
-                    };
-
-                }
-
-                if (shape.RotationState == Shape.Rotation.Down)
-                {
-                    shape.Blocks = new List<Block>
-                    {
-                        new Block(0,3,ShapeColor.Cyan),
-                        new Block(1,3,ShapeColor.Cyan),
-                        new Block(2,3,ShapeColor.Cyan),
-                        new Block(3,3,ShapeColor.Cyan)
-                    };
-
-                }
-
-                if (shape.RotationState == Shape.Rotation.Left)
-                {
-                    shape.Blocks = new List<Block>
-                    {
-                        new Block(0,1,ShapeColor.Cyan),
-                        new Block(1,1,ShapeColor.Cyan),
-                        new Block(2,1,ShapeColor.Cyan),
-                        new Block(3,1,ShapeColor.Cyan)
-                    };
-
-                }
-
-            }
+            shape.PositionX = X;
+            shape.PositionX = Y;
 
             return shape;
 
