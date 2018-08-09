@@ -53,9 +53,9 @@ namespace Spelprojekt
         protected override void UpdateGame()
         {
 
+
             OnGameUpdated();
 
-            // throw new NotImplementedException();
         }
 
         protected void MoveDown(object source, EventArgs e)
@@ -70,76 +70,53 @@ namespace Spelprojekt
             }
         }
 
-        protected void CheckShapeForValidState(object source, EventArgs e)
-        {
-
-        }
-
-
         protected override void Render(IRender render)
         {
             
-            var usedBlocks = _game.Blocks;
+            var game = _game.Blocks;
 
-            var block = new Block(4,0, ShapeColor.Purple);
+            var shape = new IShape();
             
-            foreach (var b in usedBlocks)
-            {
-                render.Draw(b.XPosition, b.YPosition, b.ShapeColor);
-            }
+            //foreach (var b in shape.Blocks)
+            //{
+            //    render.Draw(b.XPosition, b.YPosition, b.ShapeColor);
+            //}
            
-            render.Draw(block.XPosition + _shapeService.ShapeInPlayX, block.YPosition + _shapeService.ShapeInPlayY, block.ShapeColor);
+           render.Draw(shape.XPosition + _shapeService.ShapeInPlayX, shape.YPosition + _shapeService.ShapeInPlayY, block.ShapeColor);
            
-            
-            //var i = 0;
-
-            //render.Draw(0, 1 + i, ShapeColor.Cyan);
-            //render.Draw(1, 2 + i, ShapeColor.Cyan);
-            //render.Draw(2, 3 + i, ShapeColor.Cyan);
-            //render.Draw(3, 4 + i, ShapeColor.Cyan);
-
-
-            //render.Draw(3, 4 + i, ShapeColor.Yellow);
-
-            //throw new NotImplementedException();
         }
 
         protected override void Rotate()
         {
 
-            var message = "Rotate";
-            MessageBox.Show(message);
 
-            //  throw new NotImplementedException();
         }
 
         protected override void Drop()
         {
-            //var message = "Drop";
-            //MessageBox.Show(message);
 
             _shapeService.ShapeInPlayY = 19;
             _shapeService.ShapeInPlayState = false;
 
-            //  throw new NotImplementedException();
         }
 
         protected override void MoveLeft()
         {
-            //var message = "Move left";
-            //MessageBox.Show(message);
             if (_shapeService.ShapeInPlayX > -4 && _shapeService.ShapeInPlayState == true)
             {
                 _shapeService.ShapeInPlayX -= 1;
             }
 
-            // throw new NotImplementedException();
+                        else
+            {
+                _shapeService.ShapeInPlayX = _shapeService.ShapeInPlayX;
+            }
+            
         }
 
         protected override void MoveRight()
         {
-            //var message = "Move right";
-            //MessageBox.Show(message);
+
             if (_shapeService.ShapeInPlayX < 5 && _shapeService.ShapeInPlayState == true)
             {
                 _shapeService.ShapeInPlayX += 1;

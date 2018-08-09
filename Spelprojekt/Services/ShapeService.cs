@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
+using TetrisUI;
 
 namespace Spelprojekt.Services
 {
@@ -9,20 +11,72 @@ namespace Spelprojekt.Services
         public int ShapeInPlayY { get; set; }
         public bool ShapeInPlayState { get; set; }
 
-
-        public enum Rotations
-        {
-            Default,
-            Left,
-            Down,
-            Right
-        }
-
         public Shape UpdatePositionOfShape(Shape shape, int X, int Y)
         {
 
             shape.OffsetX = X;
             shape.OffsetY = Y;
+
+            return shape;
+
+        }
+
+        public Shape RotateShape(Shape shape)
+        {
+
+            shape.Blocks.Clear();
+
+            if (shape is IShape)
+            {
+                if (shape.RotationState == Shape.Rotation.Default)
+                {
+                    shape.Blocks = new List<Block>
+                    {
+                        new Block(3,0,ShapeColor.Cyan),
+                        new Block(3,1,ShapeColor.Cyan),
+                        new Block(3,2,ShapeColor.Cyan),
+                        new Block(3,3,ShapeColor.Cyan)
+                    };
+
+                }
+
+                if (shape.RotationState == Shape.Rotation.Right)
+                {
+                    shape.Blocks = new List<Block>
+                    {
+                        new Block(3,0,ShapeColor.Cyan),
+                        new Block(3,1,ShapeColor.Cyan),
+                        new Block(3,2,ShapeColor.Cyan),
+                        new Block(3,3,ShapeColor.Cyan)
+                    };
+
+                }
+
+                if (shape.RotationState == Shape.Rotation.Down)
+                {
+                    shape.Blocks = new List<Block>
+                    {
+                        new Block(0,3,ShapeColor.Cyan),
+                        new Block(1,3,ShapeColor.Cyan),
+                        new Block(2,3,ShapeColor.Cyan),
+                        new Block(3,3,ShapeColor.Cyan)
+                    };
+
+                }
+
+                if (shape.RotationState == Shape.Rotation.Left)
+                {
+                    shape.Blocks = new List<Block>
+                    {
+                        new Block(0,1,ShapeColor.Cyan),
+                        new Block(1,1,ShapeColor.Cyan),
+                        new Block(2,1,ShapeColor.Cyan),
+                        new Block(3,1,ShapeColor.Cyan)
+                    };
+
+                }
+
+            }
 
             return shape;
 
@@ -41,13 +95,5 @@ namespace Spelprojekt.Services
             var message = "Shapeservice";
             MessageBox.Show(message);
         }
-
-
-        public int MoveDown(int y)
-        {
-            return y += 1;
-        }
-
-
     }
 }
