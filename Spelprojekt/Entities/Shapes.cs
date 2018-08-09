@@ -27,7 +27,6 @@ namespace Spelprojekt
         }
     }
 
-<<<<<<< HEAD
     public class TestShape : Shape
     {
         public TestShape()
@@ -43,8 +42,6 @@ namespace Spelprojekt
 
     }
 
-=======
->>>>>>> parent of b6a97b5... Fungerande primitiv med blocks
     public class IShape : Shape
     {
         public IShape()
