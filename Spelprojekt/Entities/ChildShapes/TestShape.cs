@@ -1,25 +1,35 @@
-﻿using System.Collections.Generic;
-using TetrisUI;
+﻿//using System.Collections.Generic;
+//using TetrisUI;
 
-namespace Spelprojekt
-{
-    public class TestShape : Shape
-    {
+//namespace Spelprojekt
+//{
+//    public class TestShape : Shape, IRotatable
+//    {
 
-        public TestShape() : base(2,2)
-        {
-            var blocks = new List<Block>()
-            {
-                new Block(0,0,ShapeColor.Green),
-                new Block(1,0,ShapeColor.Green),
-                new Block(0,1,ShapeColor.Green),
-                new Block(1,1,ShapeColor.Blue)
-            };
+//    }
+//        public TestShape() : base()
+//        {
 
-            Blocks = blocks;
+//            RotationState = Rotation.Default;
+//        }
 
-            RotationState = Rotation.Default;
-        }
+//        public Shape Rotate(Shape shape)
+//        {
+//            shape.Blocks.Clear();
 
-    }
-}
+//            var blocks = new List<Block>()
+//            {
+//                new Block(0,0,ShapeColor.Green),
+//                new Block(1,0,ShapeColor.Green),
+//                new Block(0,1,ShapeColor.Green),
+//                new Block(1,1,ShapeColor.Blue)
+//            };
+
+//            shape.Blocks = blocks;
+//            shape.RotationState = Rotation.Right;
+
+//            return shape;
+
+//        }
+//    }
+//}

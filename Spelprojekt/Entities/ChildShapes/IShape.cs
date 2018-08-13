@@ -5,18 +5,15 @@ namespace Spelprojekt
 {
     public class IShape : Shape
     {
-        public IShape() : base(4,4)
+        public IShape() : base(ShapeColor.Green, true)
         {
-            var blocks = new List<Block>()
-            {
-                new Block(0,0,ShapeColor.Cyan),
-                new Block(1,0,ShapeColor.Cyan),
-                new Block(2,0,ShapeColor.Cyan),
-                new Block(3,0,ShapeColor.Cyan)
-            };
+            ShapeGridArea = new bool[4, 4];
 
-            Blocks = blocks;
-            ShapeColor = ShapeColor.Cyan;
+            ShapeGridArea[1, 1] = true;
+            ShapeGridArea[2, 1] = true;
+            ShapeGridArea[3, 1] = true;
+            ShapeGridArea[0, 1] = true;
+
 
         }
 

@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencie
 		Dependencies\TetrisUI.dll = Dependencies\TetrisUI.dll
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpelprojektTester", "SpelprojektTester\SpelprojektTester.csproj", "{7C1D0C97-08CB-499E-93F5-6777AA8150CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{0C8224A9-3327-44FE-8317-D155C547BC39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C8224A9-3327-44FE-8317-D155C547BC39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C8224A9-3327-44FE-8317-D155C547BC39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C1D0C97-08CB-499E-93F5-6777AA8150CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C1D0C97-08CB-499E-93F5-6777AA8150CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C1D0C97-08CB-499E-93F5-6777AA8150CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C1D0C97-08CB-499E-93F5-6777AA8150CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -7,17 +7,23 @@ using System.Windows.Forms;
 
 namespace Spelprojekt.Entities
 {
-    class GameGrid
+    public class GameGrid
     {
-        public int X { get; set; }
-        public int Y { get; set; }
+        public int X  { get; set; }
+        public int Y  { get; set; }
 
+        public bool[,] GameGridArray { get; set; }
 
-        public static void InBounds(int x, int y)
+        public GameGrid(int x, int y)
         {
+            X = x;
+            Y = y;
 
+            bool[,] gameGridArray = new bool[x, y];
 
-
+            GameGridArray = gameGridArray;
         }
+
+
     }
 }

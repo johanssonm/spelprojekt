@@ -1,9 +1,6 @@
 ﻿using Spelprojekt.Entities;
 using Spelprojekt.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using TetrisUI;
 
 namespace Spelprojekt
@@ -16,109 +13,122 @@ namespace Spelprojekt
 
         private Game _game;
 
-        public delegate void GameUpdatedEventHandler(object source, EventArgs e);
-
-        public event GameUpdatedEventHandler GameUpdated;
-
-        protected virtual void OnGameUpdated()
-        {
-
-            if (GameUpdated != null)
-            {
-                GameUpdated(this, EventArgs.Empty);
-            }
-
-
-
-        }
-
         public App() : base(1000)
         {
+
             _game = new Game();
+
+            _game.GameGrid = new GameGrid(10,20);
+
             _shapeService = new ShapeService();
 
-            var shape = new IShape();
-
+            var shape = new LShape();
 
             _shapeService.ShapeInPlayState = shape;
-            _shapeService.ShapeInPlayState.InPlay = true;
 
-            GameUpdated += MoveDown;
+            _shapeService.ShapeInPlayState.IsInPlay = true;
+            
 
         }
 
         protected override void UpdateGame()
         {
+            var shape = _shapeService.ShapeInPlayState;
 
-            OnGameUpdated();
-
-        }
-
-        protected void MoveDown(object source, EventArgs e)
-        {
-            if (_shapeService.ShapeInPlayState.InPlay)
+            if (!_shapeService.InBounds(shape, _game))
             {
-                _shapeService.ShapeInPlayState.PositionY++;
+                _shapeService.ShapeInPlayState.IsInPlay = false;
+            }
+
+            if (shape.IsInPlay)
+            {
+                _shapeService.ShapeInPlayState.GameGridYPosition++;
+
             }
 
         }
 
         protected override void Render(IRender render)
         {
-            var shape = _shapeService.ShapeInPlayState;
+            var grid = _game.GameGrid.GameGridArray;
 
-            foreach (var block in shape.Blocks)
+            var shape = _shapeService.ShapeInPlayState;
+            var shapeGridWidth = shape.ShapeGridArea.GetLength(0);
+
+            for (int i = 0; i < shapeGridWidth; i++)
             {
-                render.Draw(block.XPosition + shape.PositionX,block.YPosition + shape.PositionY ,block.ShapeColor);
+                for (int j = 0; j < shapeGridWidth; j++)
+                {
+                    if (shape.ShapeGridArea[i, j])
+                        render.Draw(i + shape.GameGridXPosition, j + shape.GameGridYPosition, shape.ShapeColor);
+                }
+
             }
-      
+
+            var y = _game.GameGrid.X -1;
+            var x = _game.GameGrid.Y -1;
+
+            for (int i = 0; i <= y; i++)
+            {
+                for (int j = 0; j <= x; j++)
+                {
+                    if (grid[i, j])
+                        render.Draw(i, j, ShapeColor.Cyan);
+                }
+
+            }
         }
 
         protected override void Rotate()
         {
-            RotateShape(_shapeService.ShapeInPlayState);
+            if (_shapeService.ShapeInPlayState.IsInPlay && _shapeService.ShapeInPlayState.CanBeRotated)
+            {
+                _shapeService.ShapeInPlayState.ShapeGridArea = _shapeService.Rotate(_shapeService.ShapeInPlayState.ShapeGridArea,(int)Math.Sqrt(_shapeService.ShapeInPlayState.ShapeGridArea.Length));
+
+            }
         }
-
-        protected Shape RotateShape(Shape shape)
-        {
-            int x = (int)Math.Sqrt(shape.Width);
-            int y = (int)Math.Sqrt(shape.Height);
-
-           
-            return shape;
-        }
-
-
 
         protected override void Drop()
         {
+            var shape = _shapeService.ShapeInPlayState;
 
-            _shapeService.ShapeInPlayState.PositionY = 20 - _shapeService.ShapeInPlayState.Height;
-            _shapeService.ShapeInPlayState.InPlay = false;
-
-        }
-
-        protected override void MoveLeft()
-        {
-            if (_shapeService.ShapeInPlayState.PositionX > 0 && _shapeService.ShapeInPlayState.InPlay)
+            if (shape.IsInPlay)
             {
-                _shapeService.ShapeInPlayState.PositionX--;
+                shape.GameGridYPosition =_game.GameGrid.Y - (int)Math.Sqrt(shape.ShapeGridArea.Length);
+                shape.IsInPlay = false;
             }
 
             else
             {
                 _shapeService.ShapeInPlayX = _shapeService.ShapeInPlayX;
             }
-            
+
+        }
+
+        protected override void MoveLeft()
+        {
+            var shape = _shapeService.ShapeInPlayState;
+
+            if (shape.IsInPlay && _shapeService.InBounds(shape, _game))
+            {
+                shape.GameGridXPosition--;
+            }
+
+            else
+            {
+                _shapeService.ShapeInPlayX = _shapeService.ShapeInPlayX;
+            }
+
+
         }
 
         protected override void MoveRight()
         {
             var shape = _shapeService.ShapeInPlayState;
 
-            if (shape.PositionX < 10 - shape.Width && shape.InPlay)
+            if (shape.IsInPlay && _shapeService.InBounds(shape, _game))
             {
-                _shapeService.ShapeInPlayState.PositionX++;
+                shape.GameGridXPosition++;
             }
 
             else

@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Microsoft.Build.Framework;
-using Spelprojekt.Services;
-using TetrisUI;
+﻿using TetrisUI;
 
 namespace Spelprojekt
 {
@@ -10,30 +6,34 @@ namespace Spelprojekt
     public abstract class Shape
     {
         public int ID { get; set; }
-        public bool InPlay { get; set; }
+        public bool IsInPlay { get; set; }
 
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public bool CanBeRotated { get; set; }
+        public bool[,] ShapeGridArea { get; set; }
 
-        public int PositionX { get; set; }
-        public int PositionY { get; set; }
+        public int GameGridXPosition { get; set; }
+        public int GameGridYPosition { get; set; }
 
-        public List<Block> Blocks { get; set; }
         public Rotation RotationState { get; set; } // TODO: Behövs denna?
         public ShapeColor ShapeColor { get; set; }
 
         public enum Rotation
         {
             Default,
-            Left,
+            Right,
             Down,
-            Right
+            Left
         }
 
-        protected Shape(int width, int height)
+        protected Shape(ShapeColor shapecolor, bool canBeRotated)
         {
-            Width = width;
-            Height = height;
+
+            ShapeColor = shapecolor;
+            RotationState = Rotation.Default;
+            CanBeRotated = canBeRotated;
+            GameGridXPosition = 0;
+            GameGridYPosition = 0;
+
         }
     }
 }

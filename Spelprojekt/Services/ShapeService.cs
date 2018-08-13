@@ -1,40 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Spelprojekt.Entities;
 using System.Windows.Forms;
-using TetrisUI;
 
 namespace Spelprojekt.Services
 {
     public class ShapeService
     {
-        private readonly IShapeRotator _shaperotator;
-
         public int ShapeInPlayX { get; set; }
         public int ShapeInPlayY { get; set; }
         public Shape ShapeInPlayState { get; set; }
 
-        public Shape UpdatePositionOfShape(Shape shape, int X, int Y)
+        public bool InBounds(Shape shape, Game game)
         {
+            var grid = game.GameGrid.GameGridArray;
+            var message = "Out of bounds";
 
-            shape.PositionX = X;
-            shape.PositionX = Y;
 
-            return shape;
+            if (shape.GameGridXPosition > game.GameGrid.X)
+            {
+              //  MessageBox.Show(message);
+                return false;
+            }
+
+            return true;
 
         }
 
-        public Shape UpdateShapeState(Shape shape, bool inplay)
+
+        public bool[,] Rotate(bool[,] matrix, int n)
         {
-            shape.InPlay = inplay;
+            bool[,] result = new bool[n, n];
 
-            return shape;
+            for (int i = 0; i < n; ++i)
+            {
+                for (int j = 0; j < n; ++j)
+                {
+                    result[i, j] = matrix[j,n - i - 1];
+                }
+            }
 
+            return result;
         }
 
-        public void OnGameUpdated(object source, EventArgs e)
-        {
-            var message = "Shapeservice";
-            MessageBox.Show(message);
-        }
+
     }
 }
