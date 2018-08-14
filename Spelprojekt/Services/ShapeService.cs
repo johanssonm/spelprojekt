@@ -1,5 +1,6 @@
-﻿using Spelprojekt.Entities;
-using System.Windows.Forms;
+﻿using System.Diagnostics;
+using System.Linq;
+using Spelprojekt.Entities;
 
 namespace Spelprojekt.Services
 {
@@ -9,24 +10,98 @@ namespace Spelprojekt.Services
         public int ShapeInPlayY { get; set; }
         public Shape ShapeInPlayState { get; set; }
 
-        public bool InBounds(Shape shape, Game game)
+        public bool InBoundsLeft(Shape shape, Game game)
         {
-            var grid = game.GameGrid.GameGridArray;
-            var message = "Out of bounds";
+            int currentLeft = FindLeftLocation(shape);
 
 
-            if (shape.GameGridXPosition > game.GameGrid.X)
-            {
-              //  MessageBox.Show(message);
+
+            if (0 < shape.GameGridXPosition)
+                return true;
+
                 return false;
-            }
-
-            return true;
 
         }
 
+        public bool InBoundsRight(Shape shape, Game game)
+        {
+            int currentRight = FindRightLocation(shape);
 
-        public bool[,] Rotate(bool[,] matrix, int n)
+            if (shape.GameGridXPosition + currentRight < 10)
+                return true;
+
+            return false;
+
+        }
+
+        public bool InBoundsBottom(Shape shape, Game game)
+        {
+            int currentBottom = FindRightLocation(shape);
+
+            if (shape.GameGridYPosition + (shape.ShapeGridArea.GetLength(0)) == 20)
+                return true;
+
+            return false;
+
+        }
+
+        private static int FindLeftLocation(Shape shape)
+        {
+
+            int counter = 0;
+
+            for (int i = 0; i < shape.ShapeGridArea.GetLength(0); ++i)
+            {
+
+
+                if (!shape.ShapeGridArea[i, 0])
+                {
+                    counter++;
+                }
+
+
+
+            }
+
+            if (counter == 0)
+            {
+               return 1;
+            }
+
+            return 0;
+
+
+        }
+
+        private static int FindRightLocation(Shape shape)
+        {
+
+            int counter = 0;
+
+            for (int i = 0; i < shape.ShapeGridArea.GetLength(0); ++i)
+            {
+
+
+                if (!shape.ShapeGridArea[i, shape.ShapeGridArea.GetLength(0) - 1])
+                {
+                    counter++;
+                }
+
+
+
+            }
+
+            if (counter != 0)
+            {
+                return shape.ShapeGridArea.GetLength(0) - 1;
+            }
+
+            return shape.ShapeGridArea.GetLength(0);
+
+
+        }
+
+        public bool[,] Rotate(bool[,] grid, int n)
         {
             bool[,] result = new bool[n, n];
 
@@ -34,13 +109,56 @@ namespace Spelprojekt.Services
             {
                 for (int j = 0; j < n; ++j)
                 {
-                    result[i, j] = matrix[j,n - i - 1];
+                    result[i, j] = grid[j, n - i - 1];
                 }
             }
 
             return result;
         }
 
+        public int CheckCurrentWidthOfShape(Shape shape)
+        {
 
+            var maxWidth = new System.Collections.Generic.List<int>();
+
+            for (int i = 0; i < shape.ShapeGridArea.GetLength(0); ++i)
+            {
+                int counter = 0;
+
+                for (int j = 0; j < shape.ShapeGridArea.GetLength(0); ++j)
+                {
+
+
+                    if (shape.ShapeGridArea[i, j])
+                    {
+                        counter++;
+                    }
+
+
+                }
+
+                maxWidth.Add(counter);
+            }
+
+            return maxWidth.Max();
+        }
+
+        public void AddShapeToHeap(Shape shape, Game game)
+        {
+
+            var shapeGridWidth = shape.ShapeGridArea.GetLength(0);
+
+            for (int i = 0; i < shapeGridWidth; i++)
+            {
+                for (int j = 0; j < shapeGridWidth; j++)
+                {
+                    if (shape.ShapeGridArea[i, j])
+                        game.GameGrid.GameGridArray[i + shape.GameGridXPosition, j + shape.GameGridYPosition] = true;
+                }
+
+            }
+
+
+        }
     }
 }

@@ -1,35 +1,22 @@
-﻿//using System.Collections.Generic;
-//using TetrisUI;
+﻿using System.Collections.Generic;
+using TetrisUI;
 
-//namespace Spelprojekt
-//{
-//    public class TestShape : Shape, IRotatable
-//    {
+namespace Spelprojekt
+{
+    public class TestShape : Shape
+    {
+        public TestShape() : base(ShapeColor.Purple, true)
+        {
+            ShapeGridArea = new bool[2, 2];
 
-//    }
-//        public TestShape() : base()
-//        {
+            ShapeGridArea[0, 0] = true;
+            ShapeGridArea[0, 1] = true;
+            ShapeGridArea[1, 1] = true;
+            ShapeGridArea[1, 0] = true;
 
-//            RotationState = Rotation.Default;
-//        }
+            CanBeRotated = false;
 
-//        public Shape Rotate(Shape shape)
-//        {
-//            shape.Blocks.Clear();
 
-//            var blocks = new List<Block>()
-//            {
-//                new Block(0,0,ShapeColor.Green),
-//                new Block(1,0,ShapeColor.Green),
-//                new Block(0,1,ShapeColor.Green),
-//                new Block(1,1,ShapeColor.Blue)
-//            };
-
-//            shape.Blocks = blocks;
-//            shape.RotationState = Rotation.Right;
-
-//            return shape;
-
-//        }
-//    }
-//}
+        }
+    }
+}

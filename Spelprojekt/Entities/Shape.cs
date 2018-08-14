@@ -13,6 +13,7 @@ namespace Spelprojekt
 
         public int GameGridXPosition { get; set; }
         public int GameGridYPosition { get; set; }
+        public int CurrentWidth { get; set; }
 
         public Rotation RotationState { get; set; } // TODO: Behövs denna?
         public ShapeColor ShapeColor { get; set; }

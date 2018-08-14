@@ -10,6 +10,23 @@ namespace Spelprojekt.Entities
 
         public GameGrid GameGrid { get; set; }
 
+        public Game()
+        {
+            InPlay = true;
+
+            var shapes = new List<Shape>();
+
+            var shape = new TestShape();
+
+
+            shapes.Add(shape);
+
+            Shapes = shapes;
+
+        }
+
     }
+
+
 
 }
