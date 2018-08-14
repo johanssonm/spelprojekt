@@ -7,12 +7,12 @@ namespace Spelprojekt
     {
         public IShape() : base(ShapeColor.Green, true)
         {
-            ShapeGridArea = new bool[4, 4];
+            ShapeGrid = new bool[4, 4];
 
-            ShapeGridArea[1, 1] = true;
-            ShapeGridArea[2, 1] = true;
-            ShapeGridArea[3, 1] = true;
-            ShapeGridArea[0, 1] = true;
+            ShapeGrid[1, 1] = true;
+            ShapeGrid[2, 1] = true;
+            ShapeGrid[3, 1] = true;
+            ShapeGrid[0, 1] = true;
 
 
         }

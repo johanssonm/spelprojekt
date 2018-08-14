@@ -25,31 +25,31 @@ namespace SpelprojektTester
             controlArray[2, 2] = true;
             controlArray[2, 3] = true;
 
-            rotatedShape.ShapeGridArea = service.Rotate(rotatedShape.ShapeGridArea, 4);
+            rotatedShape.ShapeGrid = service.Rotate(rotatedShape.ShapeGrid, 4);
 
-            rotatedShape.ShapeGridArea.Should().BeEquivalentTo(controlArray);
+            rotatedShape.ShapeGrid.Should().BeEquivalentTo(controlArray);
 
         }
 
         [TestMethod]
-        public void ValidateMethodForRotatingTShapeTwice()
+        public void ValidateMethodForRotatingIShapeTwice()
         {
             var service = new ShapeService();
 
 
-            var rotatedShape = new TShape();
+            var rotatedShape = new IShape();
 
-            var controlArray = new bool[3, 3];
+            var controlArray = new bool[4, 4];
 
-            controlArray[1, 0] = true;
-            controlArray[1, 1] = true;
+            controlArray[0, 2] = true;
             controlArray[1, 2] = true;
-            controlArray[2, 1] = true;
+            controlArray[2, 2] = true;
+            controlArray[3, 2] = true;
 
-            rotatedShape.ShapeGridArea = service.Rotate(rotatedShape.ShapeGridArea, 3);
-            rotatedShape.ShapeGridArea = service.Rotate(rotatedShape.ShapeGridArea, 3);
+            rotatedShape.ShapeGrid = service.Rotate(rotatedShape.ShapeGrid, rotatedShape.ShapeGrid.GetLength(0));
+            rotatedShape.ShapeGrid = service.Rotate(rotatedShape.ShapeGrid, rotatedShape.ShapeGrid.GetLength(0));
 
-            rotatedShape.ShapeGridArea.Should().BeEquivalentTo(controlArray);
+            rotatedShape.ShapeGrid.Should().BeEquivalentTo(controlArray);
 
         }
 

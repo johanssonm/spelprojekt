@@ -8,12 +8,12 @@ namespace Spelprojekt
 
         public OShape() : base(ShapeColor.Yellow, false)
         {
-            ShapeGridArea = new bool[4, 3];
+            ShapeGrid = new bool[4, 3];
 
-            ShapeGridArea[1, 0] = true;
-            ShapeGridArea[2, 0] = true;
-            ShapeGridArea[1, 1] = true;
-            ShapeGridArea[2, 1] = true;
+            ShapeGrid[1, 0] = true;
+            ShapeGrid[2, 0] = true;
+            ShapeGrid[1, 1] = true;
+            ShapeGrid[2, 1] = true;
 
 
         }

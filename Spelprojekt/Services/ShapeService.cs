@@ -1,6 +1,7 @@
-﻿using System.Diagnostics;
-using System.Linq;
+﻿using System;
 using Spelprojekt.Entities;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Spelprojekt.Services
 {
@@ -9,97 +10,6 @@ namespace Spelprojekt.Services
         public int ShapeInPlayX { get; set; }
         public int ShapeInPlayY { get; set; }
         public Shape ShapeInPlayState { get; set; }
-
-        public bool InBoundsLeft(Shape shape, Game game)
-        {
-            int currentLeft = FindLeftLocation(shape);
-
-
-
-            if (0 < shape.GameGridXPosition)
-                return true;
-
-                return false;
-
-        }
-
-        public bool InBoundsRight(Shape shape, Game game)
-        {
-            int currentRight = FindRightLocation(shape);
-
-            if (shape.GameGridXPosition + currentRight < 10)
-                return true;
-
-            return false;
-
-        }
-
-        public bool InBoundsBottom(Shape shape, Game game)
-        {
-            int currentBottom = FindRightLocation(shape);
-
-            if (shape.GameGridYPosition + (shape.ShapeGridArea.GetLength(0)) == 20)
-                return true;
-
-            return false;
-
-        }
-
-        private static int FindLeftLocation(Shape shape)
-        {
-
-            int counter = 0;
-
-            for (int i = 0; i < shape.ShapeGridArea.GetLength(0); ++i)
-            {
-
-
-                if (!shape.ShapeGridArea[i, 0])
-                {
-                    counter++;
-                }
-
-
-
-            }
-
-            if (counter == 0)
-            {
-               return 1;
-            }
-
-            return 0;
-
-
-        }
-
-        private static int FindRightLocation(Shape shape)
-        {
-
-            int counter = 0;
-
-            for (int i = 0; i < shape.ShapeGridArea.GetLength(0); ++i)
-            {
-
-
-                if (!shape.ShapeGridArea[i, shape.ShapeGridArea.GetLength(0) - 1])
-                {
-                    counter++;
-                }
-
-
-
-            }
-
-            if (counter != 0)
-            {
-                return shape.ShapeGridArea.GetLength(0) - 1;
-            }
-
-            return shape.ShapeGridArea.GetLength(0);
-
-
-        }
 
         public bool[,] Rotate(bool[,] grid, int n)
         {
@@ -116,43 +26,71 @@ namespace Spelprojekt.Services
             return result;
         }
 
-        public int CheckCurrentWidthOfShape(Shape shape)
+        public List<string> UpdateBlockLocation(Shape shape)
         {
+            var coordinates = new List<string>();
 
-            var maxWidth = new System.Collections.Generic.List<int>();
+            int n = shape.ShapeGrid.GetLength(0);
 
-            for (int i = 0; i < shape.ShapeGridArea.GetLength(0); ++i)
+            for (int i = 0; i < n; ++i)
             {
-                int counter = 0;
-
-                for (int j = 0; j < shape.ShapeGridArea.GetLength(0); ++j)
+                for (int j = 0; j < n; ++j)
                 {
-
-
-                    if (shape.ShapeGridArea[i, j])
-                    {
-                        counter++;
-                    }
-
-
+                    if(shape.ShapeGrid[i,j])
+                    coordinates.Add($"{i + shape.GameGridXPosition}x{j + shape.GameGridYPosition}");
                 }
-
-                maxWidth.Add(counter);
             }
 
-            return maxWidth.Max();
+            return coordinates;
+        }
+
+        public List<string> CurrentShapeDimensions(Shape shape)
+        {
+            var coordinates = new List<string>();
+
+            int n = shape.ShapeGrid.GetLength(0);
+
+            for (int i = 0; i < n; ++i)
+            {
+                for (int j = 0; j < n; ++j)
+                {
+                    if (shape.ShapeGrid[i, j])
+                        coordinates.Add($"{i}x{j}");
+                }
+            }
+
+            return coordinates;
+        }
+
+        public int FindBottomOfShape(Shape shape)
+        {
+            var shapeblocks = CurrentShapeDimensions(shape);
+
+            var yList = new List<int>();
+
+            foreach (var block in shapeblocks)
+            {
+                var tmpstring = block.Split('x');
+
+                yList.Add(Int32.Parse(tmpstring[1]));
+
+            }
+
+            int shapeBottom = yList.Max();
+
+            return shapeBottom;
         }
 
         public void AddShapeToHeap(Shape shape, Game game)
         {
 
-            var shapeGridWidth = shape.ShapeGridArea.GetLength(0);
+            var shapeGridWidth = shape.ShapeGrid.GetLength(0);
 
             for (int i = 0; i < shapeGridWidth; i++)
             {
                 for (int j = 0; j < shapeGridWidth; j++)
                 {
-                    if (shape.ShapeGridArea[i, j])
+                    if (shape.ShapeGrid[i, j])
                         game.GameGrid.GameGridArray[i + shape.GameGridXPosition, j + shape.GameGridYPosition] = true;
                 }
 

@@ -7,12 +7,12 @@ namespace Spelprojekt
     {
         public ZShape() : base(ShapeColor.Red, true)
         {
-            ShapeGridArea = new bool[3, 3];
+            ShapeGrid = new bool[3, 3];
 
-            ShapeGridArea[0, 0] = true;
-            ShapeGridArea[1, 0] = true;
-            ShapeGridArea[1, 1] = true;
-            ShapeGridArea[2, 1] = true;
+            ShapeGrid[0, 0] = true;
+            ShapeGrid[1, 0] = true;
+            ShapeGrid[1, 1] = true;
+            ShapeGrid[2, 1] = true;
 
 
         }
