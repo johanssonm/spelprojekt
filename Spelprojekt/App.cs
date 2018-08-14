@@ -12,8 +12,6 @@ namespace Spelprojekt
     {
         private ShapeService _shapeService;
 
-        private GameService _gameService;
-
         private Game _game;
 
         private Shape _shape => _shapeService.ShapeInPlayState;
@@ -45,6 +43,8 @@ namespace Spelprojekt
         protected override void UpdateGame()
         {
 
+            _shape.IsInPlay = !_shapeService.CheckForBlockCollisions(_shape, _game);
+
             if (_game.InPlay && !_shape.IsInPlay)
             {
                 _shapeService.AddShapeToHeap(_shape, _game);
@@ -70,7 +70,7 @@ namespace Spelprojekt
 
         private bool CollisionBottomLine(Shape shape)
         {
-            var shapeblocks = _shapeService.UpdateBlockLocation(shape);
+            var shapeblocks = _shapeService.CurrentLocationOfShapeInPlay(shape);
 
             var yList = new List<int>();
 
@@ -93,7 +93,7 @@ namespace Spelprojekt
 
         private bool CollisionLeftSide(Shape shape)
         {
-            var shapeblocks = _shapeService.UpdateBlockLocation(shape);
+            var shapeblocks = _shapeService.CurrentLocationOfShapeInPlay(shape);
 
             var xList = new List<int>();
 
@@ -116,7 +116,7 @@ namespace Spelprojekt
 
         private bool CollisionRightSide(Shape shape)
         {
-            var shapeblocks = _shapeService.UpdateBlockLocation(shape);
+            var shapeblocks = _shapeService.CurrentLocationOfShapeInPlay(shape);
 
             var xList = new List<int>();
 
@@ -153,16 +153,12 @@ namespace Spelprojekt
 
             }
 
-            var y = _game.GameGrid.X - 1;
-            var x = _game.GameGrid.Y - 1;
-
-            for (int i = 0; i <= y; i++)
+            foreach (var block in _game.GameGrid.Squares)
             {
-                for (int j = 0; j <= x; j++)
-                {
-                    if (grid[i, j])
-                        render.Draw(i, j, ShapeColor.Cyan);
-                }
+               var tmpblock = block.Id.Split('x');
+
+                render.Draw(Int32.Parse(tmpblock[0]),Int32.Parse(tmpblock[1]),block.ShapeColor);
+
 
             }
         }
@@ -191,11 +187,6 @@ namespace Spelprojekt
 
                 _shape.IsInPlay = false;
 
-            }
-
-            else
-            {
-                _shapeService.ShapeInPlayX = _shapeService.ShapeInPlayX;
             }
 
         }

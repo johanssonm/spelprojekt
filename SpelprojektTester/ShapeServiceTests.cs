@@ -32,24 +32,21 @@ namespace SpelprojektTester
         }
 
         [TestMethod]
-        public void ValidateMethodForRotatingIShapeTwice()
+        public void ValidateMethodForRotatingIShapeFourTimes()
         {
             var service = new ShapeService();
 
 
             var rotatedShape = new IShape();
 
-            var controlArray = new bool[4, 4];
-
-            controlArray[0, 2] = true;
-            controlArray[1, 2] = true;
-            controlArray[2, 2] = true;
-            controlArray[3, 2] = true;
+            var controlShape = new IShape();
 
             rotatedShape.ShapeGrid = service.Rotate(rotatedShape.ShapeGrid, rotatedShape.ShapeGrid.GetLength(0));
             rotatedShape.ShapeGrid = service.Rotate(rotatedShape.ShapeGrid, rotatedShape.ShapeGrid.GetLength(0));
+            rotatedShape.ShapeGrid = service.Rotate(rotatedShape.ShapeGrid, rotatedShape.ShapeGrid.GetLength(0));
+            rotatedShape.ShapeGrid = service.Rotate(rotatedShape.ShapeGrid, rotatedShape.ShapeGrid.GetLength(0));
 
-            rotatedShape.ShapeGrid.Should().BeEquivalentTo(controlArray);
+            rotatedShape.ShapeGrid.Should().BeEquivalentTo(controlShape.ShapeGrid);
 
         }
 

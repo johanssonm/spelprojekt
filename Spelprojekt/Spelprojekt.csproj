@@ -72,7 +72,7 @@
       <DependentUpon>App.cs</DependentUpon>
     </Compile>
     <Compile Include="Entities\ShapeGrid.cs" />
-    <Compile Include="Entities\Square.cs" />
+    <Compile Include="Entities\Block.cs" />
     <Compile Include="Entities\Game.cs" />
     <Compile Include="Entities\GameGrid.cs" />
     <Compile Include="Entities\ChildShapes\IShape.cs" />

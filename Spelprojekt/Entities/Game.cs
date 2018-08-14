@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Spelprojekt.Entities
 {
@@ -14,12 +16,26 @@ namespace Spelprojekt.Entities
         {
             InPlay = true;
 
-            var shapes = new List<Shape>();
+            var tmpShapes = new List<Shape>();
 
-            var shape = new TestShape();
+            var shape1 = new IShape();
+            var shape2 = new JShape();
+            var shape3 = new LShape();
+            var shape4 = new OShape();
+            var shape5 = new SShape();
+            var shape6 = new TShape();
+            var shape7 = new ZShape();
 
 
-            shapes.Add(shape);
+            tmpShapes.Add(shape1);
+            tmpShapes.Add(shape2);
+            tmpShapes.Add(shape3);
+            tmpShapes.Add(shape4);
+            tmpShapes.Add(shape5);
+            tmpShapes.Add(shape6);
+            tmpShapes.Add(shape7);
+
+            var shapes = tmpShapes.OrderBy(a => Guid.NewGuid()).ToList();
 
             Shapes = shapes;
 

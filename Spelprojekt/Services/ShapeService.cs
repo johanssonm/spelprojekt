@@ -26,7 +26,28 @@ namespace Spelprojekt.Services
             return result;
         }
 
-        public List<string> UpdateBlockLocation(Shape shape)
+        public List<string> CurrentGameGrid(GameGrid gameGrid)
+        {
+            var coordinates = new List<string>();
+
+            int n = gameGrid.GameGridArray.GetLength(0);
+
+            for (int i = 0; i < n; ++i)
+            {
+                for (int j = 0; j < n; ++j)
+                {
+                    if (gameGrid.GameGridArray[i, j])
+                    {
+                        coordinates.Add($"{i}x{j}");
+                    }
+                }
+            }
+
+            return coordinates;
+        }
+
+
+        public List<string> CurrentLocationOfShapeInPlay(Shape shape)
         {
             var coordinates = new List<string>();
 
@@ -91,12 +112,40 @@ namespace Spelprojekt.Services
                 for (int j = 0; j < shapeGridWidth; j++)
                 {
                     if (shape.ShapeGrid[i, j])
-                        game.GameGrid.GameGridArray[i + shape.GameGridXPosition, j + shape.GameGridYPosition] = true;
+                       // game.GameGrid.GameGridArray[i + shape.GameGridXPosition, j + shape.GameGridYPosition] = true; TODO: Ta bort när den inte behövs
+                        game.GameGrid.Squares.Add(new Block($"{i + shape.GameGridXPosition}x{j + shape.GameGridYPosition}", shape.ShapeColor));
                 }
 
             }
 
 
         }
+
+        public bool CheckForBlockCollisions(Shape shape, Game game)
+        {
+
+            shape.GameGridYPosition++;
+
+            var shapepos = CurrentLocationOfShapeInPlay(shape);
+
+            var heappos = new List<string>();
+
+            foreach (var block in game.GameGrid.Squares)
+            {
+                heappos.Add(block.Id);
+            }
+
+            var result = heappos.Intersect(shapepos);
+            shape.GameGridYPosition--;
+
+            if (result.Count() != 0)
+            {
+                return true;
+            }
+
+            return false;
+       
+        }
     }
 }
+
