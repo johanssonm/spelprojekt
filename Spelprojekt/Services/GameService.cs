@@ -11,8 +11,6 @@ namespace Spelprojekt.Services
     {
         public void OnGameUpdated(Shape shape, Game game, ShapeService shapeService)
         {
-            //var message = "Gameservice";
-            //MessageBox.Show(message);
 
             if (game.InPlay) // game.ShapesPlayed < game.Shapes.Count()  TODO: Kan behövas för debug
             {
@@ -27,11 +25,48 @@ namespace Spelprojekt.Services
                     SpawnNewShape(shape, game, shapeService);
                 }
 
+                game.InPlay = !GameOverController(shape, game, shapeService);
+
                 if (game.InPlay)
                 {
                     MoveShapeInPlay(shape, game, shapeService);
                 }
+
+                if (!game.InPlay)
+                {
+                    var message = "Game over";
+                    MessageBox.Show(message);
+                }
+
+
+
             }
+
+        }
+
+        private bool GameOverController(Shape shape, Game game, ShapeService shapeService)
+        {
+            var heappos = new List<string>();
+
+            foreach (var block in game.GameGrid.Squares)
+            {
+                heappos.Add(block.Id);
+            }
+
+            var gameOverPos = new List<string>();
+
+            gameOverPos.Add("3x1");
+            gameOverPos.Add("4x1");
+            gameOverPos.Add("5x1");
+            gameOverPos.Add("6x1");
+
+            var result = heappos.Intersect(gameOverPos);
+
+
+            if (result.Count() != 0)
+                return true;
+
+            return false;
 
         }
 

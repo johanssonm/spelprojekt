@@ -23,7 +23,7 @@ namespace Spelprojekt.Services
 
         public void DropShape(Shape shape, Game game, ShapeService _shapeService, GameService _gameService)
         {
-            if (shape.IsInPlay)
+            if (shape.IsInPlay && game.InPlay)
             {
                 while (ShapeInPlayState.IsInPlay)
                 {
@@ -81,7 +81,8 @@ namespace Spelprojekt.Services
         public void MoveShapeRight(Shape shape, Game game, GameService gameService, ShapeService shapeService)
         {
             if (shape.IsInPlay && !gameService.CollisionRightSide(shape, shapeService) &&
-                !shapeService.CheckForBlockRightMovementCollisions(shape, game))
+                !shapeService.CheckForBlockRightMovementCollisions(shape, game)
+                && game.InPlay)
 
                 shape.GameGridXPosition++;
         }
@@ -89,7 +90,8 @@ namespace Spelprojekt.Services
         public void MoveShapeLeft(Shape shape, Game game, ShapeService shapeService,GameService gameService)
         {
             if (shape.IsInPlay && !gameService.CollisionLeftSide(shape, shapeService) &&
-                !shapeService.CheckForBlockLeftMovementCollisions(shape, game))
+                !shapeService.CheckForBlockLeftMovementCollisions(shape, game)
+                && game.InPlay)
 
                 shape.GameGridXPosition--;
         }
