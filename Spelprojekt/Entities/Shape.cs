@@ -5,7 +5,7 @@ namespace Spelprojekt
 
     public abstract class Shape
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public bool IsInPlay { get; set; }
 
         public bool CanBeRotated { get; set; }

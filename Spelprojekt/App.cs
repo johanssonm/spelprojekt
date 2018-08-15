@@ -32,7 +32,7 @@ namespace Spelprojekt
 
                 int r = rnd.Next((_game.Shapes.Count));
 
-                _shapeService.ShapeInPlayState = _game.Shapes[r];
+                _shapeService.ShapeInPlayState = _game.Shapes.First();
 
                 _shapeService.ShapeInPlayState.IsInPlay = true;
 
@@ -43,27 +43,56 @@ namespace Spelprojekt
         protected override void UpdateGame()
         {
 
-            _shape.IsInPlay = !_shapeService.CheckForBlockCollisions(_shape, _game);
-
-            if (_game.InPlay && !_shape.IsInPlay)
+            if (_game.ShapesPlayed < _game.Shapes.Count())
             {
-                _shapeService.AddShapeToHeap(_shape, _game);
 
-                _shapeService.ShapeInPlayState = _game.Shapes.FirstOrDefault();
-                _shapeService.ShapeInPlayState.GameGridYPosition = -1;
-                _shapeService.ShapeInPlayState.GameGridXPosition = 4;
-                _shapeService.ShapeInPlayState.IsInPlay = true;
+                _shape.IsInPlay = !_shapeService.CheckForBlockCollisions(_shape, _game);
 
+                if (_game.InPlay && !_shape.IsInPlay)
+                {
+                    _game.ShapesPlayed++;
+
+                    _shapeService.AddShapeToHeap(_shape, _game);
+
+                    _shapeService.ShapeInPlayState = _game.Shapes.FirstOrDefault();
+                    _shapeService.ShapeInPlayState.GameGridYPosition = -1;
+                    _shapeService.ShapeInPlayState.GameGridXPosition = 4;
+
+                    try
+                    {
+                        var newShape = _game.Shapes.FirstOrDefault(x => x.Id == _game.ShapesPlayed);
+
+
+                        _shapeService.ShapeInPlayState = newShape;
+
+                        _shapeService.ShapeInPlayState.IsInPlay = true;
+
+                    }
+
+                    catch (NullReferenceException e)
+                    {
+
+                    }
+
+
+                }
+
+
+
+
+                if (_shape.IsInPlay && !CollisionBottomLine(_shape))
+                    _shapeService.ShapeInPlayState.GameGridYPosition++;
+
+                if (CollisionBottomLine(_shape))
+                    _shapeService.ShapeInPlayState.IsInPlay = false;
 
             }
 
+            if (_game.ShapesPlayed < _game.Shapes.Count())
+            {
 
+            }
 
-            if (_shape.IsInPlay && !CollisionBottomLine(_shape))
-                _shapeService.ShapeInPlayState.GameGridYPosition++;
-
-            if (CollisionBottomLine(_shape))
-                _shapeService.ShapeInPlayState.IsInPlay = false;
 
 
         }
@@ -156,7 +185,7 @@ namespace Spelprojekt
             foreach (var block in _game.GameGrid.Squares)
             {
                var tmpblock = block.Id.Split('x');
-
+                 
                 render.Draw(Int32.Parse(tmpblock[0]),Int32.Parse(tmpblock[1]),block.ShapeColor);
 
 
@@ -179,13 +208,24 @@ namespace Spelprojekt
 
             if (_shape.IsInPlay)
             {
-                int bottomOfShape = _shapeService.FindBottomOfShape(_shape);
+                while (_shapeService.ShapeInPlayState.IsInPlay)
+                {
+                        _shapeService.ShapeInPlayState.GameGridYPosition++;
 
-                _shape.GameGridYPosition = 19 - bottomOfShape;
+                    if (_shapeService.CheckForBlockCollisions(_shape,_game))
+                    {
+                        _shape.IsInPlay = false;
+                    }
+
+                    if (CollisionBottomLine(_shape))
+                    {
+                        _shape.IsInPlay = false;
+                    }
+
+                }
 
                 _shapeService.AddShapeToHeap(_shape, _game);
-
-                _shape.IsInPlay = false;
+                _shapeService.ShapeInPlayState.IsInPlay = false;
 
             }
 

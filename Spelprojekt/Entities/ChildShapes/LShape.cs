@@ -5,7 +5,7 @@ namespace Spelprojekt
 {
     public class LShape : Shape
     {
-        public LShape() : base(ShapeColor.Yellow, true)
+        public LShape() : base(ShapeColor.Orange, true)
         {
             ShapeGrid = new bool[3, 3];
 
