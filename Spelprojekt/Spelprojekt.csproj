@@ -87,6 +87,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Shape.cs" />
+    <Compile Include="Services\RandomShape.cs" />
     <Compile Include="Services\UserInputServices.cs" />
     <Compile Include="Services\GameService.cs" />
     <Compile Include="Services\ShapeService.cs" />

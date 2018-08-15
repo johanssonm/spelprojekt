@@ -17,40 +17,28 @@ namespace Spelprojekt.Entities
         {
             InPlay = true;
 
-            var tmpShapes = new List<Shape>();
+            var tmpShapes = new List<Shape>
+            {
+                new IShape(),
+                new JShape(),
+                new LShape(),
+                new OShape(),
+                new SShape(),
+                new TShape(),
+                new ZShape()
+            };
 
-            var shape1 = new IShape();
-            shape1.Id = 1;
+            var shapes = tmpShapes.Shuffle().ToList();
 
-            var shape2 = new JShape();
-            shape2.Id = 2;
+            //int i = 0;
 
-            var shape3 = new LShape();
-            shape3.Id = 3;
+            //foreach (var shape in shapes)
+            //{
+            //    shape.Id = i;
+            //    i++;
+            //}
 
-            var shape4 = new OShape();
-            shape4.Id = 4;
-
-            var shape5 = new SShape();
-            shape5.Id = 5;
-
-            var shape6 = new TShape();
-            shape6.Id = 6;
-
-            var shape7 = new ZShape();
-            shape7.Id = 7;
-
-            tmpShapes.Add(shape1);
-            tmpShapes.Add(shape2);
-            tmpShapes.Add(shape3);
-            tmpShapes.Add(shape4);
-            tmpShapes.Add(shape5);
-            tmpShapes.Add(shape6);
-            tmpShapes.Add(shape7);
-
-            //var shapes = tmpShapes.OrderBy(a => Guid.NewGuid()).ToList();
-
-            Shapes = tmpShapes;
+            Shapes = shapes;
 
             ShapesPlayed = 0;
 

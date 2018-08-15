@@ -2,14 +2,99 @@
 using Spelprojekt.Entities;
 using System.Collections.Generic;
 using System.Linq;
+using TetrisUI;
 
 namespace Spelprojekt.Services
 {
     public class ShapeService
     {
-        public int ShapeInPlayX { get; set; }
-        public int ShapeInPlayY { get; set; }
         public Shape ShapeInPlayState { get; set; }
+
+        public void RotateShape()
+        {
+            var shape = ShapeInPlayState;
+
+            if (ShapeInPlayState.IsInPlay && ShapeInPlayState.CanBeRotated)
+            {
+                ShapeInPlayState.ShapeGrid =
+                    Rotate(ShapeInPlayState.ShapeGrid, shape.ShapeGrid.GetLength(0));
+            }
+        }
+
+        public void DropShape(Shape shape, Game game, ShapeService _shapeService, GameService _gameService)
+        {
+            if (shape.IsInPlay)
+            {
+                while (ShapeInPlayState.IsInPlay)
+                {
+                    ShapeInPlayState.GameGridYPosition++;
+
+                    if (CheckForBlockYAxisCollisions(shape, game))
+                    {
+                        shape.IsInPlay = false;
+                    }
+
+                    if (_gameService.CollisionBottomLine(shape, game, _shapeService))
+                    {
+                        shape.IsInPlay = false;
+                    }
+
+                }
+
+                AddShapeToHeap(shape, game);
+                ShapeInPlayState.IsInPlay = false;
+
+            }
+        }
+
+        public void RenderShapes(IRender render, Game game, Shape shape, ShapeService shapeService)
+        {
+            try
+            {
+                var shapeGridWidth = shape.ShapeGrid.GetLength(0);
+
+                for (int i = 0; i < shapeGridWidth; i++)
+                {
+                    for (int j = 0; j < shapeGridWidth; j++)
+                    {
+                        if (shape.ShapeGrid[i, j])
+                            render.Draw(i + shape.GameGridXPosition, j + shape.GameGridYPosition, shape.ShapeColor);
+                    }
+                }
+
+                foreach (var block in game.GameGrid.Squares)
+                {
+                    var tmpblock = block.Id.Split('x');
+
+                    render.Draw(Int32.Parse(tmpblock[0]), Int32.Parse(tmpblock[1]), block.ShapeColor);
+                }
+            }
+
+            catch (NullReferenceException)
+            {
+                game.InPlay = false;
+                shapeService.ShapeInPlayState = new TestShape();
+                shapeService.ShapeInPlayState.IsInPlay = false;
+            }
+        }
+
+        public void MoveShapeRight(Shape shape, Game game, GameService gameService, ShapeService shapeService)
+        {
+            if (shape.IsInPlay && !gameService.CollisionRightSide(shape, shapeService) &&
+                !shapeService.CheckForBlockRightMovementCollisions(shape, game))
+
+                shape.GameGridXPosition++;
+        }
+
+        public void MoveShapeLeft(Shape shape, Game game, ShapeService shapeService,GameService gameService)
+        {
+            if (shape.IsInPlay && !gameService.CollisionLeftSide(shape, shapeService) &&
+                !shapeService.CheckForBlockLeftMovementCollisions(shape, game))
+
+                shape.GameGridXPosition--;
+        }
+
+
 
         public bool[,] Rotate(bool[,] grid, int n)
         {
@@ -25,27 +110,6 @@ namespace Spelprojekt.Services
 
             return result;
         }
-
-        public List<string> CurrentGameGrid(GameGrid gameGrid)
-        {
-            var coordinates = new List<string>();
-
-            int n = gameGrid.GameGridArray.GetLength(0);
-
-            for (int i = 0; i < n; ++i)
-            {
-                for (int j = 0; j < n; ++j)
-                {
-                    if (gameGrid.GameGridArray[i, j])
-                    {
-                        coordinates.Add($"{i}x{j}");
-                    }
-                }
-            }
-
-            return coordinates;
-        }
-
 
         public List<string> CurrentLocationOfShapeInPlay(Shape shape)
         {
@@ -65,43 +129,6 @@ namespace Spelprojekt.Services
             return coordinates;
         }
 
-        public List<string> CurrentShapeDimensions(Shape shape)
-        {
-            var coordinates = new List<string>();
-
-            int n = shape.ShapeGrid.GetLength(0);
-
-            for (int i = 0; i < n; ++i)
-            {
-                for (int j = 0; j < n; ++j)
-                {
-                    if (shape.ShapeGrid[i, j])
-                        coordinates.Add($"{i}x{j}");
-                }
-            }
-
-            return coordinates;
-        }
-
-        public int FindBottomOfShape(Shape shape)
-        {
-            var shapeblocks = CurrentShapeDimensions(shape);
-
-            var yList = new List<int>();
-
-            foreach (var block in shapeblocks)
-            {
-                var tmpstring = block.Split('x');
-
-                yList.Add(Int32.Parse(tmpstring[1]));
-
-            }
-
-            int shapeBottom = yList.Max();
-
-            return shapeBottom;
-        }
-
         public void AddShapeToHeap(Shape shape, Game game)
         {
 
@@ -112,7 +139,6 @@ namespace Spelprojekt.Services
                 for (int j = 0; j < shapeGridWidth; j++)
                 {
                     if (shape.ShapeGrid[i, j])
-                       // game.GameGrid.GameGridArray[i + shape.GameGridXPosition, j + shape.GameGridYPosition] = true; TODO: Ta bort när den inte behövs
                         game.GameGrid.Squares.Add(new Block($"{i + shape.GameGridXPosition}x{j + shape.GameGridYPosition}", shape.ShapeColor));
                 }
 
@@ -121,7 +147,7 @@ namespace Spelprojekt.Services
 
         }
 
-        public bool CheckForBlockCollisions(Shape shape, Game game)
+        public bool CheckForBlockYAxisCollisions(Shape shape, Game game)
         {
 
             shape.GameGridYPosition++;
@@ -135,10 +161,10 @@ namespace Spelprojekt.Services
                 heappos.Add(block.Id);
             }
 
-            var result = heappos.Intersect(shapepos);
+            var yResult = heappos.Intersect(shapepos);
             shape.GameGridYPosition--;
 
-            if (result.Count() != 0)
+            if (yResult.Count() != 0)
             {
                 return true;
             }
@@ -146,6 +172,62 @@ namespace Spelprojekt.Services
             return false;
        
         }
+
+        public bool CheckForBlockRightMovementCollisions(Shape shape, Game game)
+        {
+
+            shape.GameGridXPosition++;
+
+            var shapepos = CurrentLocationOfShapeInPlay(shape);
+
+            var heappos = new List<string>();
+
+            foreach (var block in game.GameGrid.Squares)
+            {
+                heappos.Add(block.Id);
+            }
+
+            var yResult = heappos.Intersect(shapepos);
+
+            shape.GameGridXPosition--;
+
+            if (yResult.Count() != 0)
+            {
+                return true;
+            }
+
+            return false;
+
+        }
+
+        public bool CheckForBlockLeftMovementCollisions(Shape shape, Game game)
+        {
+
+            shape.GameGridXPosition--;
+
+            var shapepos = CurrentLocationOfShapeInPlay(shape);
+
+            var heappos = new List<string>();
+
+            foreach (var block in game.GameGrid.Squares)
+            {
+                heappos.Add(block.Id);
+            }
+
+            var yResult = heappos.Intersect(shapepos);
+
+            shape.GameGridXPosition++;
+
+            if (yResult.Count() != 0) 
+            {
+                return true;
+            }
+
+            return false;
+
+        }
+
+
     }
 }
 
