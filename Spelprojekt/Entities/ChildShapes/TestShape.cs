@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using TetrisUI;
+﻿using TetrisUI;
 
 namespace Spelprojekt
 {

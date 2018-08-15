@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace Spelprojekt.Entities
 {
@@ -28,11 +26,11 @@ namespace Spelprojekt.Entities
                 new ZShape()
             };
 
-            var shapes = tmpShapes.Shuffle().ToList();
+            var shapes = tmpShapes;
 
             //int i = 0;
 
-            //foreach (var shape in shapes)
+            //foreach (var shape in shapes) // TODO: Kan behövas för debug
             //{
             //    shape.Id = i;
             //    i++;

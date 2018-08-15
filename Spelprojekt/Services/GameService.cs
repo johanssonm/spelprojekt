@@ -9,16 +9,12 @@ namespace Spelprojekt.Services
     public class GameService
 
     {
-        public void OnGameUpdated(object source, EventArgs e)
+        public void OnGameUpdated(Shape shape, Game game, ShapeService shapeService)
         {
             //var message = "Gameservice";
             //MessageBox.Show(message);
 
-        }
-
-        public void Update(Shape shape, Game game, ShapeService shapeService)
-        {
-            if (game.ShapesPlayed < game.Shapes.Count() && game.InPlay)
+            if (game.InPlay) // game.ShapesPlayed < game.Shapes.Count()  TODO: Kan behövas för debug
             {
                 if (!shapeService.CheckForBlockYAxisCollisions(shape, game) &&
                     !CollisionBottomLine(shape, game, shapeService))
@@ -28,44 +24,57 @@ namespace Spelprojekt.Services
 
                 if (game.InPlay && !shape.IsInPlay)
                 {
-                    game.ShapesPlayed++;
-
-                    shapeService.AddShapeToHeap(shape, game);
-
-                    shapeService.ShapeInPlayState = game.Shapes.FirstOrDefault();
-                    shapeService.ShapeInPlayState.GameGridYPosition = -1;
-                    shapeService.ShapeInPlayState.GameGridXPosition = 4;
-
-                    try
-                    {
-                        var newShape = game.Shapes.FirstOrDefault(x => x.Id == game.ShapesPlayed);
-
-                        shapeService.ShapeInPlayState = newShape;
-
-                        shapeService.ShapeInPlayState.IsInPlay = true;
-                    }
-
-                    catch (NullReferenceException e)
-                    {
-                        var message = e.Message;
-                        MessageBox.Show(message);
-                    }
+                    SpawnNewShape(shape, game, shapeService);
                 }
 
                 if (game.InPlay)
                 {
-                    shapeService.ShapeInPlayState.GameGridYPosition++;
-
-                    if (shapeService.CheckForBlockYAxisCollisions(shape, game))
-                    {
-                        shape.IsInPlay = false;
-                    }
-
-                    if (CollisionBottomLine(shape, game, shapeService))
-                    {
-                        shape.IsInPlay = false;
-                    }
+                    MoveShapeInPlay(shape, game, shapeService);
                 }
+            }
+
+        }
+
+
+        private void MoveShapeInPlay(Shape shape, Game game, ShapeService shapeService)
+        {
+            shapeService.ShapeInPlayState.GameGridYPosition++;
+
+            if (shapeService.CheckForBlockYAxisCollisions(shape, game))
+            {
+                shape.IsInPlay = false;
+            }
+
+            if (CollisionBottomLine(shape, game, shapeService))
+            {
+                shape.IsInPlay = false;
+            }
+        }
+
+        private static void SpawnNewShape(Shape shape, Game game, ShapeService shapeService)
+        {
+            game.ShapesPlayed++;
+
+            shapeService.AddShapeToHeap(shape, game);
+
+            // shapeService.ShapeInPlayState = game.Shapes.FirstOrDefault();
+
+
+            try
+            {
+                var newShape = game.Shapes.PickRandom();
+
+                shapeService.ShapeInPlayState = newShape;
+
+                shapeService.ShapeInPlayState.GameGridYPosition = -1;
+                shapeService.ShapeInPlayState.GameGridXPosition = 4;
+                shapeService.ShapeInPlayState.IsInPlay = true;
+            }
+
+            catch (NullReferenceException e)
+            {
+                var message = e.Message;
+                MessageBox.Show(message);
             }
         }
 

@@ -1,8 +1,6 @@
 ﻿using Spelprojekt.Entities;
 using Spelprojekt.Services;
-using System;
 using System.Linq;
-using System.Windows.Forms;
 using TetrisUI;
 
 namespace Spelprojekt
@@ -40,7 +38,7 @@ namespace Spelprojekt
 
         protected override void UpdateGame()
         {
-            _gameService.Update(_shape, _game, _shapeService);
+            _gameService.OnGameUpdated(_shape, _game, _shapeService);
         }
 
         protected override void Render(IRender render)
