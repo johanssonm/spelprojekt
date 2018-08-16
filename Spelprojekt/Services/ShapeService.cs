@@ -66,9 +66,7 @@ namespace Spelprojekt.Services
 
                 foreach (var block in game.GameGrid.Squares)
                 {
-                    var tmpblock = block.Id.Split('x');
-
-                    render.Draw(Int32.Parse(tmpblock[0]), Int32.Parse(tmpblock[1]), block.ShapeColor);
+                    render.Draw(block.X, block.Y, block.ShapeColor);
                 }
             }
 
@@ -143,7 +141,7 @@ namespace Spelprojekt.Services
                 for (int j = 0; j < shapeGridWidth; j++)
                 {
                     if (shape.ShapeGrid[i, j])
-                        game.GameGrid.Squares.Add(new Block($"{i + shape.GameGridXPosition}x{j + shape.GameGridYPosition}", shape.ShapeColor));
+                        game.GameGrid.Squares.Add(new Block(i + shape.GameGridXPosition,j + shape.GameGridYPosition, shape.ShapeColor));
                 }
 
             }
@@ -162,7 +160,7 @@ namespace Spelprojekt.Services
 
             foreach (var block in game.GameGrid.Squares)
             {
-                heappos.Add(block.Id);
+                heappos.Add(block.Coordinates);
             }
 
             var yResult = heappos.Intersect(shapepos);
@@ -188,7 +186,7 @@ namespace Spelprojekt.Services
 
             foreach (var block in game.GameGrid.Squares)
             {
-                heappos.Add(block.Id);
+                heappos.Add(block.Coordinates);
             }
 
             var yResult = heappos.Intersect(shapepos);
@@ -215,7 +213,7 @@ namespace Spelprojekt.Services
 
             foreach (var block in game.GameGrid.Squares)
             {
-                heappos.Add(block.Id);
+                heappos.Add(block.Coordinates);
             }
 
             var yResult = heappos.Intersect(shapepos);

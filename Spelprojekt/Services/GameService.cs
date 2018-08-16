@@ -50,7 +50,7 @@ namespace Spelprojekt.Services
 
             foreach (var block in game.GameGrid.Squares)
             {
-                heappos.Add(block.Id);
+                heappos.Add(block.Coordinates);
             }
 
             var gameOverPos = new List<string>();
@@ -76,7 +76,7 @@ namespace Spelprojekt.Services
 
             foreach (var block in game.GameGrid.Squares)
             {
-                heappos.Add(block.Id);
+                heappos.Add(block.Coordinates);
             }
 
             int result = 0;

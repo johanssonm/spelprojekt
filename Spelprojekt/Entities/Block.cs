@@ -4,10 +4,12 @@ namespace Spelprojekt
 {
     public class Block
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public ShapeColor ShapeColor { get; set; }
-        private int X { get; set; }
-        private int Y { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+
+        public string Coordinates => X.ToString() + "x" + Y.ToString();
 
         public Block(int x, int y, ShapeColor shapecolor)
         {
