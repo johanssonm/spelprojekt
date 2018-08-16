@@ -28,14 +28,6 @@ namespace Spelprojekt.Entities
 
             var shapes = tmpShapes;
 
-            //int i = 0;
-
-            //foreach (var shape in shapes) // TODO: Kan behövas för debug
-            //{
-            //    shape.Id = i;
-            //    i++;
-            //}
-
             Shapes = shapes;
 
             ShapesPlayed = 0;

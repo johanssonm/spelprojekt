@@ -48,7 +48,7 @@ namespace Spelprojekt
 
         protected override void Rotate()
         {
-           _shapeService.RotateShape();
+           _shapeService.RotateShape(_shape, _game, _gameService, _shapeService);
         }
 
         protected override void Drop()

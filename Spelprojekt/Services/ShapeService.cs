@@ -10,11 +10,13 @@ namespace Spelprojekt.Services
     {
         public Shape ShapeInPlayState { get; set; }
 
-        public void RotateShape()
+        public void RotateShape(Shape shape, Game game, GameService gameService, ShapeService shapeService)
         {
-            var shape = ShapeInPlayState;
 
-            if (ShapeInPlayState.IsInPlay && ShapeInPlayState.CanBeRotated)
+            if (ShapeInPlayState.IsInPlay && ShapeInPlayState.CanBeRotated &&
+                !CheckForBlockLeftMovementCollisions(shape, game) &&
+                !CheckForBlockRightMovementCollisions(shape, game) &&
+                !CheckForBlockYAxisCollisions(shape, game))
             {
                 ShapeInPlayState.ShapeGrid =
                     Rotate(ShapeInPlayState.ShapeGrid, shape.ShapeGrid.GetLength(0));

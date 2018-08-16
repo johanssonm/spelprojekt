@@ -12,7 +12,7 @@ namespace Spelprojekt.Services
         public void OnGameUpdated(Shape shape, Game game, ShapeService shapeService)
         {
 
-            if (game.InPlay) // game.ShapesPlayed < game.Shapes.Count()  TODO: Kan behövas för debug
+            if (game.InPlay)
             {
                 if (!shapeService.CheckForBlockYAxisCollisions(shape, game) &&
                     !CollisionBottomLine(shape, game, shapeService))
@@ -64,6 +64,24 @@ namespace Spelprojekt.Services
 
 
             if (result.Count() != 0)
+                return true;
+
+            return false;
+
+        }
+
+        private bool CompleteLineController(Shape shape, Game game, ShapeService shapeService)
+        {
+            var heappos = new List<string>();
+
+            foreach (var block in game.GameGrid.Squares)
+            {
+                heappos.Add(block.Id);
+            }
+
+            int result = 0;
+
+            if (result != 0)
                 return true;
 
             return false;

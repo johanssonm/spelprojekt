@@ -83,12 +83,10 @@
     <Compile Include="Entities\ChildShapes\TestShape.cs" />
     <Compile Include="Entities\ChildShapes\TShape.cs" />
     <Compile Include="Entities\ChildShapes\ZShape.cs" />
-    <Compile Include="Services\IRotatable.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Shape.cs" />
     <Compile Include="Services\RandomShape.cs" />
-    <Compile Include="Services\UserInputServices.cs" />
     <Compile Include="Services\GameService.cs" />
     <Compile Include="Services\ShapeService.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
