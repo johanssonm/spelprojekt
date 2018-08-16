@@ -6,13 +6,10 @@ namespace Spelprojekt
     {
         public string Id { get; set; }
         public ShapeColor ShapeColor { get; set; }
-        private int X { get; set; }
-        private int Y { get; set; }
 
-        public Block(int x, int y, ShapeColor shapecolor)
+        public Block(string id, ShapeColor shapecolor)
         {
-            X = x;
-            Y = y;
+            Id = id;
             ShapeColor = shapecolor;
         }
     }
