@@ -12,6 +12,7 @@ namespace Spelprojekt
         private GameService _gameService;
 
         private Game _game;
+    
         private Shape _shape => _shapeService.ShapeInPlayState;
 
         public App() : base(1000)
@@ -32,6 +33,7 @@ namespace Spelprojekt
 
                 _shapeService.ShapeInPlayState.IsInPlay = true;
 
+
             }
 
         }
@@ -39,6 +41,7 @@ namespace Spelprojekt
         protected override void UpdateGame()
         {
             _gameService.OnGameUpdated(_shape, _game, _shapeService);
+
         }
 
         protected override void Render(IRender render)
@@ -49,6 +52,7 @@ namespace Spelprojekt
         protected override void Rotate()
         {
            _shapeService.RotateShape(_shape, _game, _gameService, _shapeService);
+            _gameService.CompleteLineController(_shape, _game, _shapeService);
         }
 
         protected override void Drop()

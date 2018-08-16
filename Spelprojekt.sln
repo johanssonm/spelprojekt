@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpelprojektTester", "SpelprojektTester\SpelprojektTester.csproj", "{7C1D0C97-08CB-499E-93F5-6777AA8150CB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spelprojekt.Data", "Spelprojekt.Data\Spelprojekt.Data.csproj", "{5FD988D2-D196-477B-95D5-6C783CA039BE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spelprojekt.Data", "Spelprojekt.Data\Spelprojekt.Data.csproj", "{C519EFE2-C316-4B02-A57E-3B7132BEDBE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,10 +28,10 @@ Global
 		{7C1D0C97-08CB-499E-93F5-6777AA8150CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C1D0C97-08CB-499E-93F5-6777AA8150CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C1D0C97-08CB-499E-93F5-6777AA8150CB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5FD988D2-D196-477B-95D5-6C783CA039BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5FD988D2-D196-477B-95D5-6C783CA039BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5FD988D2-D196-477B-95D5-6C783CA039BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5FD988D2-D196-477B-95D5-6C783CA039BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C519EFE2-C316-4B02-A57E-3B7132BEDBE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C519EFE2-C316-4B02-A57E-3B7132BEDBE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C519EFE2-C316-4B02-A57E-3B7132BEDBE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C519EFE2-C316-4B02-A57E-3B7132BEDBE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

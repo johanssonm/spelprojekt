@@ -25,7 +25,9 @@ namespace Spelprojekt.Services
                     SpawnNewShape(shape, game, shapeService);
                 }
 
+
                 game.InPlay = !GameOverController(shape, game, shapeService);
+
 
                 if (game.InPlay)
                 {
@@ -36,6 +38,8 @@ namespace Spelprojekt.Services
                 {
                     var message = "Game over";
                     MessageBox.Show(message);
+
+
                 }
 
 
@@ -70,19 +74,14 @@ namespace Spelprojekt.Services
 
         }
 
-        private bool CompleteLineController(Shape shape, Game game, ShapeService shapeService)
+        public bool CompleteLineController(Shape shape, Game game, ShapeService shapeService)
         {
-            var heappos = new List<string>();
 
-            foreach (var block in game.GameGrid.Squares)
-            {
-                heappos.Add(block.Coordinates);
-            }
+            var blocks = game.GameGrid.Squares.;
 
-            int result = 0;
-
-            if (result != 0)
-                return true;
+            var query = blocks.GroupBy(block => block)
+                .Select(group => new { Block = group.Key, Y = group.ToList()})
+                .ToList();
 
             return false;
 

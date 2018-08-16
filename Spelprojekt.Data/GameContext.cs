@@ -1,4 +1,4 @@
-﻿using System.Data.Entity;
+﻿using Microsoft.EntityFrameworkCore;
 using Spelprojekt.Entities;
 
 namespace Spelprojekt.Data
@@ -8,6 +8,12 @@ namespace Spelprojekt.Data
         public GameContext() : base()
         {
 
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(
+                "Server = (localdb)\\mssqllocaldb; Database = Spelprojekt; Trusted_Connection = True; ");
         }
 
         public DbSet<Player> Players { get; set; }
