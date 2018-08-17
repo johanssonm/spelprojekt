@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Spelprojekt.Data;
 
 namespace Spelprojekt.Migrations
 {
     [DbContext(typeof(GameContext))]
-    partial class GameContextModelSnapshot : ModelSnapshot
+    [Migration("20180817133527_12345")]
+    partial class _12345
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,30 +21,15 @@ namespace Spelprojekt.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Spelprojekt.Entities.Identity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Identity");
-                });
-
             modelBuilder.Entity("Spelprojekt.Entities.Player", b =>
                 {
                     b.Property<int>("PlayerId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("IdentityId");
+                    b.Property<string>("Name");
 
                     b.HasKey("PlayerId");
-
-                    b.HasIndex("IdentityId");
 
                     b.ToTable("Players");
                 });
@@ -62,13 +49,6 @@ namespace Spelprojekt.Migrations
                     b.HasIndex("PlayerId");
 
                     b.ToTable("Scores");
-                });
-
-            modelBuilder.Entity("Spelprojekt.Entities.Player", b =>
-                {
-                    b.HasOne("Spelprojekt.Entities.Identity", "Identity")
-                        .WithMany("Players")
-                        .HasForeignKey("IdentityId");
                 });
 
             modelBuilder.Entity("Spelprojekt.Entities.Score", b =>
