@@ -1,4 +1,5 @@
-﻿using Spelprojekt.Entities;
+﻿using System.Diagnostics;
+using Spelprojekt.Entities;
 using Spelprojekt.Services;
 using System.Linq;
 using TetrisUI;
@@ -41,6 +42,7 @@ namespace Spelprojekt
         protected override void UpdateGame()
         {
             _gameService.OnGameUpdated(_shape, _game, _shapeService);
+           _gameService.CheckForCompleteLineAndClearIfComplete(_game);
 
         }
 
@@ -52,7 +54,6 @@ namespace Spelprojekt
         protected override void Rotate()
         {
            _shapeService.RotateShape(_shape, _game, _gameService, _shapeService);
-            _gameService.CompleteLineController(_shape, _game, _shapeService);
         }
 
         protected override void Drop()

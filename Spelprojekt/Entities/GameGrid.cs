@@ -4,19 +4,22 @@ namespace Spelprojekt.Entities
 {
     public class GameGrid
     {
-        public int X  { get; set; }
-        public int Y  { get; set; }
+        public int Width  { get; set; }
+        public int Height  { get; set; }
+
+        public int FilledColumns { get; set; }
+        public int FilledRows { get; set; }
 
         public bool[,] GameGridArray { get; set; }
 
         public List<Block> Squares { get; set; }
 
-        public GameGrid(int x, int y)
+        public GameGrid(int width, int height)
         {
-            X = x;
-            Y = y;
+            Width = width;
+            Height = height;
 
-            bool[,] gameGridArray = new bool[x, y];
+            bool[,] gameGridArray = new bool[width, height];
             Squares = new List<Block>();
 
             GameGridArray = gameGridArray;

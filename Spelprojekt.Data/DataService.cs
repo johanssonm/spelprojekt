@@ -1,5 +1,4 @@
-﻿using Spelprojekt.Data;
-using Spelprojekt.Entities;
+﻿using Spelprojekt.Entities;
 
 namespace Spelprojekt.Data
 {
@@ -9,6 +8,7 @@ namespace Spelprojekt.Data
         {
             using (var context = new GameContext())
             {
+                context.Add(score);
 
             }
         }

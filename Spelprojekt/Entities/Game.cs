@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Dynamic;
 
 namespace Spelprojekt.Entities
 {
@@ -28,6 +29,10 @@ namespace Spelprojekt.Entities
                 new TShape(),
                 new ZShape()
             };
+
+            // var types = new ExpandoObject(); TODO: Fixa så alla shapes skapas vid runtime
+
+
 
             var shapes = tmpShapes;
 

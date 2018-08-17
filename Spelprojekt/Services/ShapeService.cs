@@ -8,6 +8,7 @@ namespace Spelprojekt.Services
 {
     public class ShapeService
     {
+        
         public Shape ShapeInPlayState { get; set; }
 
         public void RotateShape(Shape shape, Game game, GameService gameService, ShapeService shapeService)
@@ -142,9 +143,12 @@ namespace Spelprojekt.Services
                 {
                     if (shape.ShapeGrid[i, j])
                         game.GameGrid.Squares.Add(new Block(i + shape.GameGridXPosition,j + shape.GameGridYPosition, shape.ShapeColor));
+
+
                 }
 
             }
+
 
 
         }

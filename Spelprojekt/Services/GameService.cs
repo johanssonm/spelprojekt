@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using Spelprojekt.Data;
 
 namespace Spelprojekt.Services
 {
@@ -11,6 +13,7 @@ namespace Spelprojekt.Services
     {
         public void OnGameUpdated(Shape shape, Game game, ShapeService shapeService)
         {
+         
 
             if (game.InPlay)
             {
@@ -22,6 +25,9 @@ namespace Spelprojekt.Services
 
                 if (game.InPlay && !shape.IsInPlay)
                 {
+
+                    MoveHeapAfterCompletedLineIsRemoved(game);
+                    shapeService.AddShapeToHeap(shape, game);
                     SpawnNewShape(shape, game, shapeService);
                 }
 
@@ -39,6 +45,15 @@ namespace Spelprojekt.Services
                     var message = "Game over";
                     MessageBox.Show(message);
 
+                    var score = new Score();
+
+                    score.PlayerId = 555;
+                    score.ScoreAmount = game.ShapesPlayed;
+
+                    var dataservice = new DatabaseService();
+
+                    dataservice.SaveScore(score);
+
 
                 }
 
@@ -46,6 +61,68 @@ namespace Spelprojekt.Services
 
             }
 
+        }
+
+        private void MoveHeapAfterCompletedLineIsRemoved(Game game)
+        {
+
+        }
+
+        public void CheckForCompleteLineAndClearIfComplete(Game game)
+        {
+            
+            var query = game.GameGrid.Squares.GroupBy(x => x.Y)
+                .Select(group => new
+                {
+                    Row = group.Key,
+                    Count = group.Count()
+                })
+                .OrderBy(x => x.Row);
+
+            var result = query.Where(x => x.Count == 20);
+
+            foreach (var row in result)
+            {
+
+                ClearRow(row.Row, game);
+
+            }
+
+                try
+                {
+                    var rowstoshift = query.Where(x => x.Row < result.Min(r => r.Row));
+
+                        foreach (var rowtoshift in rowstoshift)
+                        {
+                            var blockstoshift = game.GameGrid.Squares.Where(x => x.Y == rowtoshift.Row);
+
+                            foreach (var blocktoshift in blockstoshift)
+                            {
+                                // if(blocktoshift.Y < rowtoshift.Row)
+                                game.GameGrid.Squares.Where(x => x.Y == blocktoshift.Y)
+                                    .Select(x =>
+                                    {
+                                        x.Y++;
+                                        return x;
+                                    }).ToList();
+                            }
+                        }
+
+                }
+                catch (Exception e)
+                {
+                   
+                }
+
+            
+
+
+
+        }
+
+        private void ClearRow(int row, Game game)
+        {
+                game.GameGrid.Squares.RemoveAll(x => x.Y == row);
         }
 
         private bool GameOverController(Shape shape, Game game, ShapeService shapeService)
@@ -74,16 +151,24 @@ namespace Spelprojekt.Services
 
         }
 
-        public bool CompleteLineController(Shape shape, Game game, ShapeService shapeService)
+        public int CountFilledColumns(Shape shape, Game game, ShapeService shapeService)
         {
 
-            var blocks = game.GameGrid.Squares.;
+            var blocks = game.GameGrid.GameGridArray;
 
-            var query = blocks.GroupBy(block => block)
-                .Select(group => new { Block = group.Key, Y = group.ToList()})
-                .ToList();
+            int result = 0;
 
-            return false;
+            int n = game.GameGrid.GameGridArray.GetLength(0) - 1;
+
+            for (int i = 0; i < n; ++i)
+            {
+                if (game.GameGrid.GameGridArray[i,n])
+                    result++;
+            }
+
+            return result;
+
+
 
         }
 
@@ -107,9 +192,9 @@ namespace Spelprojekt.Services
         {
             game.ShapesPlayed++;
 
-            shapeService.AddShapeToHeap(shape, game);
+            var log = new Filelogger();
 
-            // shapeService.ShapeInPlayState = game.Shapes.FirstOrDefault();
+            log.LogShape(shape);
 
 
             try
@@ -147,7 +232,7 @@ namespace Spelprojekt.Services
 
             int bottomMargin = yList.Max();
 
-            if (bottomMargin == game.GameGrid.Y - 1)
+            if (bottomMargin == game.GameGrid.Height - 1)
                 return true;
 
             return false;

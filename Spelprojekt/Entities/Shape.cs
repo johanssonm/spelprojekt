@@ -1,4 +1,5 @@
-﻿using TetrisUI;
+﻿using System.ComponentModel;
+using TetrisUI;
 
 namespace Spelprojekt
 {
@@ -7,7 +8,7 @@ namespace Spelprojekt
     {
         public int Id { get; set; }
         public bool IsInPlay { get; set; }
-
+        public string Name { get; set; }
         public bool CanBeRotated { get; set; }
         public bool[,] ShapeGrid { get; set; }
 
@@ -18,7 +19,7 @@ namespace Spelprojekt
 
         protected Shape(ShapeColor shapecolor, bool canBeRotated)
         {
-
+            
             ShapeColor = shapecolor;
             CanBeRotated = canBeRotated;
             GameGridXPosition = 4;
