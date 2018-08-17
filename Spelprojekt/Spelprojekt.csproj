@@ -154,24 +154,6 @@
     <Compile Include="App.Designer.cs">
       <DependentUpon>App.cs</DependentUpon>
     </Compile>
-    <Compile Include="Entities\Identity.cs" />
-    <Compile Include="Entities\PlayerScore.cs" />
-    <Compile Include="Migrations\20180817131238_playerscoreplayerscores.cs" />
-    <Compile Include="Migrations\20180817131238_playerscoreplayerscores.designer.cs">
-      <DependentUpon>20180817131238_playerscoreplayerscores.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20180817131533_playerscoreplayerscores2.cs" />
-    <Compile Include="Migrations\20180817131533_playerscoreplayerscores2.designer.cs">
-      <DependentUpon>20180817131533_playerscoreplayerscores2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20180817133527_12345.cs" />
-    <Compile Include="Migrations\20180817133527_12345.designer.cs">
-      <DependentUpon>20180817133527_12345.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20180817133917_123456.cs" />
-    <Compile Include="Migrations\20180817133917_123456.designer.cs">
-      <DependentUpon>20180817133917_123456.cs</DependentUpon>
-    </Compile>
     <Compile Include="Services\Filelogger.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Entities\Row.cs" />

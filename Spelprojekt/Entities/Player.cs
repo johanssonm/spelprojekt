@@ -1,13 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace Spelprojekt.Entities
+﻿namespace Spelprojekt.Entities
 {
     public class Player
     {
-        public int PlayerId { get; set; }
-        public Identity Identity { get; set; }
-
-        public List<Score> Scores { get; set; }
-
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

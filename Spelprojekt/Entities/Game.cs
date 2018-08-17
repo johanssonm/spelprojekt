@@ -32,7 +32,7 @@ namespace Spelprojekt.Entities
 
             // var types = new ExpandoObject(); TODO: Fixa så alla shapes skapas vid runtime
 
-            GameSpeed = 1000;
+
 
             var shapes = tmpShapes;
 
