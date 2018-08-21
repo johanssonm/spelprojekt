@@ -49,8 +49,8 @@ namespace Spelprojekt.Services
 
                     MessageBox.Show(message);
 
-                    game.Score.PlayerId = Int32.Parse(App.Prompt.ShowDialog("Enter your name","Testing"));
-
+                    game.Score.PlayerName = App.Prompt.ShowDialog("Enter your name","Testing");
+          
 
                     dataservice.SaveScore(game.Score);
 

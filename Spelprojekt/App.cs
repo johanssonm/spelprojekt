@@ -23,15 +23,15 @@ namespace Spelprojekt
         private ScoreService _scoreService;
 
         private Game _game;
-    
+
         private Shape _shape => _shapeService.ShapeInPlayState;
 
         private Button button1;
         private Button button2;
+        private Button button3;
 
         private Label highscore;
 
-        private EventHandler button1_Clicks;
         void button1_Click(object sender, EventArgs e)
         {
             StartNewGame();
@@ -42,18 +42,20 @@ namespace Spelprojekt
             button2.Hide();
             button2.Enabled = false;
 
+            button3.Hide();
+            button3.Enabled = false;
+
             highscore.Visible = false;
-
-
-         
         }
 
         void button2_Click(object sender, EventArgs e)
         {
-
             button2.Hide();
             button2.Enabled = false;
 
+            button3.Hide();
+            button3.Enabled = false;
+            
             var sb = new StringBuilder();
 
             sb.AppendLine("High scores");
@@ -72,13 +74,11 @@ namespace Spelprojekt
             var highscorelist = scores.OrderByDescending(x => x.ScoreAmount);
 
 
-
-
             int i = 1;
 
             foreach (var score in highscorelist)
             {
-                sb.AppendLine($"#{i} {score.ScoreAmount.ToString()}");
+                sb.AppendLine($"#{i} {score.ScoreAmount.ToString()} {score.PlayerName}");
                 i++;
             }
 
@@ -86,14 +86,34 @@ namespace Spelprojekt
             highscore.Height = 200;
             highscore.Width = 150;
             highscore.Font = new Font("Arial", 14, FontStyle.Bold);
-
         }
 
+        void button3_Click(object sender, EventArgs e)
+        {
+            var scores = new List<Score>()
+            {
+                new Score() { PlayerName = "Kalle", ScoreAmount = 11 },
+                new Score() { PlayerName = "Anna", ScoreAmount = 22 },
+                new Score() { PlayerName = "Elisabeth", ScoreAmount = 33 },
+                new Score() { PlayerName = "Ragnar", ScoreAmount = 44 },
+                new Score() { PlayerName = "Gunhild", ScoreAmount = 55 }
+
+            };
+
+            using (var context = new GameContext())
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+                context.Scores.AddRange(scores);
+                context.SaveChanges();
+            }
+
+                MessageBox.Show("Databasen seedades");
+        }
 
 
         public App() : base(1000)
         {
-
             button1 = new Button();
             button1.Location = new Point(25, 40);
             button1.AutoSize = true;
@@ -104,17 +124,24 @@ namespace Spelprojekt
             button2.AutoSize = true;
             button2.Text = "High Score";
 
+            button3 = new Button();
+            button3.Location = new Point(25, 140);
+            button3.AutoSize = true;
+            button3.Text = "Seed Database";
+
+
             highscore = new Label();
             highscore.Location = new Point(25, 90);
             highscore.BackColor = Color.White;
 
             this.Controls.Add(button1);
             this.Controls.Add(button2);
+            this.Controls.Add(button3);
             this.Controls.Add(highscore);
 
             button1.Click += button1_Click;
             button2.Click += button2_Click;
-
+            button3.Click += button3_Click;
         }
 
         private void StartNewGame()
@@ -129,19 +156,18 @@ namespace Spelprojekt
 
             _scoreService = new ScoreService();
 
+            _game.Player = new Player();
+
             _game.Score = new Score();
 
             _shapeService.ShapeInPlayState = _game.Shapes.First();
 
             _shapeService.ShapeInPlayState.IsInPlay = true;
-
         }
 
         protected override void UpdateGame()
         {
             _gameService?.OnGameUpdated(_shape, _game, _shapeService, _scoreService);
-
-
         }
 
         protected override void Render(IRender render)
@@ -156,20 +182,18 @@ namespace Spelprojekt
 
         protected override void Drop()
         {
-            _shapeService.DropShape(_shape,_game,_shapeService,_gameService);
-
+            _shapeService.DropShape(_shape, _game, _shapeService, _gameService);
         }
 
 
         protected override void MoveLeft()
         {
-             _shapeService.MoveShapeLeft(_shape, _game, _shapeService, _gameService);
+            _shapeService.MoveShapeLeft(_shape, _game, _shapeService, _gameService);
         }
 
         protected override void MoveRight()
         {
             _shapeService.MoveShapeRight(_shape, _game, _gameService, _shapeService);
         }
-
     }
 }

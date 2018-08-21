@@ -16,7 +16,7 @@ namespace Spelprojekt.Data
                 "Server = (localdb)\\mssqllocaldb; Database = Spelprojekt; Trusted_Connection = True; ");
         }
 
-        public DbSet<Player> Players { get; set; }
+        // public DbSet<Player> Players { get; set; }
         public DbSet<Score> Scores { get; set; }
 
     }
