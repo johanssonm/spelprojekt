@@ -42,7 +42,10 @@ namespace Spelprojekt
             button2.Hide();
             button2.Enabled = false;
 
-            // Prompt.ShowDialog("Enter your name", "123");
+            highscore.Visible = false;
+
+
+         
         }
 
         void button2_Click(object sender, EventArgs e)
@@ -51,12 +54,9 @@ namespace Spelprojekt
             button2.Hide();
             button2.Enabled = false;
 
-            highscore = new Label();
-            highscore.Location = new Point(25,90);
-
             var sb = new StringBuilder();
 
-            sb.AppendLine("Highscores");
+            sb.AppendLine("High scores");
             sb.AppendLine("");
 
             List<Score> scores = new List<Score>();
@@ -69,9 +69,14 @@ namespace Spelprojekt
                 }
             }
 
+            var highscorelist = scores.OrderByDescending(x => x.ScoreAmount);
+
+
+
+
             int i = 1;
 
-            foreach (var score in scores)
+            foreach (var score in highscorelist)
             {
                 sb.AppendLine($"#{i} {score.ScoreAmount.ToString()}");
                 i++;
@@ -80,11 +85,7 @@ namespace Spelprojekt
             highscore.Text = sb.ToString();
             highscore.Height = 200;
             highscore.Width = 150;
-            highscore.BackColor = Color.White;
             highscore.Font = new Font("Arial", 14, FontStyle.Bold);
-
-
-            Controls.Add(highscore);
 
         }
 
@@ -92,9 +93,6 @@ namespace Spelprojekt
 
         public App() : base(1000)
         {
-
-
-            //Width += 100;
 
             button1 = new Button();
             button1.Location = new Point(25, 40);
@@ -104,10 +102,15 @@ namespace Spelprojekt
             button2 = new Button();
             button2.Location = new Point(25, 90);
             button2.AutoSize = true;
-            button2.Text = "High Scores";
+            button2.Text = "High Score";
+
+            highscore = new Label();
+            highscore.Location = new Point(25, 90);
+            highscore.BackColor = Color.White;
 
             this.Controls.Add(button1);
             this.Controls.Add(button2);
+            this.Controls.Add(highscore);
 
             button1.Click += button1_Click;
             button2.Click += button2_Click;

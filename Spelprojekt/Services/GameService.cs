@@ -24,8 +24,6 @@ namespace Spelprojekt.Services
 
                 if (game.InPlay && !shape.IsInPlay)
                 {
-
-                    MoveHeapAfterCompletedLineIsRemoved(game);
                     shapeService.AddShapeToHeap(shape, game);
                     SpawnNewShape(shape, game, shapeService);
                     game.InPlay = shapeService.CheckForBlockYAxisCollisions(shape, game);
@@ -68,8 +66,16 @@ namespace Spelprojekt.Services
 
         }
 
-        private void MoveHeapAfterCompletedLineIsRemoved(Game game)
+        private void MoveHeapAfterCompletedLineIsRemoved(int row, Game game)
         {
+            foreach (var block in game.GameGrid.Squares)
+            {
+                if (block.Y < row)
+                {
+                    block.Y++;
+                }
+            }
+
 
         }
 
@@ -91,33 +97,9 @@ namespace Spelprojekt.Services
 
                 ClearRow(row.Row, game);
 
+                MoveHeapAfterCompletedLineIsRemoved(row.Row, game);
+
             }
-
-                try
-                {
-                    var rowstoshift = query.Where(x => x.Row < result.Min(r => r.Row));
-
-                        foreach (var rowtoshift in rowstoshift)
-                        {
-                            var blockstoshift = game.GameGrid.Squares.Where(x => x.Y == rowtoshift.Row);
-
-                            foreach (var blocktoshift in blockstoshift)
-                            {
-                                // if(blocktoshift.Y < rowtoshift.Row)
-                                game.GameGrid.Squares.Where(x => x.Y == blocktoshift.Y)
-                                    .Select(x =>
-                                    {
-                                        x.Y++;
-                                        return x;
-                                    }).ToList();
-                            }
-                        }
-
-                }
-                catch (Exception e)
-                {
-                   
-                }
 
 
         }
