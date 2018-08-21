@@ -71,14 +71,14 @@ namespace Spelprojekt
                 }
             }
 
-            var highscorelist = scores.OrderByDescending(x => x.ScoreAmount);
+            var highscorelist = scores.OrderByDescending(x => x.Points);
 
 
             int i = 1;
 
             foreach (var score in highscorelist)
             {
-                sb.AppendLine($"#{i} {score.ScoreAmount.ToString()} {score.PlayerName}");
+                sb.AppendLine($"#{i} {score.Points.ToString()}");
                 i++;
             }
 
@@ -90,21 +90,17 @@ namespace Spelprojekt
 
         void button3_Click(object sender, EventArgs e)
         {
-            var scores = new List<Score>()
-            {
-                new Score() { PlayerName = "Kalle", ScoreAmount = 11 },
-                new Score() { PlayerName = "Anna", ScoreAmount = 22 },
-                new Score() { PlayerName = "Elisabeth", ScoreAmount = 33 },
-                new Score() { PlayerName = "Ragnar", ScoreAmount = 44 },
-                new Score() { PlayerName = "Gunhild", ScoreAmount = 55 }
+            var player = new Player();
 
-            };
+            player.Identity.Name = "Kurt";
+           
+
 
             using (var context = new GameContext())
             {
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
-                context.Scores.AddRange(scores);
+                context.Players.Add(player);
                 context.SaveChanges();
             }
 
@@ -118,6 +114,7 @@ namespace Spelprojekt
             button1.Location = new Point(25, 40);
             button1.AutoSize = true;
             button1.Text = "New Game";
+           
 
             button2 = new Button();
             button2.Location = new Point(25, 90);
@@ -157,6 +154,8 @@ namespace Spelprojekt
             _scoreService = new ScoreService();
 
             _game.Player = new Player();
+
+            _game.Player.Identity = new Identity();
 
             _game.Score = new Score();
 

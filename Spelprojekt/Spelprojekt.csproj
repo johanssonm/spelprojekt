@@ -154,6 +154,13 @@
     <Compile Include="App.Designer.cs">
       <DependentUpon>App.cs</DependentUpon>
     </Compile>
+    <Compile Include="Entities\Identity.cs" />
+    <Compile Include="Entities\PlayerScores.cs" />
+    <Compile Include="Migrations\20180821143811_init.cs" />
+    <Compile Include="Migrations\20180821143811_init.designer.cs">
+      <DependentUpon>20180821143811_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\GameContextModelSnapshot.cs" />
     <Compile Include="Prompt.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -174,11 +181,6 @@
     <Compile Include="Entities\ChildShapes\TShape.cs" />
     <Compile Include="Entities\ChildShapes\ZShape.cs" />
     <Compile Include="Data\GameContext.cs" />
-    <Compile Include="Migrations\20180816193345_initial.cs" />
-    <Compile Include="Migrations\20180816193345_initial.designer.cs">
-      <DependentUpon>20180816193345_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\GameContextModelSnapshot.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Shape.cs" />
@@ -215,6 +217,7 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

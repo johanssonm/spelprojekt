@@ -38,7 +38,7 @@ namespace Spelprojekt.Services
                 {
                     MoveShapeInPlay(shape, game, shapeService);
 
-                    game.Score.ScoreAmount += scoreService.LineMoved;
+                    game.Score.Points += scoreService.LineMoved;
                 }
 
                 if (!game.InPlay)
@@ -49,8 +49,7 @@ namespace Spelprojekt.Services
 
                     MessageBox.Show(message);
 
-                    game.Score.PlayerName = App.Prompt.ShowDialog("Enter your name","Testing");
-          
+                    game.Player.Identity.Name = App.Prompt.ShowDialog("Enter your name","Testing");
 
                     dataservice.SaveScore(game.Score);
 
