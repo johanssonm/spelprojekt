@@ -15,6 +15,9 @@ namespace Spelprojekt.Entities
 
         public GameGrid GameGrid { get; set; }
 
+        public Score Score { get; set; }
+        public Player Player { get; set; }
+
         public Game()
         {
             InPlay = true;

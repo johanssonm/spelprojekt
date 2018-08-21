@@ -10,7 +10,7 @@ namespace Spelprojekt.Services
     public class GameService
 
     {
-        public void OnGameUpdated(Shape shape, Game game, ShapeService shapeService)
+        public void OnGameUpdated(Shape shape, Game game, ShapeService shapeService, ScoreService scoreService)
         {
          
 
@@ -39,24 +39,28 @@ namespace Spelprojekt.Services
                 if (game.InPlay)
                 {
                     MoveShapeInPlay(shape, game, shapeService);
+
+                    game.Score.ScoreAmount += scoreService.LineMoved;
                 }
 
                 if (!game.InPlay)
                 {
-                    var message = "Game over";
-                    MessageBox.Show(message);
-
-                    var score = new Score();
-
-                    score.PlayerId = 555;
-                    score.ScoreAmount = game.ShapesPlayed;
-
                     var dataservice = new DatabaseService();
 
-                    dataservice.SaveScore(score);
+                    var message = "Game over";
+
+                    MessageBox.Show(message);
+
+                    game.Score.PlayerId = Int32.Parse(App.Prompt.ShowDialog("Enter your name","Testing"));
+
+
+                    dataservice.SaveScore(game.Score);
 
 
                 }
+
+
+                CheckForCompleteLineAndClearIfComplete(game, scoreService);
 
 
 
@@ -69,7 +73,7 @@ namespace Spelprojekt.Services
 
         }
 
-        public void CheckForCompleteLineAndClearIfComplete(Game game)
+        public void CheckForCompleteLineAndClearIfComplete(Game game, ScoreService scoreService)
         {
             
             var query = game.GameGrid.Squares.GroupBy(x => x.Y)
@@ -114,9 +118,6 @@ namespace Spelprojekt.Services
                 {
                    
                 }
-
-            
-
 
 
         }
