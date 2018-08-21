@@ -1,10 +1,9 @@
-﻿using Spelprojekt.Entities;
+﻿using Spelprojekt.Data;
+using Spelprojekt.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows.Forms;
-using Spelprojekt.Data;
 
 namespace Spelprojekt.Services
 {
@@ -29,6 +28,8 @@ namespace Spelprojekt.Services
                     MoveHeapAfterCompletedLineIsRemoved(game);
                     shapeService.AddShapeToHeap(shape, game);
                     SpawnNewShape(shape, game, shapeService);
+                    game.InPlay = shapeService.CheckForBlockYAxisCollisions(shape, game);
+
                 }
 
 

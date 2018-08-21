@@ -205,3 +205,15 @@ Spelprojekt.IShape, Cyan
 Spelprojekt.TShape, Purple
 Spelprojekt.TShape, Purple
 Spelprojekt.TShape, Purple
+Spelprojekt.IShape, Cyan
+Spelprojekt.TShape, Purple
+Spelprojekt.OShape, Yellow
+Spelprojekt.JShape, Blue
+Spelprojekt.IShape, Cyan
+Spelprojekt.SShape, Green
+Spelprojekt.OShape, Yellow
+Spelprojekt.OShape, Yellow
+Spelprojekt.JShape, Blue
+Spelprojekt.JShape, Blue
+Spelprojekt.LShape, Orange
+Spelprojekt.OShape, Yellow
