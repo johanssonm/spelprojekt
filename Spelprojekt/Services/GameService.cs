@@ -49,7 +49,7 @@ namespace Spelprojekt.Services
 
                     MessageBox.Show(message);
 
-                    game.Score.PlayerId = Int32.Parse(App.Prompt.ShowDialog("Enter your name","Testing"));
+                    game.Player.Name = App.Prompt.ShowDialog("Enter your name","Testing");
 
 
                     dataservice.SaveScore(game.Score);
@@ -118,12 +118,14 @@ namespace Spelprojekt.Services
                 heappos.Add(block.Coordinates);
             }
 
-            var gameOverPos = new List<string>();
+            var gameOverPos = new List<string>()
+            {
+                "3x1",
+                "4x1",
+                "5x1",
+                "6x1"
+            };
 
-            gameOverPos.Add("3x1");
-            gameOverPos.Add("4x1");
-            gameOverPos.Add("5x1");
-            gameOverPos.Add("6x1");
 
             var result = heappos.Intersect(gameOverPos);
 
@@ -135,26 +137,7 @@ namespace Spelprojekt.Services
 
         }
 
-        public int CountFilledColumns(Shape shape, Game game, ShapeService shapeService)
-        {
 
-            var blocks = game.GameGrid.GameGridArray;
-
-            int result = 0;
-
-            int n = game.GameGrid.GameGridArray.GetLength(0) - 1;
-
-            for (int i = 0; i < n; ++i)
-            {
-                if (game.GameGrid.GameGridArray[i,n])
-                    result++;
-            }
-
-            return result;
-
-
-
-        }
 
 
         private void MoveShapeInPlay(Shape shape, Game game, ShapeService shapeService)
@@ -188,7 +171,7 @@ namespace Spelprojekt.Services
                 shapeService.ShapeInPlayState = newShape;
 
                 shapeService.ShapeInPlayState.GameGridYPosition = -1;
-                shapeService.ShapeInPlayState.GameGridXPosition = 4;
+                shapeService.ShapeInPlayState.GameGridXPosition = 3;
                 shapeService.ShapeInPlayState.IsInPlay = true;
             }
 

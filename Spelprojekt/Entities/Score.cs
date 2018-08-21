@@ -4,6 +4,5 @@
     {
         public int Id { get; set; }
         public int ScoreAmount { get; set; }
-        public int PlayerId { get; set; }
     }
 }
