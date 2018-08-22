@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Mime;
 using System.Text;
 using System.Windows.Forms;
+using Microsoft.EntityFrameworkCore;
 using TetrisUI;
 
 namespace Spelprojekt
@@ -66,7 +67,12 @@ namespace Spelprojekt
 
             using (_context)
             {
-                foreach (var contextScore in _context.Scores)
+                result.AddRange(_context.Players
+                    .Include(x => x.Identity)
+                    .Include(y => y.Scores)
+                    .ToList());
+
+               foreach (var contextScore in _context.Scores)
                 {
                     scores.Add(contextScore);
                 }
@@ -77,10 +83,15 @@ namespace Spelprojekt
 
             int i = 1;
 
-            foreach (var score in highscorelist)
+            //foreach (var score in highscorelist)
+            //{
+            //    sb.AppendLine($"#{i} {score.Points.ToString()}");
+            //    i++;
+            //}
+
+            foreach (var player in result)
             {
-                sb.AppendLine($"#{i} {score.Points.ToString()}");
-                i++;
+                sb.AppendLine(player.Identity.Name);
             }
 
             highscore.Text = sb.ToString();
