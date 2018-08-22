@@ -3,14 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2047
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spelprojekt", "Spelprojekt\Spelprojekt.csproj", "{0C8224A9-3327-44FE-8317-D155C547BC39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spelprojekt.WindowsFormApp", "Spelprojekt\Spelprojekt.WindowsFormApp.csproj", "{0C8224A9-3327-44FE-8317-D155C547BC39}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{416D61E0-1E3A-4978-AB97-519DB65A7FC6}"
 	ProjectSection(SolutionItems) = preProject
 		Dependencies\TetrisUI.dll = Dependencies\TetrisUI.dll
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpelprojektTester", "SpelprojektTester\SpelprojektTester.csproj", "{7C1D0C97-08CB-499E-93F5-6777AA8150CB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spelprojekt.Test", "SpelprojektTester\Spelprojekt.Test.csproj", "{7C1D0C97-08CB-499E-93F5-6777AA8150CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spelprojekt.Data", "Spelprojekt.Data\Spelprojekt.Data.csproj", "{BB0924CB-ACDB-4395-9757-98B00243FF8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spelprojekt.Infrastructure", "Spelprojekt.Infrastructure\Spelprojekt.Infrastructure.csproj", "{268D95D6-F33B-4E04-ABE0-F7FEF14C7F1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spelprojekt.Repository", "Spelprojekt.Repository\Spelprojekt.Repository.csproj", "{97C05A08-03FA-4D58-B22E-11028C6F84C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spelprojekt.Business", "Spelprojekt.Business\Spelprojekt.Business.csproj", "{FE8D17C6-430C-4FFB-848F-230381C03C1C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +34,22 @@ Global
 		{7C1D0C97-08CB-499E-93F5-6777AA8150CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C1D0C97-08CB-499E-93F5-6777AA8150CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C1D0C97-08CB-499E-93F5-6777AA8150CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB0924CB-ACDB-4395-9757-98B00243FF8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB0924CB-ACDB-4395-9757-98B00243FF8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB0924CB-ACDB-4395-9757-98B00243FF8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB0924CB-ACDB-4395-9757-98B00243FF8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{268D95D6-F33B-4E04-ABE0-F7FEF14C7F1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{268D95D6-F33B-4E04-ABE0-F7FEF14C7F1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{268D95D6-F33B-4E04-ABE0-F7FEF14C7F1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{268D95D6-F33B-4E04-ABE0-F7FEF14C7F1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97C05A08-03FA-4D58-B22E-11028C6F84C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97C05A08-03FA-4D58-B22E-11028C6F84C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97C05A08-03FA-4D58-B22E-11028C6F84C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97C05A08-03FA-4D58-B22E-11028C6F84C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE8D17C6-430C-4FFB-848F-230381C03C1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE8D17C6-430C-4FFB-848F-230381C03C1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE8D17C6-430C-4FFB-848F-230381C03C1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE8D17C6-430C-4FFB-848F-230381C03C1C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

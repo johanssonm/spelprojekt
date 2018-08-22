@@ -160,9 +160,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Spelprojekt\Spelprojekt.csproj">
+    <ProjectReference Include="..\Spelprojekt\Spelprojekt.WindowsFormApp.csproj">
       <Project>{0c8224a9-3327-44fe-8317-d155c547bc39}</Project>
-      <Name>Spelprojekt</Name>
+      <Name>Spelprojekt.WindowsFormApp</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

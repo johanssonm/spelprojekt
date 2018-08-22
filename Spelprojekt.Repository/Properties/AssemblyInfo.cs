@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Spelprojekt.Data")]
+[assembly: AssemblyTitle("Spelprojekt.Repository")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Spelprojekt.Data")]
+[assembly: AssemblyProduct("Spelprojekt.Repository")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("bb0924cb-acdb-4395-9757-98b00243ff8d")]
+[assembly: Guid("97c05a08-03fa-4d58-b22e-11028c6f84c1")]
 
 // Version information for an assembly consists of the following four values:
 //
