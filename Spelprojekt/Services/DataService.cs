@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Spelprojekt.Data;
+﻿using Spelprojekt.Data;
 using Spelprojekt.Entities;
 
 namespace Spelprojekt.Services

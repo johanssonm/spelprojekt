@@ -83,16 +83,16 @@ namespace Spelprojekt
 
             int i = 1;
 
-            //foreach (var score in highscorelist)
-            //{
-            //    sb.AppendLine($"#{i} {score.Points.ToString()}");
-            //    i++;
-            //}
-
-            foreach (var player in result)
+            foreach (var score in highscorelist)
             {
-                sb.AppendLine(player.Identity.Name);
+                sb.AppendLine($"#{i} {score.Points.ToString()}");
+                i++;
             }
+
+            //foreach (var player in result)
+            //{
+            //    sb.AppendLine(player.Identity.Name);
+            //}
 
             highscore.Text = sb.ToString();
             highscore.Height = 200;

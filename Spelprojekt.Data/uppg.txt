@@ -1,0 +1,39 @@
+Projekt
+# Business känner till infrastructure
+## Managers
+### PersonManager.cs
+
+### Contracts
+#### IPersonManager.cs
+
+# Infrastructure känner till repository 
+## DataModel
+### IPerson.cs
+##Repositories
+###IRepository.cs
+## Exceptions
+## Providers
+### Contracts
+#### IDateTimeProvider.cs
+
+
+# Repository (Typ efrepository)
+# Service pratar med business, känner till infrastructure + repository
+
+Gränssnitt känner till service och infrastructure
+# WPF
+# Console
+# MVC
+
+Ordning kanske
+Core
+
+Tests
+#BusinessTests
+##Managers
+###PersonManagerTests.cs
+####CreatePersonWillSaveToRepository
+
+FluentAssertions
+Moq
+StructureMap
