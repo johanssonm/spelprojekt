@@ -62,6 +62,7 @@ namespace Spelprojekt
             sb.AppendLine("");
 
             List<Score> scores = new List<Score>();
+            var result = new List<Player>();
 
             using (_context)
             {

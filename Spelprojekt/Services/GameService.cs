@@ -49,9 +49,12 @@ namespace Spelprojekt.Services
 
                     MessageBox.Show(message);
 
-                    game.Player.Identity.Name = App.Prompt.ShowDialog("Enter your name","Testing");
+                    var player = new Player();
 
-                    dataservice.SaveScore(game.Score);
+                    player.Identity.Name = App.Prompt.ShowDialog("Enter your name","Enter your name");
+                    player.Scores.Add(game.Score);
+
+                    dataservice.Save(player);
 
 
                 }

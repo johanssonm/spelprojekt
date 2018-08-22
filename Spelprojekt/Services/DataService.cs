@@ -6,11 +6,11 @@ namespace Spelprojekt.Services
 {
     public class DatabaseService
     {
-        public void SaveScore(Score score)
+        public void Save(Player player)
         {
             using (var context = new GameContext())
             {
-                context.Add(score);
+                context.Add(player);
                 context.SaveChanges();
             }
         }
