@@ -20,19 +20,6 @@ namespace Spelprojekt.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Scores",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Points = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Scores", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Identity",
                 columns: table => new
                 {
@@ -53,26 +40,21 @@ namespace Spelprojekt.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PlayerScores",
+                name: "Scores",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
-                    PlayerId = table.Column<int>(nullable: false),
-                    ScoreId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Points = table.Column<int>(nullable: false),
+                    PlayerId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PlayerScores", x => new { x.PlayerId, x.ScoreId });
+                    table.PrimaryKey("PK_Scores", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PlayerScores_Players_PlayerId",
+                        name: "FK_Scores_Players_PlayerId",
                         column: x => x.PlayerId,
                         principalTable: "Players",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PlayerScores_Scores_ScoreId",
-                        column: x => x.ScoreId,
-                        principalTable: "Scores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -84,9 +66,9 @@ namespace Spelprojekt.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_PlayerScores_ScoreId",
-                table: "PlayerScores",
-                column: "ScoreId");
+                name: "IX_Scores_PlayerId",
+                table: "Scores",
+                column: "PlayerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -95,13 +77,10 @@ namespace Spelprojekt.Migrations
                 name: "Identity");
 
             migrationBuilder.DropTable(
-                name: "PlayerScores");
+                name: "Scores");
 
             migrationBuilder.DropTable(
                 name: "Players");
-
-            migrationBuilder.DropTable(
-                name: "Scores");
         }
     }
 }

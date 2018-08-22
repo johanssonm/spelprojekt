@@ -448,3 +448,6 @@ Spelprojekt.ZShape, Red
 Spelprojekt.JShape, Blue
 Spelprojekt.JShape, Blue
 Spelprojekt.OShape, Yellow
+Spelprojekt.IShape, Cyan
+Spelprojekt.TShape, Purple
+Spelprojekt.JShape, Blue

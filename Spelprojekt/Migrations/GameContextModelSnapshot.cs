@@ -47,30 +47,19 @@ namespace Spelprojekt.Migrations
                     b.ToTable("Players");
                 });
 
-            modelBuilder.Entity("Spelprojekt.Entities.PlayerScore", b =>
-                {
-                    b.Property<int>("PlayerId");
-
-                    b.Property<int>("ScoreId");
-
-                    b.Property<int>("Id");
-
-                    b.HasKey("PlayerId", "ScoreId");
-
-                    b.HasIndex("ScoreId");
-
-                    b.ToTable("PlayerScores");
-                });
-
             modelBuilder.Entity("Spelprojekt.Entities.Score", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("PlayerId");
+
                     b.Property<int>("Points");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PlayerId");
 
                     b.ToTable("Scores");
                 });
@@ -83,16 +72,11 @@ namespace Spelprojekt.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Spelprojekt.Entities.PlayerScore", b =>
+            modelBuilder.Entity("Spelprojekt.Entities.Score", b =>
                 {
-                    b.HasOne("Spelprojekt.Entities.Player", "Player")
-                        .WithMany("PlayerScores")
+                    b.HasOne("Spelprojekt.Entities.Player", "Pleyer")
+                        .WithMany("Scores")
                         .HasForeignKey("PlayerId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Spelprojekt.Entities.Score", "Score")
-                        .WithMany("PlayerScore")
-                        .HasForeignKey("ScoreId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

@@ -90,17 +90,15 @@ namespace Spelprojekt
 
         void button3_Click(object sender, EventArgs e)
         {
-            var player = new Player();
-
-            player.Identity.Name = "Kurt";
-           
 
 
             using (var context = new GameContext())
             {
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
-                context.Players.Add(player);
+
+                context.Players.AddRange(TestPlayers.Players());
+
                 context.SaveChanges();
             }
 

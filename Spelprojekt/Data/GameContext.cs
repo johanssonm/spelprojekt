@@ -7,7 +7,7 @@ namespace Spelprojekt.Data
     {
         public DbSet<Player> Players { get; set; }
         public DbSet<Score> Scores { get; set; }
-        public DbSet<PlayerScore> PlayerScores { get; set; }
+        //public DbSet<PlayerScore> PlayerScores { get; set; }
 
 
         public GameContext() : base()
@@ -25,7 +25,7 @@ namespace Spelprojekt.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<PlayerScore>().HasKey(x => new { x.PlayerId, x.ScoreId });
+           // modelBuilder.Entity<PlayerScore>().HasKey(x => new { x.PlayerId, x.ScoreId });
 
         }
 

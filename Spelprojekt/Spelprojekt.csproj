@@ -155,10 +155,10 @@
       <DependentUpon>App.cs</DependentUpon>
     </Compile>
     <Compile Include="Entities\Identity.cs" />
-    <Compile Include="Entities\PlayerScores.cs" />
-    <Compile Include="Migrations\20180821143811_init.cs" />
-    <Compile Include="Migrations\20180821143811_init.designer.cs">
-      <DependentUpon>20180821143811_init.cs</DependentUpon>
+    <Compile Include="Entities\TestPlayers.cs" />
+    <Compile Include="Migrations\20180822064231_init.cs" />
+    <Compile Include="Migrations\20180822064231_init.designer.cs">
+      <DependentUpon>20180822064231_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\GameContextModelSnapshot.cs" />
     <Compile Include="Prompt.cs">
@@ -166,7 +166,6 @@
     </Compile>
     <Compile Include="Services\Filelogger.cs" />
     <Compile Include="Entities\Player.cs" />
-    <Compile Include="Entities\Row.cs" />
     <Compile Include="Entities\Score.cs" />
     <Compile Include="Entities\ShapeGrid.cs" />
     <Compile Include="Entities\Block.cs" />

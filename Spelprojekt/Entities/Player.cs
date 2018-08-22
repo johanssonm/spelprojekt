@@ -7,9 +7,14 @@ namespace Spelprojekt.Entities
         public int Id { get; set; }
 
         public Identity Identity { get; set; }
-        public List<PlayerScore> PlayerScores { get; set; }
 
+        public ICollection<Score> Scores { get; set; }
 
+        public Player()
+        {
+            Identity = new Identity();
+            Scores = new List<Score>();
+        }
     }
 
 }
