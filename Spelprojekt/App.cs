@@ -1,18 +1,20 @@
 ﻿using Spelprojekt.Business;
+using Spelprojekt.Entities;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Spelprojekt.Entities;
+using Spelprojekt.Business.Managers;
 using TetrisUI;
 
 namespace Spelprojekt
 {
     public partial class App : GameBoard
     {
-        private GameManager _gameManager;
+        private GameManager _gameManager => new GameManager();
+        private UserInputManager _userInputManager => new UserInputManager();
 
         private Game _game;
 
@@ -54,18 +56,18 @@ namespace Spelprojekt
             List<Score> scores = new List<Score>();
             var result = new List<Player>();
 
-            using (data)
-            {
-                result.AddRange(_context.Players
-                    .Include(x => x.Identity)
-                    .Include(y => y.Scores)
-                    .ToList());
+            //using (data)
+            //{
+            //    result.AddRange(_context.Players
+            //        .Include(x => x.Identity)
+            //        .Include(y => y.Scores)
+            //        .ToList()); // TODO: Flytta till repository
 
-               foreach (var contextScore in _context.Scores)
-                {
-                    scores.Add(contextScore);
-                }
-            }
+            //   foreach (var contextScore in _context.Scores)
+            //    {
+            //        scores.Add(contextScore);
+            //    }
+            //}
 
             var highscorelist = scores.OrderByDescending(x => x.Points);
 
@@ -142,28 +144,28 @@ namespace Spelprojekt
 
         protected override void Render(IRender render)
         {
-            _ShapeManager?.RenderShapes(render, _game, _shape, _ShapeManager);
+            RenderManager.RenderShapes(render, _game);
         }
 
         protected override void Rotate()
         {
-            _ShapeManager.RotateShape(_shape, _game, _GameManager, _ShapeManager);
+            _userInputManager.Rotate(_game);
         }
 
         protected override void Drop()
         {
-            _ShapeManager.DropShape(_shape, _game, _ShapeManager, _GameManager);
+            _userInputManager.Drop(_game);
         }
 
 
         protected override void MoveLeft()
         {
-            MoveShapeLeft(_shape, _game, _ShapeManager, _GameManager);
+            _userInputManager.MoveLeft(_game);
         }
 
         protected override void MoveRight()
         {
-            _ShapeManager.MoveShapeRight(_shape, _game, _GameManager, _ShapeManager);
+            _userInputManager.MoveRight(_game);
         }
     }
 }

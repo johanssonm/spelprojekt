@@ -1,4 +1,5 @@
-﻿using Spelprojekt.Business;
+﻿using System;
+using Spelprojekt.Business;
 using Spelprojekt.Entities;
 using System.Collections.Generic;
 using Spelprojekt.Business.Managers;
@@ -12,7 +13,7 @@ namespace Spelprojekt.Services
         
         public Shape ShapeInPlayState { get; set; }
 
-        public void RotateShape(Shape shape, Game game, GameManager GameManager, ShapeManager ShapeManager)
+        public void RotateShape(Game game)
         {
 
             if (ShapeInPlayState.IsInPlay && ShapeInPlayState.CanBeRotated &&
@@ -21,52 +22,78 @@ namespace Spelprojekt.Services
                 !BlockManager.CheckForBlockYAxisCollisions(game))
             {
                 ShapeInPlayState.ShapeGrid =
-                    RotateArray(ShapeInPlayState.ShapeGrid, shape.ShapeGrid.GetLength(0));
+                    RotateArray(ShapeInPlayState.ShapeGrid, game.ShapeInPlay.ShapeGrid.GetLength(0));
             }
         }
 
-        public void DropShape(Shape shape, Game game)
+        public void DropShape(Game game)
         {
-            if (shape.IsInPlay && game.InPlay)
+            try
             {
-                while (ShapeInPlayState.IsInPlay)
+                if (game.ShapeInPlay.IsInPlay && game.InPlay)
                 {
-                    ShapeInPlayState.GameGridYPosition++;
-
-                    if (BlockManager.CheckForBlockYAxisCollisions(game))
+                    while (ShapeInPlayState.IsInPlay)
                     {
-                        shape.IsInPlay = false;
+                        ShapeInPlayState.GameGridYPosition++;
+
+                        if (BlockManager.CheckForBlockYAxisCollisions(game))
+                        {
+                            game.ShapeInPlay.IsInPlay = false;
+                        }
+
+                        if (_gameManager.CollisionBottomLine(game))
+                        {
+                            game.ShapeInPlay.IsInPlay = false;
+                        }
+
                     }
 
-                    if (_gameManager.CollisionBottomLine(game))
-                    {
-                        shape.IsInPlay = false;
-                    }
-
+                    AddShapeToHeap(game);
+                    ShapeInPlayState.IsInPlay = false;
                 }
+            }
 
-                AddShapeToHeap(game);
-                ShapeInPlayState.IsInPlay = false;
+            catch (NullReferenceException e)
+            {
 
             }
+
+
         }
+        
 
         public void MoveShapeRight(Game game)
         {
-            if (game.ShapeInPlay.IsInPlay && game.InPlay &&
-                !_gameManager.CollisionRightSide(game) &&
-                !BlockManager.CheckForBlockRightMovementCollisions(game))
+            try
+            {
+                if (game.ShapeInPlay.IsInPlay && game.InPlay &&
+                    !_gameManager.CollisionRightSide(game) &&
+                    !BlockManager.CheckForBlockRightMovementCollisions(game))
 
-                game.ShapeInPlay.GameGridXPosition++;
+                    game.ShapeInPlay.GameGridXPosition++;
+            }
+            catch (NullReferenceException e)
+            {
+
+            }
+
         }
 
         public void MoveShapeLeft(Game game)
         {
-            if (game.ShapeInPlay.IsInPlay && !_gameManager.CollisionLeftSide(game) &&
-                !BlockManager.CheckForBlockLeftMovementCollisions(game)
-                && game.InPlay)
+            try
+            {
+                if (game.ShapeInPlay.IsInPlay && !_gameManager.CollisionLeftSide(game) &&
+                    !BlockManager.CheckForBlockLeftMovementCollisions(game)
+                    && game.InPlay)
 
-                ShapeInPlayState.GameGridXPosition--;
+                    ShapeInPlayState.GameGridXPosition--;
+            }
+            catch (NullReferenceException e)
+            {
+
+            }
+
         }
 
 
@@ -87,6 +114,7 @@ namespace Spelprojekt.Services
 
             return shape;
         }
+
         public bool[,] RotateArray(bool[,] grid, int n)
         {
             bool[,] result = new bool[n, n];

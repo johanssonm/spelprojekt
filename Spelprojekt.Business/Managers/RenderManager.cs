@@ -5,20 +5,20 @@ using TetrisUI;
 
 namespace Spelprojekt.Business.Managers
 {
-    class RenderManager
+    public class RenderManager
     {
-        public void RenderShapes(IRender render, Game game, Shape shape, ShapeManager ShapeManager)
+        public static void RenderShapes(IRender render, Game game)
         {
             try
             {
-                var shapeGridWidth = shape.ShapeGrid.GetLength(0);
+                var shapeGridWidth = game.ShapeInPlay.ShapeGrid.GetLength(0);
 
                 for (int i = 0; i < shapeGridWidth; i++)
                 {
                     for (int j = 0; j < shapeGridWidth; j++)
                     {
-                        if (shape.ShapeGrid[i, j])
-                            render.Draw(i + shape.GameGridXPosition, j + shape.GameGridYPosition, shape.ShapeColor);
+                        if (game.ShapeInPlay.ShapeGrid[i, j])
+                            render.Draw(i + game.ShapeInPlay.GameGridXPosition, j + game.ShapeInPlay.GameGridYPosition, game.ShapeInPlay.ShapeColor);
                     }
                 }
 
@@ -28,11 +28,9 @@ namespace Spelprojekt.Business.Managers
                 }
             }
 
-            catch (NullReferenceException)
+            catch (NullReferenceException e)
             {
-                game.InPlay = false;
-                ShapeManager.ShapeInPlayState = new TestShape();
-                ShapeManager.ShapeInPlayState.IsInPlay = false;
+                // TODO : Kanske kasta ett exception
             }
         }
 

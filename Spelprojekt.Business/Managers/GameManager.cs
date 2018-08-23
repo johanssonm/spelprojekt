@@ -18,78 +18,85 @@ namespace Spelprojekt.Business
         {
             var game = new Game();
 
-            Game.GameGrid = new GameGrid(10, 20);
+            game.GameGrid = new GameGrid(10, 20);
 
             _shapeManager = new ShapeManager();
 
             _scoreManager = new ScoreManager();
 
-            Game.Player = new Player();
+            game.Player = new Player();
 
-            Game.Player.Identity = new Identity();
+            game.Player.Identity = new Identity();
 
-            Game.Score = new Score();
+            game.Score = new Score();
 
-            Game.ShapeInPlay = Game.Shapes.First();
+            game.ShapeInPlay = game.Shapes.First();
 
-            Game.ShapeInPlay.IsInPlay = true;
+            game.ShapeInPlay.IsInPlay = true;
 
             return game;
         }
 
         public void OnGameUpdated(Game game)
         {
-         
 
-            if (game.InPlay)
+            try
             {
-                if (!BlockManager.CheckForBlockYAxisCollisions(game) &&
-                    !CollisionBottomLine(game))
-                {
-                    game.ShapeInPlay.IsInPlay = true;
-                }
-
-                if (game.InPlay && !game.ShapeInPlay.IsInPlay)
-                {
-                    _shapeManager.AddShapeToHeap(game);
-                    SpawnNewShape(game);
-                    game.InPlay = BlockManager.CheckForBlockYAxisCollisions(game);
-
-                }
-
-
-                game.InPlay = !GameOverController(game);
-
-
                 if (game.InPlay)
                 {
-                    MoveShapeInPlay(game);
+                    if (!BlockManager.CheckForBlockYAxisCollisions(game) &&
+                        !CollisionBottomLine(game))
+                    {
+                        game.ShapeInPlay.IsInPlay = true;
+                    }
 
-                    game.Score.Points += 10; // TODO: Flytta till ScoreManager
+                    if (game.InPlay && !game.ShapeInPlay.IsInPlay)
+                    {
+                        _shapeManager.AddShapeToHeap(game);
+                        SpawnNewShape(game);
+                        game.InPlay = BlockManager.CheckForBlockYAxisCollisions(game);
+
+                    }
+
+
+                    game.InPlay = !GameOverController(game);
+
+
+                    if (game.InPlay)
+                    {
+                        MoveShapeInPlay(game);
+
+                        game.Score.Points += 10; // TODO: Flytta till ScoreManager
+                    }
+
+                    if (!game.InPlay)
+                    {
+                        // var dataservice = new DatabaseService(); // TODO : Gör till event
+
+                        var message = "Game over";
+
+                        // MessageBox.Show(message); // TODO:Flytta till gui
+
+                        var player = new Player();
+
+                        //player.Identity.Name = App.Prompt.ShowDialog("Enter your name","Enter your name");
+                        // player.Scores.Add(game.Score);
+
+                        //  dataservice.Save(player);
+
+
+                    }
+
+
+                    CheckForCompleteLineAndClearIfComplete(game);
+
+
+
                 }
 
-                if (!game.InPlay)
-                {
-                   // var dataservice = new DatabaseService(); // TODO : Gör till event
-
-                    var message = "Game over";
-
-                   // MessageBox.Show(message); // TODO:Flytta till gui
-
-                    var player = new Player();
-
-                    //player.Identity.Name = App.Prompt.ShowDialog("Enter your name","Enter your name");
-                   // player.Scores.Add(game.Score);
-
-                  //  dataservice.Save(player);
-
-
-                }
-
-
-                CheckForCompleteLineAndClearIfComplete(game);
-
-
+            }
+            catch (NullReferenceException e)
+            {
 
             }
 

@@ -1,33 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TetrisUI;
+﻿using Spelprojekt.Entities;
+using Spelprojekt.Services;
 
 namespace Spelprojekt.Business.Managers
 {
+
     public class UserInputManager
     {
-        protected override void Rotate()
+        private ShapeManager _shapeManager => new ShapeManager();
+
+        public void Rotate(Game game)
         {
-            _ShapeManager.RotateShape(_shape, _game, _GameManager, _ShapeManager);
+            _shapeManager.RotateShape(game);
         }
 
-        protected override void Drop()
+        public void Drop(Game game)
         {
-            _ShapeManager.DropShape(_shape, _game, _ShapeManager, _GameManager);
+            _shapeManager.DropShape(game);
         }
 
 
-        protected override void MoveLeft()
+        public void MoveLeft(Game game)
         {
-            MoveShapeLeft(_shape, _game, _ShapeManager, _GameManager);
+            _shapeManager.MoveShapeLeft(game);
         }
 
-        protected override void MoveRight()
+        public void MoveRight(Game game)
         {
-            _ShapeManager.MoveShapeRight(_shape, _game, _GameManager, _ShapeManager);
+            _shapeManager.MoveShapeRight(game);
         }
     }
 }
