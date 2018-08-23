@@ -1,6 +1,7 @@
 ﻿using Spelprojekt.Business.Managers;
 using Spelprojekt.Entities;
 using System.Collections.Generic;
+using Spelprojekt.Infrastructure;
 using NullReferenceException = System.NullReferenceException;
 
 namespace Spelprojekt.Services
@@ -65,17 +66,17 @@ namespace Spelprojekt.Services
         }
         
 
-        public void MoveShapeRight(Game game)
+        public void MoveShapeRight(object source, EventHandlerService.GameEventArgs e)
         {
             try
             {
-                if (game.ShapeInPlay.IsInPlay && game.InPlay &&
-                    !_gameManager.CollisionRightSide(game) &&
-                    !BlockManager.CheckForBlockRightMovementCollisions(game))
+                if (e.Game.ShapeInPlay.IsInPlay && e.Game.InPlay &&
+                    !_gameManager.CollisionRightSide(e.Game) &&
+                    !BlockManager.CheckForBlockRightMovementCollisions(e.Game))
 
-                    game.ShapeInPlay.GameGridXPosition++;
+                    e.Game.ShapeInPlay.GameGridXPosition++;
             }
-            catch (NullReferenceException e)
+            catch (NullReferenceException ex)
             {
 
             }

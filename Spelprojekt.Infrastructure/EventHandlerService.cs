@@ -1,53 +1,59 @@
 ﻿using System;
+using Spelprojekt.Entities;
 
 namespace Spelprojekt.Infrastructure
 {
     public class EventHandlerService
     {
-
+        public class GameEventArgs : EventArgs
+        {
+            public Game Game { get; set; }
+        }
         
-        public event EventHandler<EventArgs> NewGameStarted;
-        public event EventHandler<EventArgs> ShapeRotated;
-        public event EventHandler<EventArgs> ShapeDropped;
-        public event EventHandler<EventArgs> ShapeMovedLeft;
-        public event EventHandler<EventArgs> ShapeMovedRight;
-        public event EventHandler<EventArgs> GameUpdated;
-        public event EventHandler<EventArgs> GameOver;
+        public event EventHandler<GameEventArgs> NewGameStarted;
+        public event EventHandler<GameEventArgs> ShapeRotated;
+        public event EventHandler<GameEventArgs> ShapeDropped;
+        public event EventHandler<GameEventArgs> ShapeMovedLeft;
+        public event EventHandler<GameEventArgs> ShapeMovedRight;
+        public event EventHandler<GameEventArgs> GameUpdated;
+        public event EventHandler<GameEventArgs> GameOver;
 
-        public virtual void OnShapeRotated()
+        public virtual void OnGameUpdated(Game game)
         {
-            ShapeRotated?.Invoke(this, EventArgs.Empty);
+            GameUpdated?.Invoke(this, new GameEventArgs() { Game = game });
+
+
         }
 
-        public virtual void OnShapeDropped()
+
+        public virtual void OnShapeRotated(Game game)
         {
-            ShapeDropped?.Invoke(this, EventArgs.Empty);
+            ShapeRotated?.Invoke(this, new GameEventArgs() { Game = game } );
         }
 
-        public virtual void OnShapeMovedLeft()
+        public virtual void OnShapeDropped(Game game)
         {
-            ShapeMovedLeft?.Invoke(this, EventArgs.Empty);
+            ShapeDropped?.Invoke(this, new GameEventArgs() { Game = game });
         }
 
-        public virtual void OnShapeMovedRight()
+        public virtual void OnShapeMovedLeft(Game game)
         {
-            ShapeMovedRight?.Invoke(this, EventArgs.Empty);
+            ShapeMovedLeft?.Invoke(this, new GameEventArgs() { Game = game });
         }
 
-        public virtual void OnGameUpdated()
+        public virtual void OnShapeMovedRight(Game game)
         {
-
-            GameUpdated?.Invoke(this, EventArgs.Empty);
+            ShapeMovedRight?.Invoke(this, new GameEventArgs() { Game = game });
         }
 
-        public virtual void OnGameOver()
+        public virtual void OnGameOver(Game game)
         {
-            GameOver?.Invoke(this, EventArgs.Empty);
+            GameOver?.Invoke(this, new GameEventArgs() { Game = game });
         }
 
         public virtual void OnNewGameStarted()
         {
-            NewGameStarted?.Invoke(this, EventArgs.Empty);
+            NewGameStarted?.Invoke(this, new GameEventArgs());
         }
     }
 }

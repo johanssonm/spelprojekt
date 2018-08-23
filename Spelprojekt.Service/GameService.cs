@@ -1,8 +1,6 @@
-﻿using System;
-using Spelprojekt.Business.Managers;
+﻿using Spelprojekt.Business.Managers;
 using Spelprojekt.Entities;
 using Spelprojekt.Infrastructure;
-using Spelprojekt.Services;
 using TetrisUI;
 
 namespace Spelprojekt.Service
@@ -11,6 +9,7 @@ namespace Spelprojekt.Service
     {
         private GameManager _gameManager => new GameManager();
         private EventHandlerService _eventHandler => new EventHandlerService();
+        private EventManager _EventManager => new EventManager();
 
         public Game StartNewGame()
         {
@@ -20,8 +19,8 @@ namespace Spelprojekt.Service
 
         public void OnGameUpdated(Game game)
         {
-            _gameManager.OnGameUpdated(game);
-            _eventHandler.OnGameUpdated();
+            _eventHandler.OnGameUpdated(game);
+            _eventHandler.GameUpdated += _EventManager.GameChangeEvents;
 
         }
 

@@ -11,24 +11,24 @@ namespace Spelprojekt.Business.Managers
 
         public void Rotate(Game game)
         {
-            _shapeManager.RotateShape(game);
+         //   _shapeManager.RotateShape(game);
 
         }
 
         public void Drop(Game game)
         {
-            _shapeManager.DropShape(game);
+         //   _shapeManager.DropShape(game);
         }
 
 
         public void MoveLeft(Game game)
         {
-            _shapeManager.MoveShapeLeft(game);
+           // _shapeManager.MoveShapeLeft(game);
         }
 
         public void MoveRight(Game game)
         {
-           _shapeManager.MoveShapeRight(game);
+          // _shapeManager.MoveShapeRight(game);
         }
     }
 }

@@ -3,7 +3,7 @@ using Spelprojekt.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Spelprojekt.Services;
+using Spelprojekt.Infrastructure;
 
 namespace Spelprojekt.Business.Managers
 {
@@ -33,40 +33,46 @@ namespace Spelprojekt.Business.Managers
 
             game.ShapeInPlay.IsInPlay = true;
 
+            var events = new EventHandlerService();
+
+            events.GameUpdated += OnGameUpdated;
+
             return game;
         }
 
-        public void OnGameUpdated(Game game)
+        
+
+        public void OnGameUpdated(object source,EventHandlerService.GameEventArgs e)
         {
 
             try
             {
-                if (game.InPlay)
+                if (e.Game.InPlay)
                 {
-                    if (!BlockManager.CheckForBlockYAxisCollisions(game) &&
-                        !CollisionBottomLine(game))
+                    if (!BlockManager.CheckForBlockYAxisCollisions(e.Game) &&
+                        !CollisionBottomLine(e.Game))
                     {
-                        game.ShapeInPlay.IsInPlay = true;
+                        e.Game.ShapeInPlay.IsInPlay = true;
                     }
 
-                    if (game.InPlay && !game.ShapeInPlay.IsInPlay)
+                    if (e.Game.InPlay && !e.Game.ShapeInPlay.IsInPlay)
                     {
-                        _shapeManager.AddShapeToHeap(game);
-                        SpawnNewShape(game);
-                        game.InPlay = BlockManager.CheckForBlockYAxisCollisions(game);
+                        _shapeManager.AddShapeToHeap(e.Game);
+                        SpawnNewShape(e.Game);
+                        e.Game.InPlay = BlockManager.CheckForBlockYAxisCollisions(e.Game);
 
                     }
 
-                    game.InPlay = !GameOverController(game);
+                    e.Game.InPlay = !GameOverController(e.Game);
                     
-                    if (game.InPlay)
+                    if (e.Game.InPlay)
                     {
-                        MoveShapeInPlay(game);
+                        MoveShapeInPlay(e.Game);
 
-                        game.Score.Points += 10; // TODO: Flytta till ScoreManager
+                        e.Game.Score.Points += 10; // TODO: Flytta till ScoreManager
                     }
 
-                    if (!game.InPlay)
+                    if (!e.Game.InPlay)
                     {
                         // var dataservice = new DatabaseService(); // TODO : Gör till event
 
@@ -85,14 +91,14 @@ namespace Spelprojekt.Business.Managers
                     }
 
 
-                    CheckForCompleteLineAndClearIfComplete(game);
+                    CheckForCompleteLineAndClearIfComplete(e.Game);
 
 
 
                 }
 
             }
-            catch (NullReferenceException e)
+            catch (NullReferenceException ex)
             {
 
             }
