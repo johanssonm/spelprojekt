@@ -1,31 +1,20 @@
-﻿using Spelprojekt.Data;
-using Spelprojekt.Entities;
-using Spelprojekt.Services;
+﻿using Spelprojekt.Business;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Net.Mime;
 using System.Text;
 using System.Windows.Forms;
-using Microsoft.EntityFrameworkCore;
+using Spelprojekt.Entities;
 using TetrisUI;
 
 namespace Spelprojekt
 {
     public partial class App : GameBoard
     {
-        private GameContext _context => new GameContext();
-
-        private ShapeService _shapeService;
-
-        private GameService _gameService;
-
-        private ScoreService _scoreService;
+        private GameManager _gameManager;
 
         private Game _game;
-
-        private Shape _shape => _shapeService.ShapeInPlayState;
 
         private Button button1;
         private Button button2;
@@ -35,7 +24,7 @@ namespace Spelprojekt
 
         void button1_Click(object sender, EventArgs e)
         {
-            StartNewGame();
+            _gameManager.StartNewGame();
 
             button1.Hide();
             button1.Enabled = false;
@@ -65,7 +54,7 @@ namespace Spelprojekt
             List<Score> scores = new List<Score>();
             var result = new List<Player>();
 
-            using (_context)
+            using (data)
             {
                 result.AddRange(_context.Players
                     .Include(x => x.Identity)
@@ -89,11 +78,6 @@ namespace Spelprojekt
                 i++;
             }
 
-            //foreach (var player in result)
-            //{
-            //    sb.AppendLine(player.Identity.Name);
-            //}
-
             highscore.Text = sb.ToString();
             highscore.Height = 200;
             highscore.Width = 150;
@@ -104,15 +88,15 @@ namespace Spelprojekt
         {
 
 
-            using (var context = new GameContext())
-            {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+            //using (var context = new GameContext())
+            //{
+            //    context.Database.EnsureDeleted(); // TODO: Flytta till repository
+            //    context.Database.EnsureCreated();
 
-                context.Players.AddRange(TestPlayers.Players());
+            //    context.Players.AddRange(TestPlayers.Players());
 
-                context.SaveChanges();
-            }
+            //    context.SaveChanges();
+            //}
 
                 MessageBox.Show("Databasen seedades");
         }
@@ -151,58 +135,35 @@ namespace Spelprojekt
             button3.Click += button3_Click;
         }
 
-        private void StartNewGame()
-        {
-            _game = new Game();
-
-            _game.GameGrid = new GameGrid(10, 20);
-
-            _shapeService = new ShapeService();
-
-            _gameService = new GameService();
-
-            _scoreService = new ScoreService();
-
-            _game.Player = new Player();
-
-            _game.Player.Identity = new Identity();
-
-            _game.Score = new Score();
-
-            _shapeService.ShapeInPlayState = _game.Shapes.First();
-
-            _shapeService.ShapeInPlayState.IsInPlay = true;
-        }
-
         protected override void UpdateGame()
         {
-            _gameService?.OnGameUpdated(_shape, _game, _shapeService, _scoreService);
+            _gameManager.OnGameUpdated(_game);
         }
 
         protected override void Render(IRender render)
         {
-            _shapeService?.RenderShapes(render, _game, _shape, _shapeService);
+            _ShapeManager?.RenderShapes(render, _game, _shape, _ShapeManager);
         }
 
         protected override void Rotate()
         {
-            _shapeService.RotateShape(_shape, _game, _gameService, _shapeService);
+            _ShapeManager.RotateShape(_shape, _game, _GameManager, _ShapeManager);
         }
 
         protected override void Drop()
         {
-            _shapeService.DropShape(_shape, _game, _shapeService, _gameService);
+            _ShapeManager.DropShape(_shape, _game, _ShapeManager, _GameManager);
         }
 
 
         protected override void MoveLeft()
         {
-            _shapeService.MoveShapeLeft(_shape, _game, _shapeService, _gameService);
+            MoveShapeLeft(_shape, _game, _ShapeManager, _GameManager);
         }
 
         protected override void MoveRight()
         {
-            _shapeService.MoveShapeRight(_shape, _game, _gameService, _shapeService);
+            _ShapeManager.MoveShapeRight(_shape, _game, _GameManager, _ShapeManager);
         }
     }
 }

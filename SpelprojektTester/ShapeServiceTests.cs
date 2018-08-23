@@ -13,7 +13,7 @@ namespace SpelprojektTester
         [TestMethod]
         public void ValidateMethodForRotatingIShape()
         {
-            var service = new ShapeService();
+            var service = new ShapeManager();
 
 
             var rotatedShape = new IShape();
@@ -34,7 +34,7 @@ namespace SpelprojektTester
         [TestMethod]
         public void ValidateMethodForRotatingIShapeFourTimes()
         {
-            var service = new ShapeService();
+            var service = new ShapeManager();
 
 
             var rotatedShape = new IShape();
