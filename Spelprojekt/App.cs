@@ -1,20 +1,20 @@
-﻿using Spelprojekt.Business;
-using Spelprojekt.Entities;
+﻿using Spelprojekt.Entities;
+using Spelprojekt.Service;
+using Spelprojekt.Services;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Spelprojekt.Business.Managers;
 using TetrisUI;
 
 namespace Spelprojekt
 {
     public partial class App : GameBoard
     {
-        private GameManager _gameManager => new GameManager();
-        private UserInputManager _userInputManager => new UserInputManager();
+        private GameService _gameService => new GameService();
+        private UserInputService _userInputManager => new UserInputService();
 
         private Game _game;
 
@@ -26,7 +26,7 @@ namespace Spelprojekt
 
         void button1_Click(object sender, EventArgs e)
         {
-            _game = _gameManager.StartNewGame();
+            _game = _gameService.StartNewGame();
 
             button1.Hide();
             button1.Enabled = false;
@@ -139,12 +139,12 @@ namespace Spelprojekt
 
         protected override void UpdateGame()
         {
-            _gameManager.OnGameUpdated(_game);
+            _gameService.OnGameUpdated(_game);
         }
 
         protected override void Render(IRender render)
         {
-            RenderManager.RenderShapes(render, _game);
+            GameService.RenderGame(render, _game);
         }
 
         protected override void Rotate()

@@ -1,11 +1,11 @@
 ﻿using Spelprojekt.Entities;
+using Spelprojekt.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Spelprojekt.Business.Managers;
 using Spelprojekt.Services;
 
-namespace Spelprojekt.Business
+namespace Spelprojekt.Business.Managers
 {
     public class GameManager
 
@@ -57,10 +57,8 @@ namespace Spelprojekt.Business
 
                     }
 
-
                     game.InPlay = !GameOverController(game);
-
-
+                    
                     if (game.InPlay)
                     {
                         MoveShapeInPlay(game);

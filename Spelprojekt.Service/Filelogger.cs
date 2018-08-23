@@ -1,10 +1,6 @@
-﻿using System;
-using System.ComponentModel;
-using System.Data;
-using System.IO;
-using Spelprojekt.Services;
+﻿using System.IO;
 
-namespace Spelprojekt.Data
+namespace Spelprojekt.Services
 {
     class Filelogger : ILog
     {

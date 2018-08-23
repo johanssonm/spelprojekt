@@ -129,10 +129,12 @@
     <Compile Include="ChildShapes\TestShape.cs" />
     <Compile Include="ChildShapes\TShape.cs" />
     <Compile Include="ChildShapes\ZShape.cs" />
+    <Compile Include="EventHandlerService.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameGrid.cs" />
     <Compile Include="Identity.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="RandomListExtensions.cs" />
     <Compile Include="Score.cs" />
     <Compile Include="Shape.cs" />
     <Compile Include="TestPlayers.cs" />

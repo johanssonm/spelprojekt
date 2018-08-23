@@ -58,10 +58,6 @@
       <Project>{268d95d6-f33b-4e04-abe0-f7fef14c7f1a}</Project>
       <Name>Spelprojekt.Infrastructure</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Spelprojekt.Service\Spelprojekt.Service.csproj">
-      <Project>{89c5ab07-848d-436f-9dd1-1fd8612986fd}</Project>
-      <Name>Spelprojekt.Service</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

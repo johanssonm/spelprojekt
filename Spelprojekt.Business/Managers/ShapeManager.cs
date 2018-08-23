@@ -1,8 +1,6 @@
-﻿using System;
-using Spelprojekt.Business;
+﻿using Spelprojekt.Business.Managers;
 using Spelprojekt.Entities;
 using System.Collections.Generic;
-using Spelprojekt.Business.Managers;
 using NullReferenceException = System.NullReferenceException;
 
 namespace Spelprojekt.Services
@@ -11,9 +9,7 @@ namespace Spelprojekt.Services
     {
 
         private GameManager _gameManager => new GameManager();
-        
-        public Shape ShapeInPlayState { get; set; }
-
+       
         public void RotateShape(Game game)
         {
             try
@@ -23,8 +19,7 @@ namespace Spelprojekt.Services
                     !BlockManager.CheckForBlockRightMovementCollisions(game) &&
                     !BlockManager.CheckForBlockYAxisCollisions(game))
                 {
-                    game.ShapeInPlay.ShapeGrid =
-                        RotateArray(game.ShapeInPlay.ShapeGrid, game.ShapeInPlay.ShapeGrid.GetLength(0));
+                    game.ShapeInPlay.ShapeGrid = RotateArray(game.ShapeInPlay.ShapeGrid, game.ShapeInPlay.ShapeGrid.GetLength(0));
                 }
 
             }
@@ -67,7 +62,6 @@ namespace Spelprojekt.Services
 
             }
 
-
         }
         
 
@@ -102,7 +96,6 @@ namespace Spelprojekt.Services
             {
 
             }
-
         }
 
 
@@ -174,11 +167,7 @@ namespace Spelprojekt.Services
 
             }
 
-
-
         }
-    
-
     }
 }
 
