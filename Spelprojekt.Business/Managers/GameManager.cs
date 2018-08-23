@@ -10,7 +10,6 @@ namespace Spelprojekt.Business
     public class GameManager
 
     {
-        public Game Game { get; set; }
         private ShapeManager _shapeManager { get; set; }
         private ScoreManager _scoreManager { get; set; }
 

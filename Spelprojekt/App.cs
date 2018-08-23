@@ -26,7 +26,7 @@ namespace Spelprojekt
 
         void button1_Click(object sender, EventArgs e)
         {
-            _gameManager.StartNewGame();
+            _game = _gameManager.StartNewGame();
 
             button1.Hide();
             button1.Enabled = false;

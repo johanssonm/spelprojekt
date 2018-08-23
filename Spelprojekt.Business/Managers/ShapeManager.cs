@@ -3,6 +3,7 @@ using Spelprojekt.Business;
 using Spelprojekt.Entities;
 using System.Collections.Generic;
 using Spelprojekt.Business.Managers;
+using NullReferenceException = System.NullReferenceException;
 
 namespace Spelprojekt.Services
 {
@@ -15,15 +16,23 @@ namespace Spelprojekt.Services
 
         public void RotateShape(Game game)
         {
-
-            if (ShapeInPlayState.IsInPlay && ShapeInPlayState.CanBeRotated &&
-                !BlockManager.CheckForBlockLeftMovementCollisions(game) &&
-                !BlockManager.CheckForBlockRightMovementCollisions(game) &&
-                !BlockManager.CheckForBlockYAxisCollisions(game))
+            try
             {
-                ShapeInPlayState.ShapeGrid =
-                    RotateArray(ShapeInPlayState.ShapeGrid, game.ShapeInPlay.ShapeGrid.GetLength(0));
+                if (game.ShapeInPlay.IsInPlay && game.ShapeInPlay.CanBeRotated &&
+                    !BlockManager.CheckForBlockLeftMovementCollisions(game) &&
+                    !BlockManager.CheckForBlockRightMovementCollisions(game) &&
+                    !BlockManager.CheckForBlockYAxisCollisions(game))
+                {
+                    game.ShapeInPlay.ShapeGrid =
+                        RotateArray(game.ShapeInPlay.ShapeGrid, game.ShapeInPlay.ShapeGrid.GetLength(0));
+                }
+
             }
+            catch (NullReferenceException e)
+            {
+                throw new NullReferenceException();
+            }
+
         }
 
         public void DropShape(Game game)
@@ -32,9 +41,9 @@ namespace Spelprojekt.Services
             {
                 if (game.ShapeInPlay.IsInPlay && game.InPlay)
                 {
-                    while (ShapeInPlayState.IsInPlay)
+                    while (game.ShapeInPlay.IsInPlay)
                     {
-                        ShapeInPlayState.GameGridYPosition++;
+                        game.ShapeInPlay.GameGridYPosition++;
 
                         if (BlockManager.CheckForBlockYAxisCollisions(game))
                         {
@@ -49,7 +58,7 @@ namespace Spelprojekt.Services
                     }
 
                     AddShapeToHeap(game);
-                    ShapeInPlayState.IsInPlay = false;
+                    game.ShapeInPlay.IsInPlay = false;
                 }
             }
 
@@ -87,7 +96,7 @@ namespace Spelprojekt.Services
                     !BlockManager.CheckForBlockLeftMovementCollisions(game)
                     && game.InPlay)
 
-                    ShapeInPlayState.GameGridXPosition--;
+                    game.ShapeInPlay.GameGridXPosition--;
             }
             catch (NullReferenceException e)
             {

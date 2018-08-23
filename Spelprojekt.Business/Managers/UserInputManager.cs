@@ -26,7 +26,7 @@ namespace Spelprojekt.Business.Managers
 
         public void MoveRight(Game game)
         {
-            _shapeManager.MoveShapeRight(game);
+           _shapeManager.MoveShapeRight(game);
         }
     }
 }
