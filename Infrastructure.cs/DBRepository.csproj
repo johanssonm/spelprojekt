@@ -126,8 +126,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataService.cs" />
     <Compile Include="Data\GameContext.cs" />
+    <Compile Include="DBRepoService.cs" />
     <Compile Include="Migrations\20180824074027_1.cs" />
     <Compile Include="Migrations\20180824074027_1.designer.cs">
       <DependentUpon>20180824074027_1.cs</DependentUpon>
@@ -138,6 +138,12 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
+      <Project>{04b2acc0-0c35-488c-b805-38aab80e570e}</Project>
+      <Name>Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

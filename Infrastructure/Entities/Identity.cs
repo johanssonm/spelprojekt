@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations.Operations;
-using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
-
-namespace Spelprojekt.Entities
+﻿namespace Spelprojekt.Entities
 {
     public class Identity
     {

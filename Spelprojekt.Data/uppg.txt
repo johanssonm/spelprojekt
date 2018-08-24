@@ -26,6 +26,7 @@ Gränssnitt känner till service och infrastructure
 # MVC
 
 Ordning kanske
+
 Core
 
 Tests
@@ -36,4 +37,5 @@ Tests
 
 FluentAssertions
 Moq
-StructureMap
+StructureMap / IOC
+#

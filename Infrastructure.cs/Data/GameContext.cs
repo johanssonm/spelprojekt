@@ -8,11 +8,6 @@ namespace Spelprojekt.Data
         public DbSet<Player> Players { get; set; }
         public DbSet<Score> Scores { get; set; }
 
-        public GameContext() : base()
-        {
-
-        }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
           optionsBuilder.UseSqlServer("Server = (localdb)\\mssqllocaldb;" +

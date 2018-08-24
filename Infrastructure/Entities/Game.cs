@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Dynamic;
 
 namespace Spelprojekt.Entities
@@ -13,6 +14,7 @@ namespace Spelprojekt.Entities
         public int ShapesPlayed { get; set; }
 
         public int GameSpeed { get; set; }
+        public bool GameOver { get; set; }
     
         public List<Shape> Shapes { get; set; }
 
@@ -34,6 +36,8 @@ namespace Spelprojekt.Entities
                 new SShape(),
                 new TShape(),
                 new ZShape()
+
+                
             };
 
             // var types = new ExpandoObject(); TODO: Fixa så alla shapes skapas vid runtime

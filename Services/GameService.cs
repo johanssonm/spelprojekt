@@ -45,20 +45,7 @@ namespace Spelprojekt.Services
 
                     if (!game.InPlay)
                     {
-                        var dataservice = new DatabaseService();
-
-                        var message = "Game over";
-
-                        //MessageBox.Show(message); TODO: Bryt ut till Gui
-
-                        var player = new Player();
-
-                        //player.Identity.Name = App.Prompt.ShowDialog("Enter your name","Enter your name");
-                        player.Scores.Add(game.Score);
-
-                       // dataservice.Save(player);
-
-
+                        game.GameOver = true;
                     }
 
 

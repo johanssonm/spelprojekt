@@ -67,10 +67,6 @@
       <Project>{905c1dc2-9dd9-4ec7-919c-5e916ff88bfb}</Project>
       <Name>Business</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Infrastructure.cs\DBRepository.csproj">
-      <Project>{bbf9af0f-2ee2-4948-819e-5312f73d31b6}</Project>
-      <Name>DBRepository</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

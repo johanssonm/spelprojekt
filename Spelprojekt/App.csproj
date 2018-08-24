@@ -182,6 +182,7 @@
     <Compile Include="App.Designer.cs">
       <DependentUpon>App.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormHelper.cs" />
     <Compile Include="Prompt.cs">
       <SubType>Form</SubType>
     </Compile>

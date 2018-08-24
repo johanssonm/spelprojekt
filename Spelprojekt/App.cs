@@ -3,6 +3,7 @@ using Spelprojekt.Entities;
 using Spelprojekt.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Net.Mime;
@@ -15,142 +16,81 @@ namespace Spelprojekt
 {
     public partial class App : GameBoard
     {
-        private GameContext _context { get; set; }
-   
 
         private ShapeService _shapeService;
 
         private GameService _gameService => new GameService();
 
+        int count = 0;
+
         private Game _game;
 
         private Shape _shape => _game.ShapeInPlay;
 
-        private Button button1;
-        private Button button2;
-        private Button button3;
+        private Button NewGame;
+        private Button HighScore;
+        private Button SeedDatabase;
 
         private Label highscore;
 
-        void button1_Click(object sender, EventArgs e)
+
+        public App() : base(500)
         {
-            StartNewGame();
+            InitButtons();
 
-            button1.Hide();
-            button1.Enabled = false;
+            NewGame.Click += StartNewGame;
+            NewGame.Click += HideMenuItems;
 
-            button2.Hide();
-            button2.Enabled = false;
+            HighScore.Click += ShowHighScore;
+            HighScore.Click += HideMenuItems;
 
-            button3.Hide();
-            button3.Enabled = false;
-
-            highscore.Visible = false;
         }
 
-        void button2_Click(object sender, EventArgs e)
+        private void AskUserForName()
         {
-            button2.Hide();
-            button2.Enabled = false;
+            var dataservice = new DatabaseService();
+            var message = "Game over";
 
-            button3.Hide();
-            button3.Enabled = false;
-            
-            var sb = new StringBuilder();
+            MessageBox.Show(message);
 
-            sb.AppendLine("High scores");
-            sb.AppendLine("");
+            var player = new Player();
 
-            List<Score> scores = new List<Score>();
-            var result = new List<Player>();
+            player.Identity.Name = App.Prompt.ShowDialog("Enter your name", "Enter your name");
+            player.Scores.Add(_game.Score);
 
-            using (_context)
-            {
-                result.AddRange(_context.Players
-                    .Include(x => x.Identity)
-                    .Include(y => y.Scores)
-                    .ToList());
-
-               foreach (var contextScore in _context.Scores)
-                {
-                    scores.Add(contextScore);
-                }
-            }
-
-            var highscorelist = scores.OrderByDescending(x => x.Points);
-
-
-            int i = 1;
-
-            foreach (var score in highscorelist)
-            {
-                sb.AppendLine($"#{i} {score.Points.ToString()}");
-                i++;
-            }
-
-            //foreach (var player in result)
-            //{
-            //    sb.AppendLine(player.Identity.Name);
-            //}
-
-            highscore.Text = sb.ToString();
-            highscore.Height = 200;
-            highscore.Width = 150;
-            highscore.Font = new Font("Arial", 14, FontStyle.Bold);
+            dataservice.Save(player);
         }
 
-        void button3_Click(object sender, EventArgs e)
+        private void InitButtons()
         {
+            NewGame = new Button();
+            NewGame.Location = new Point(25, 40);
+            NewGame.AutoSize = true;
+            NewGame.Text = "New Game";
 
 
-            using (var context = new GameContext())
-            {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+            HighScore = new Button();
+            HighScore.Location = new Point(25, 90);
+            HighScore.AutoSize = true;
+            HighScore.Text = "High Score";
 
-                context.Players.AddRange(TestPlayers.Players());
-
-                context.SaveChanges();
-            }
-
-                MessageBox.Show("Databasen seedades");
-        }
-
-
-        public App() : base(1000)
-        {
-            button1 = new Button();
-            button1.Location = new Point(25, 40);
-            button1.AutoSize = true;
-            button1.Text = "New Game";
-           
-
-            button2 = new Button();
-            button2.Location = new Point(25, 90);
-            button2.AutoSize = true;
-            button2.Text = "High Score";
-
-            button3 = new Button();
-            button3.Location = new Point(25, 140);
-            button3.AutoSize = true;
-            button3.Text = "Seed Database";
+            SeedDatabase = new Button();
+            SeedDatabase.Location = new Point(25, 140);
+            SeedDatabase.AutoSize = true;
+            SeedDatabase.Text = "Seed Database";
 
 
             highscore = new Label();
             highscore.Location = new Point(25, 90);
             highscore.BackColor = Color.White;
 
-            this.Controls.Add(button1);
-            this.Controls.Add(button2);
-            this.Controls.Add(button3);
+            this.Controls.Add(NewGame);
+            this.Controls.Add(HighScore);
+            this.Controls.Add(SeedDatabase);
             this.Controls.Add(highscore);
-
-            button1.Click += button1_Click;
-            button2.Click += button2_Click;
-            button3.Click += button3_Click;
         }
 
-        private void StartNewGame()
+        private void StartNewGame(object obj, EventArgs e)
         {
             _game = new Game();
 
@@ -170,16 +110,53 @@ namespace Spelprojekt
             _game.ShapeInPlay.IsInPlay = true;
         }
 
+        private void ShowHighScore(object obj, EventArgs e)
+        {
+
+        }
+
+        private void HideMenuItems (object obj, EventArgs e)
+        {
+            NewGame.Visible = false;
+            NewGame.Enabled = false;
+
+            HighScore.Visible = false;
+            HighScore.Enabled = false;
+
+            SeedDatabase.Visible = false;
+            SeedDatabase.Enabled = false;
+
+            highscore.Visible = false;
+        }
+
+        private void ShowMenuItems(object obj, EventArgs e)
+        {
+            NewGame.Visible = true;
+            NewGame.Enabled = false;
+            HighScore.Visible = true;
+            HighScore.Enabled = false;
+            SeedDatabase.Visible = true;
+            SeedDatabase.Enabled = false;
+            highscore.Enabled = false;
+            highscore.Visible = true;
+        }
+
+
         protected override void UpdateGame()
         {
             try
             {
                 _gameService.OnGameUpdated(_shape, _game);
+           
             }
-            catch (NullReferenceException e)
+
+
+            catch (NullReferenceException)
             {
 
             }
+
+
 
         }
 
