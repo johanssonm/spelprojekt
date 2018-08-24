@@ -15,7 +15,8 @@ namespace Spelprojekt
 {
     public partial class App : GameBoard
     {
-        private GameContext _context => new GameContext();
+        private GameContext _context { get; set; }
+   
 
         private ShapeService _shapeService;
 

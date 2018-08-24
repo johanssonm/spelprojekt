@@ -228,9 +228,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure.cs\Infrastructure.cs.csproj">
-      <Project>{bbf9af0f-2ee2-4948-819e-5312f73d31b6}</Project>
-      <Name>Infrastructure.cs</Name>
+    <ProjectReference Include="..\Infrastructure.cs\DBRepository.csproj">
+      <Project>{BBF9AF0F-2EE2-4948-819E-5312F73D31B6}</Project>
+      <Name>DBRepository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
+      <Project>{04b2acc0-0c35-488c-b805-38aab80e570e}</Project>
+      <Name>Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\Services\Services.csproj">
       <Project>{5c1304aa-e45e-447c-8064-a360f8687408}</Project>

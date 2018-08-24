@@ -128,23 +128,6 @@
   <ItemGroup>
     <Compile Include="DataService.cs" />
     <Compile Include="Data\GameContext.cs" />
-    <Compile Include="Entities\Block.cs" />
-    <Compile Include="Entities\ChildShapes\IShape.cs" />
-    <Compile Include="Entities\ChildShapes\JShape.cs" />
-    <Compile Include="Entities\ChildShapes\LShape.cs" />
-    <Compile Include="Entities\ChildShapes\OShape.cs" />
-    <Compile Include="Entities\ChildShapes\SShape.cs" />
-    <Compile Include="Entities\ChildShapes\TestShape.cs" />
-    <Compile Include="Entities\ChildShapes\TShape.cs" />
-    <Compile Include="Entities\ChildShapes\ZShape.cs" />
-    <Compile Include="Entities\Game.cs" />
-    <Compile Include="Entities\GameGrid.cs" />
-    <Compile Include="Entities\Identity.cs" />
-    <Compile Include="Entities\Player.cs" />
-    <Compile Include="Entities\Score.cs" />
-    <Compile Include="Entities\Shape.cs" />
-    <Compile Include="Entities\ShapeGrid.cs" />
-    <Compile Include="Entities\TestPlayers.cs" />
     <Compile Include="Migrations\20180824074027_1.cs" />
     <Compile Include="Migrations\20180824074027_1.designer.cs">
       <DependentUpon>20180824074027_1.cs</DependentUpon>

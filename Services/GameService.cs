@@ -56,7 +56,7 @@ namespace Spelprojekt.Services
                         //player.Identity.Name = App.Prompt.ShowDialog("Enter your name","Enter your name");
                         player.Scores.Add(game.Score);
 
-                        dataservice.Save(player);
+                       // dataservice.Save(player);
 
 
                     }
