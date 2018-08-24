@@ -8,8 +8,8 @@ namespace Spelprojekt.Services
 {
     public class ShapeService
     {
-       
-        public void RotateShape(Shape shape, Game game, GameService gameService, ShapeService shapeService)
+       private GameService gameService => new GameService();
+        public void RotateShape(Shape shape, Game game)
         {
 
             if (game.ShapeInPlay.IsInPlay && game.ShapeInPlay.CanBeRotated &&
@@ -22,7 +22,7 @@ namespace Spelprojekt.Services
             }
         }
 
-        public void DropShape(Shape shape, Game game, ShapeService _shapeService, GameService _gameService)
+        public void DropShape(Shape shape, Game game)
         {
             if (shape.IsInPlay && game.InPlay)
             {
@@ -35,7 +35,7 @@ namespace Spelprojekt.Services
                         shape.IsInPlay = false;
                     }
 
-                    if (_gameService.CollisionBottomLine(game))
+                    if (gameService.CollisionBottomLine(game))
                     {
                         shape.IsInPlay = false;
                     }
@@ -78,19 +78,19 @@ namespace Spelprojekt.Services
             }
         }
 
-        public void MoveShapeRight(Shape shape, Game game, GameService gameService, ShapeService shapeService)
+        public void MoveShapeRight(Shape shape, Game game)
         {
             if (shape.IsInPlay && !gameService.CollisionRightSide(game) &&
-                !shapeService.CheckForBlockRightMovementCollisions(shape, game)
+                !CheckForBlockRightMovementCollisions(shape, game)
                 && game.InPlay)
 
                 shape.GameGridXPosition++;
         }
 
-        public void MoveShapeLeft(Shape shape, Game game, ShapeService shapeService,GameService gameService)
+        public void MoveShapeLeft(Shape shape, Game game)
         {
             if (shape.IsInPlay && !gameService.CollisionLeftSide(game) &&
-                !shapeService.CheckForBlockLeftMovementCollisions(shape, game)
+                !CheckForBlockLeftMovementCollisions(shape, game)
                 && game.InPlay)
 
                 shape.GameGridXPosition--;

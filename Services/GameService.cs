@@ -9,7 +9,6 @@ namespace Spelprojekt.Services
     public class GameService
    
     {
-
         private ShapeService shapeService => new ShapeService();
 
         public void OnGameUpdated(Shape shape, Game game)

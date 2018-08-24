@@ -189,23 +189,23 @@ namespace Spelprojekt
 
         protected override void Rotate()
         {
-            _shapeService.RotateShape(_shape, _game, _gameService, _shapeService);
+            _shapeService.RotateShape(_shape, _game);
         }
 
         protected override void Drop()
         {
-            _shapeService.DropShape(_shape, _game, _shapeService, _gameService);
+            _shapeService.DropShape(_shape, _game);
         }
 
 
         protected override void MoveLeft()
         {
-            _shapeService.MoveShapeLeft(_shape, _game, _shapeService, _gameService);
+            _shapeService.MoveShapeLeft(_shape, _game);
         }
 
         protected override void MoveRight()
         {
-            _shapeService.MoveShapeRight(_shape, _game, _gameService, _shapeService);
+            _shapeService.MoveShapeRight(_shape, _game);
         }
     }
 }
