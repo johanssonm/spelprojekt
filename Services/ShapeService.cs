@@ -8,19 +8,17 @@ namespace Spelprojekt.Services
 {
     public class ShapeService
     {
-        
-        public Shape ShapeInPlayState { get; set; }
-
+       
         public void RotateShape(Shape shape, Game game, GameService gameService, ShapeService shapeService)
         {
 
-            if (ShapeInPlayState.IsInPlay && ShapeInPlayState.CanBeRotated &&
+            if (game.ShapeInPlay.IsInPlay && game.ShapeInPlay.CanBeRotated &&
                 !CheckForBlockLeftMovementCollisions(shape, game) &&
                 !CheckForBlockRightMovementCollisions(shape, game) &&
                 !CheckForBlockYAxisCollisions(shape, game))
             {
-                ShapeInPlayState.ShapeGrid =
-                    Rotate(ShapeInPlayState.ShapeGrid, shape.ShapeGrid.GetLength(0));
+                game.ShapeInPlay.ShapeGrid =
+                    Rotate(game.ShapeInPlay.ShapeGrid, shape.ShapeGrid.GetLength(0));
             }
         }
 
@@ -28,16 +26,16 @@ namespace Spelprojekt.Services
         {
             if (shape.IsInPlay && game.InPlay)
             {
-                while (ShapeInPlayState.IsInPlay)
+                while (game.ShapeInPlay.IsInPlay)
                 {
-                    ShapeInPlayState.GameGridYPosition++;
+                    game.ShapeInPlay.GameGridYPosition++;
 
                     if (CheckForBlockYAxisCollisions(shape, game))
                     {
                         shape.IsInPlay = false;
                     }
 
-                    if (_gameService.CollisionBottomLine(shape, game, _shapeService))
+                    if (_gameService.CollisionBottomLine(game))
                     {
                         shape.IsInPlay = false;
                     }
@@ -45,13 +43,14 @@ namespace Spelprojekt.Services
                 }
 
                 AddShapeToHeap(shape, game);
-                ShapeInPlayState.IsInPlay = false;
+                game.ShapeInPlay.IsInPlay = false;
 
             }
         }
 
-        public void RenderShapes(IRender render, Game game, Shape shape, ShapeService shapeService)
+        public void RenderShapes(IRender render, Game game)
         {
+            var shape = game.ShapeInPlay;
             try
             {
                 var shapeGridWidth = shape.ShapeGrid.GetLength(0);
@@ -74,14 +73,14 @@ namespace Spelprojekt.Services
             catch (NullReferenceException)
             {
                 game.InPlay = false;
-                shapeService.ShapeInPlayState = new TestShape();
-                shapeService.ShapeInPlayState.IsInPlay = false;
+                game.ShapeInPlay = new TestShape();
+                game.ShapeInPlay.IsInPlay = false;
             }
         }
 
         public void MoveShapeRight(Shape shape, Game game, GameService gameService, ShapeService shapeService)
         {
-            if (shape.IsInPlay && !gameService.CollisionRightSide(shape, shapeService) &&
+            if (shape.IsInPlay && !gameService.CollisionRightSide(game) &&
                 !shapeService.CheckForBlockRightMovementCollisions(shape, game)
                 && game.InPlay)
 
@@ -90,7 +89,7 @@ namespace Spelprojekt.Services
 
         public void MoveShapeLeft(Shape shape, Game game, ShapeService shapeService,GameService gameService)
         {
-            if (shape.IsInPlay && !gameService.CollisionLeftSide(shape, shapeService) &&
+            if (shape.IsInPlay && !gameService.CollisionLeftSide(game) &&
                 !shapeService.CheckForBlockLeftMovementCollisions(shape, game)
                 && game.InPlay)
 

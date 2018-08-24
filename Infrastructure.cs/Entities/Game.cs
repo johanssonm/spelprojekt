@@ -7,6 +7,9 @@ namespace Spelprojekt.Entities
     {
         public int Id { get; set; }
         public bool InPlay { get; set; }
+
+        public Shape ShapeInPlay { get; set; }
+
         public int ShapesPlayed { get; set; }
 
         public int GameSpeed { get; set; }

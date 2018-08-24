@@ -19,13 +19,11 @@ namespace Spelprojekt
 
         private ShapeService _shapeService;
 
-        private GameService _gameService;
-
-        private ScoreService _scoreService;
+        private GameService _gameService => new GameService();
 
         private Game _game;
 
-        private Shape _shape => _shapeService.ShapeInPlayState;
+        private Shape _shape => _game.ShapeInPlay;
 
         private Button button1;
         private Button button2;
@@ -159,9 +157,6 @@ namespace Spelprojekt
 
             _shapeService = new ShapeService();
 
-            _gameService = new GameService();
-
-            _scoreService = new ScoreService();
 
             _game.Player = new Player();
 
@@ -169,19 +164,27 @@ namespace Spelprojekt
 
             _game.Score = new Score();
 
-            _shapeService.ShapeInPlayState = _game.Shapes.First();
+            _game.ShapeInPlay = _game.Shapes.PickRandom();
 
-            _shapeService.ShapeInPlayState.IsInPlay = true;
+            _game.ShapeInPlay.IsInPlay = true;
         }
 
         protected override void UpdateGame()
         {
-            _gameService?.OnGameUpdated(_shape, _game, _shapeService, _scoreService);
+            try
+            {
+                _gameService.OnGameUpdated(_shape, _game);
+            }
+            catch (NullReferenceException e)
+            {
+
+            }
+
         }
 
         protected override void Render(IRender render)
         {
-            _shapeService?.RenderShapes(render, _game, _shape, _shapeService);
+            _shapeService?.RenderShapes(render, _game);
         }
 
         protected override void Rotate()

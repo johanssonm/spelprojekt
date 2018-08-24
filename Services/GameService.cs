@@ -3,68 +3,77 @@ using Spelprojekt.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace Spelprojekt.Services
 {
     public class GameService
-
+   
     {
-        public void OnGameUpdated(Shape shape, Game game, ShapeService shapeService, ScoreService scoreService)
+
+        private ShapeService shapeService => new ShapeService();
+
+        public void OnGameUpdated(Shape shape, Game game)
         {
-         
 
-            if (game.InPlay)
+            try
             {
-                if (!shapeService.CheckForBlockYAxisCollisions(shape, game) &&
-                    !CollisionBottomLine(shape, game, shapeService))
-                {
-                    shape.IsInPlay = true;
-                }
-
-                if (game.InPlay && !shape.IsInPlay)
-                {
-                    shapeService.AddShapeToHeap(shape, game);
-                    SpawnNewShape(shape, game, shapeService);
-                    game.InPlay = shapeService.CheckForBlockYAxisCollisions(shape, game);
-
-                }
-
-
-                game.InPlay = !GameOverController(shape, game, shapeService);
-
-
                 if (game.InPlay)
                 {
-                    MoveShapeInPlay(shape, game, shapeService);
+                    if (!shapeService.CheckForBlockYAxisCollisions(game.ShapeInPlay, game) &&
+                        !CollisionBottomLine(game))
+                    {
+                        shape.IsInPlay = true;
+                    }
 
-                    game.Score.Points += scoreService.LineMoved;
+                    if (game.InPlay && !shape.IsInPlay)
+                    {
+                        shapeService.AddShapeToHeap(shape, game);
+                        SpawnNewShape(game);
+                        game.InPlay = shapeService.CheckForBlockYAxisCollisions(shape, game);
+
+                    }
+
+
+                    game.InPlay = !GameOverController(game);
+
+
+                    if (game.InPlay)
+                    {
+                        MoveShapeInPlay(shape, game, shapeService);
+
+                        game.Score.Points += 10;
+                    }
+
+                    if (!game.InPlay)
+                    {
+                        var dataservice = new DatabaseService();
+
+                        var message = "Game over";
+
+                        //MessageBox.Show(message); TODO: Bryt ut till Gui
+
+                        var player = new Player();
+
+                        //player.Identity.Name = App.Prompt.ShowDialog("Enter your name","Enter your name");
+                        player.Scores.Add(game.Score);
+
+                        dataservice.Save(player);
+
+
+                    }
+
+
+                    CheckForCompleteLineAndClearIfComplete(game);
                 }
-
-                if (!game.InPlay)
-                {
-                    var dataservice = new DatabaseService();
-
-                    var message = "Game over";
-
-                    MessageBox.Show(message);
-
-                    var player = new Player();
-
-                    player.Identity.Name = App.Prompt.ShowDialog("Enter your name","Enter your name");
-                    player.Scores.Add(game.Score);
-
-                    dataservice.Save(player);
-
-
-                }
-
-
-                CheckForCompleteLineAndClearIfComplete(game, scoreService);
-
-
-
             }
+
+            catch (NullReferenceException e)
+            {
+                throw;
+            }
+
+
+
 
         }
 
@@ -81,7 +90,7 @@ namespace Spelprojekt.Services
 
         }
 
-        public void CheckForCompleteLineAndClearIfComplete(Game game, ScoreService scoreService)
+        public void CheckForCompleteLineAndClearIfComplete(Game game)
         {
             
             var query = game.GameGrid.Squares.GroupBy(x => x.Y)
@@ -111,7 +120,7 @@ namespace Spelprojekt.Services
                 game.GameGrid.Squares.RemoveAll(x => x.Y == row);
         }
 
-        private bool GameOverController(Shape shape, Game game, ShapeService shapeService)
+        private bool GameOverController(Game game)
         {
             var heappos = new List<string>();
 
@@ -137,45 +146,25 @@ namespace Spelprojekt.Services
 
         }
 
-        public int CountFilledColumns(Shape shape, Game game, ShapeService shapeService)
-        {
-
-            var blocks = game.GameGrid.GameGridArray;
-
-            int result = 0;
-
-            int n = game.GameGrid.GameGridArray.GetLength(0) - 1;
-
-            for (int i = 0; i < n; ++i)
-            {
-                if (game.GameGrid.GameGridArray[i,n])
-                    result++;
-            }
-
-            return result;
-
-
-
-        }
-
-
         private void MoveShapeInPlay(Shape shape, Game game, ShapeService shapeService)
         {
-            shapeService.ShapeInPlayState.GameGridYPosition++;
+            game.ShapeInPlay.GameGridYPosition++;
 
             if (shapeService.CheckForBlockYAxisCollisions(shape, game))
             {
                 shape.IsInPlay = false;
             }
 
-            if (CollisionBottomLine(shape, game, shapeService))
+            if (CollisionBottomLine(game))
             {
                 shape.IsInPlay = false;
             }
         }
 
-        private static void SpawnNewShape(Shape shape, Game game, ShapeService shapeService)
+        private static void SpawnNewShape(Game game)
         {
+            var shape = game.ShapeInPlay;
+
             game.ShapesPlayed++;
 
             var log = new Filelogger();
@@ -185,25 +174,26 @@ namespace Spelprojekt.Services
 
             try
             {
-                var newShape = game.Shapes.PickRandom();
 
-                shapeService.ShapeInPlayState = newShape;
+                game.ShapeInPlay = game.Shapes.PickRandom();
 
-                shapeService.ShapeInPlayState.GameGridYPosition = -1;
-                shapeService.ShapeInPlayState.GameGridXPosition = 4;
-                shapeService.ShapeInPlayState.IsInPlay = true;
+                game.ShapeInPlay.GameGridYPosition = -1;
+                game.ShapeInPlay.GameGridXPosition = 4;
+                game.ShapeInPlay.IsInPlay = true;
             }
 
             catch (NullReferenceException e)
             {
-                var message = e.Message;
-                MessageBox.Show(message);
+                // var message = e.Message; TODO: Flytta ut till Gui
+                //  MessageBox.Show(message);
             }
         }
 
 
-        public bool CollisionBottomLine(Shape shape, Game game, ShapeService shapeService)
+        public bool CollisionBottomLine(Game game)
         {
+            var shape = game.ShapeInPlay;
+
             var shapeblocks = shapeService.CurrentLocationOfShapeInPlay(shape);
 
             var yList = new List<int>();
@@ -225,8 +215,10 @@ namespace Spelprojekt.Services
 
         }
 
-        public bool CollisionLeftSide(Shape shape, ShapeService shapeService)
+        public bool CollisionLeftSide(Game game)
         {
+            var shape = game.ShapeInPlay;
+
             var shapeblocks = shapeService.CurrentLocationOfShapeInPlay(shape);
 
             var xList = new List<int>();
@@ -248,8 +240,10 @@ namespace Spelprojekt.Services
 
         }
 
-        public bool CollisionRightSide(Shape shape, ShapeService shapeService)
+        public bool CollisionRightSide(Game game)
         {
+            var shape = game.ShapeInPlay;
+
             var shapeblocks = shapeService.CurrentLocationOfShapeInPlay(shape);
 
             var xList = new List<int>();
