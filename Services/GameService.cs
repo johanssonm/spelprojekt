@@ -89,7 +89,7 @@ namespace Spelprojekt.Services
 
         }
 
-        public void CheckForCompleteLineAndClearIfComplete(Game game)
+        private void CheckForCompleteLineAndClearIfComplete(Game game)
         {
             
             var query = game.GameGrid.Squares.GroupBy(x => x.Y)

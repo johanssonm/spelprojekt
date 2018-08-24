@@ -98,7 +98,7 @@ namespace Spelprojekt.Services
 
 
 
-        public bool[,] Rotate(bool[,] grid, int n)
+        private bool[,] Rotate(bool[,] grid, int n)
         {
             bool[,] result = new bool[n, n];
 
