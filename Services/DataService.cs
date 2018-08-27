@@ -1,5 +1,4 @@
 ﻿using Infrastructure.cs;
-using Spelprojekt.Data;
 using Spelprojekt.Entities;
 
 namespace Spelprojekt.Services
@@ -12,5 +11,29 @@ namespace Spelprojekt.Services
 
             dbrepo.Save(player);
         }
+
+        public void Update(Player player)
+        {
+            var dbrepo = new DBRepoService();
+
+            dbrepo.Save(player);
+        }
+
+        public void FindOne(int id)
+        {
+            var dbrepo = new DBRepoService();
+
+            dbrepo.FindOne(id);
+        }
+
+        public void FindAll(Player Player)
+        {
+            var dbrepo = new DBRepoService();
+
+            dbrepo.FindAll();
+
+        }
     }
+
+
 }

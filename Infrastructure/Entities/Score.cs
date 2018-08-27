@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Spelprojekt.Entities
+﻿namespace Spelprojekt.Entities
 {
     public class Score
     {

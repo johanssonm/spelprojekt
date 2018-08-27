@@ -11,6 +11,7 @@ namespace Spelprojekt.Services
        private GameService gameService => new GameService();
         public void RotateShape(Shape shape, Game game)
         {
+            gameService.CheckForCompleteLineAndClearIfComplete(game);
 
             if (game.ShapeInPlay.IsInPlay && game.ShapeInPlay.CanBeRotated &&
                 !CheckForBlockLeftMovementCollisions(shape, game) &&
@@ -35,16 +36,17 @@ namespace Spelprojekt.Services
                         shape.IsInPlay = false;
                     }
 
-                    if (gameService.CollisionBottomLine(game))
+                    if (gameService.CollisionBottomLine(game)) // TODO: Lägg med i update
                     {
                         shape.IsInPlay = false;
                     }
 
                 }
 
-                AddShapeToHeap(shape, game);
+                //AddShapeToHeap(shape, game);
                 game.ShapeInPlay.IsInPlay = false;
 
+                
             }
         }
 
@@ -64,7 +66,7 @@ namespace Spelprojekt.Services
                     }
                 }
 
-                foreach (var block in game.GameGrid.Squares)
+                foreach (var block in game.GameGrid.Blocks)
                 {
                     render.Draw(block.X, block.Y, block.ShapeColor);
                 }
@@ -141,7 +143,7 @@ namespace Spelprojekt.Services
                 for (int j = 0; j < shapeGridWidth; j++)
                 {
                     if (shape.ShapeGrid[i, j])
-                        game.GameGrid.Squares.Add(new Block(i + shape.GameGridXPosition,j + shape.GameGridYPosition, shape.ShapeColor));
+                        game.GameGrid.Blocks.Add(new Block(i + shape.GameGridXPosition,j + shape.GameGridYPosition, shape.ShapeColor));
 
 
                 }
@@ -161,7 +163,7 @@ namespace Spelprojekt.Services
 
             var heappos = new List<string>();
 
-            foreach (var block in game.GameGrid.Squares)
+            foreach (var block in game.GameGrid.Blocks)
             {
                 heappos.Add(block.Coordinates);
             }
@@ -187,7 +189,7 @@ namespace Spelprojekt.Services
 
             var heappos = new List<string>();
 
-            foreach (var block in game.GameGrid.Squares)
+            foreach (var block in game.GameGrid.Blocks)
             {
                 heappos.Add(block.Coordinates);
             }
@@ -214,7 +216,7 @@ namespace Spelprojekt.Services
 
             var heappos = new List<string>();
 
-            foreach (var block in game.GameGrid.Squares)
+            foreach (var block in game.GameGrid.Blocks)
             {
                 heappos.Add(block.Coordinates);
             }

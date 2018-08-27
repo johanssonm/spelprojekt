@@ -34,7 +34,7 @@ namespace Spelprojekt
         private Label highscore;
 
 
-        public App() : base(1000)
+        public App() : base(100)
         {
             _gameover = 0;
 

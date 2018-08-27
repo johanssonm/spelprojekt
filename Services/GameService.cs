@@ -24,14 +24,20 @@ namespace Spelprojekt.Services
                         shape.IsInPlay = true;
                     }
 
+                    if (shapeService.CheckForBlockYAxisCollisions(shape, game) ||
+                        CollisionBottomLine(game))
+                    {
+                        shape.IsInPlay = false;
+                    }
+
                     if (game.InPlay && !shape.IsInPlay)
                     {
                         shapeService.AddShapeToHeap(shape, game);
                         SpawnNewShape(game);
                         game.InPlay = shapeService.CheckForBlockYAxisCollisions(shape, game);
+                        CheckForCompleteLineAndClearIfComplete(game);
 
                     }
-
 
                     game.InPlay = !GameOverController(game);
 
@@ -49,7 +55,7 @@ namespace Spelprojekt.Services
                     }
 
 
-                    CheckForCompleteLineAndClearIfComplete(game);
+
                 }
             }
 
@@ -66,21 +72,19 @@ namespace Spelprojekt.Services
        
         private void MoveHeapAfterCompletedLineIsRemoved(int row, Game game)
         {
-            foreach (var block in game.GameGrid.Squares)
+            foreach (var block in game.GameGrid.Blocks)
             {
                 if (block.Y < row)
                 {
                     block.Y++;
                 }
             }
-
-
         }
 
-        private void CheckForCompleteLineAndClearIfComplete(Game game)
+        public void CheckForCompleteLineAndClearIfComplete(Game game)
         {
             
-            var query = game.GameGrid.Squares.GroupBy(x => x.Y)
+            var query = game.GameGrid.Blocks.GroupBy(x => x.Y)
                 .Select(group => new
                 {
                     Row = group.Key,
@@ -88,15 +92,12 @@ namespace Spelprojekt.Services
                 })
                 .OrderBy(x => x.Row);
 
-            var result = query.Where(x => x.Count == 20);
+            var result = query.Where(x => x.Count == 10);
 
             foreach (var row in result)
             {
-
                 ClearRow(row.Row, game);
-
                 MoveHeapAfterCompletedLineIsRemoved(row.Row, game);
-
             }
 
 
@@ -104,14 +105,14 @@ namespace Spelprojekt.Services
 
         private void ClearRow(int row, Game game)
         {
-                game.GameGrid.Squares.RemoveAll(x => x.Y == row);
+                game.GameGrid.Blocks.RemoveAll(x => x.Y == row);
         }
 
         private bool GameOverController(Game game)
         {
             var heappos = new List<string>();
 
-            foreach (var block in game.GameGrid.Squares)
+            foreach (var block in game.GameGrid.Blocks)
             {
                 heappos.Add(block.Coordinates);
             }

@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using Infrastructure.cs;
+using Spelprojekt.Entities;
 
 namespace Webadmin.Controllers
 {
@@ -11,16 +10,35 @@ namespace Webadmin.Controllers
     {
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult JsonFeed()
         {
-            return new string[] { "value1", "value2" };
+
+            var dbservice = new DBRepoService();
+
+            var result = dbservice.FindAll();
+
+            return Json(new
+            {
+                success = true,
+                Message = result
+            });
         }
+
+
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public JsonResult Get(int id)
         {
-            return "value";
+            var dbservice = new DBRepoService();
+
+            var result = dbservice.FindOne(id);
+
+            return Json(new
+            {
+                success = true,
+                Message = result
+            });
         }
 
         // POST api/values

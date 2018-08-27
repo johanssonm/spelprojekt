@@ -38,7 +38,7 @@ namespace Spelprojekt.Entities
                 new TShape(),
                 new ZShape()
 
-                
+
             };
 
             // var types = new ExpandoObject(); TODO: Fixa så alla shapes skapas vid runtime
