@@ -100,6 +100,7 @@ namespace Spelprojekt
         private void StartNewGame(object obj, EventArgs e)
         {
             _game = new Game();
+            _gameover = 0;
 
             _game.GameGrid = new GameGrid(10, 20);
 
@@ -139,12 +140,12 @@ namespace Spelprojekt
         private void ShowMenuItems(object obj, EventArgs e)
         {
             NewGame.Visible = true;
-            NewGame.Enabled = false;
+            NewGame.Enabled = true;
             HighScore.Visible = true;
-            HighScore.Enabled = false;
+            HighScore.Enabled = true;
             SeedDatabase.Visible = true;
-            SeedDatabase.Enabled = false;
-            highscore.Enabled = false;
+            SeedDatabase.Enabled = true;
+            highscore.Enabled = true;
             highscore.Visible = true;
         }
 
@@ -162,6 +163,11 @@ namespace Spelprojekt
                 {
                     _gameover++;
                     AskUserForName();
+                    _game = new Game();
+                    ShowHighScore(null, null);
+                    Thread.Sleep(5000);
+                    ShowMenuItems(null, null);
+                    
 
                 }
 
