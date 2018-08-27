@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Net.Mime;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using Microsoft.EntityFrameworkCore;
 using TetrisUI;
@@ -21,9 +22,8 @@ namespace Spelprojekt
 
         private GameService _gameService => new GameService();
 
-        int count = 0;
-
         private Game _game;
+        private int _gameover { get; set; }
 
         private Shape _shape => _game.ShapeInPlay;
 
@@ -34,8 +34,13 @@ namespace Spelprojekt
         private Label highscore;
 
 
-        public App() : base(500)
+        public App() : base(1000)
         {
+            _gameover = 0;
+
+            var _game = new Game();
+            _game.GameOver = false;
+
             InitButtons();
 
             NewGame.Click += StartNewGame;
@@ -43,6 +48,7 @@ namespace Spelprojekt
 
             HighScore.Click += ShowHighScore;
             HighScore.Click += HideMenuItems;
+
 
         }
 
@@ -59,6 +65,7 @@ namespace Spelprojekt
             player.Scores.Add(_game.Score);
 
             dataservice.Save(player);
+            Thread.Sleep(10000);
         }
 
         private void InitButtons()
@@ -146,7 +153,19 @@ namespace Spelprojekt
         {
             try
             {
-                _gameService.OnGameUpdated(_shape, _game);
+                if (!_game.GameOver)
+                {
+                    _gameService.OnGameUpdated(_shape, _game);
+                }
+
+                if (_game.GameOver && _gameover == 0)
+                {
+                    _gameover++;
+                    AskUserForName();
+
+                }
+
+                
            
             }
 

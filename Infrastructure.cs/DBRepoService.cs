@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Spelprojekt.Data;
+﻿using Spelprojekt.Data;
 using Spelprojekt.Entities;
 
 namespace Infrastructure.cs

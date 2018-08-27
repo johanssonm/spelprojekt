@@ -63,6 +63,7 @@ namespace Spelprojekt.Services
 
         }
 
+       
         private void MoveHeapAfterCompletedLineIsRemoved(int row, Game game)
         {
             foreach (var block in game.GameGrid.Squares)

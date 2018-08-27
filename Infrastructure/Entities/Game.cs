@@ -14,7 +14,8 @@ namespace Spelprojekt.Entities
         public int ShapesPlayed { get; set; }
 
         public int GameSpeed { get; set; }
-        public bool GameOver { get; set; }
+
+        public bool GameOver { get; set; } 
     
         public List<Shape> Shapes { get; set; }
 
