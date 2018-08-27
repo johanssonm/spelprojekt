@@ -1097,3 +1097,13 @@ Spelprojekt.TShape, Purple
 Spelprojekt.IShape, Cyan
 Spelprojekt.JShape, Blue
 Spelprojekt.IShape, Cyan
+Spelprojekt.LShape, Orange
+Spelprojekt.SShape, Green
+Spelprojekt.ZShape, Red
+Spelprojekt.IShape, Cyan
+Spelprojekt.OShape, Yellow
+Spelprojekt.SShape, Green
+Spelprojekt.ZShape, Red
+Spelprojekt.IShape, Cyan
+Spelprojekt.LShape, Orange
+Spelprojekt.LShape, Orange

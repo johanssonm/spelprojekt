@@ -65,7 +65,6 @@ namespace Spelprojekt
             player.Scores.Add(_game.Score);
 
             dataservice.Save(player);
-            Thread.Sleep(10000);
         }
 
         private void InitButtons()
