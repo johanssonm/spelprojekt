@@ -44,19 +44,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataService.cs" />
     <Compile Include="Filelogger.cs" />
     <Compile Include="GameService.cs" />
     <Compile Include="Ilog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RandomShapeService.cs" />
     <Compile Include="ScoreService.cs" />
     <Compile Include="ShapeService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure.cs\DBRepository.csproj">
+    <ProjectReference Include="..\Business.cs\Business.csproj">
+      <Project>{905C1DC2-9DD9-4EC7-919C-5E916FF88BFB}</Project>
+      <Name>Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infrastructure.cs\Repositories.csproj">
       <Project>{BBF9AF0F-2EE2-4948-819E-5312F73D31B6}</Project>
-      <Name>DBRepository</Name>
+      <Name>Repositories</Name>
     </ProjectReference>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
       <Project>{04b2acc0-0c35-488c-b805-38aab80e570e}</Project>

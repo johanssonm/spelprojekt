@@ -1,7 +1,9 @@
-﻿namespace Spelprojekt.Services
+﻿using Infrastructure.Entities;
+
+namespace Spelprojekt.Services
 {
     public interface ILog
     {
-        void LogShape(Shape shape);
+        void LogShape(IShape shape);
     }
 }

@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Spelprojekt.Data;
 using Spelprojekt.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Infrastructure.cs.Contracts;
 
-namespace Infrastructure.cs
+namespace Repositories
 {
-    public class DBRepoService
+    public class SqlRepository : IPlayerRepository
     {
         public void Save(Player player)
         {
@@ -21,9 +23,32 @@ namespace Infrastructure.cs
         {
             using (var context = new GameContext())
             {
-                context.Add(player);
+                try
+                {
+                    var oldPlayer = context.Players.Where(p => p.Identity.Name.ToLower() == player.Identity.Name.ToLower()).SingleOrDefault();
+
+                    oldPlayer.Scores.Add(player.Scores.FirstOrDefault());
+
+                    context.Update(player);
+                    context.SaveChanges();
+
+                }
+                catch (ArgumentException e)
+                {
+                    throw new ArgumentException(e + " Player was not found");
+                }
+
+            }
+        }
+
+        public void Delete(Player player)
+        {
+            using (var context = new GameContext())
+            {
+                context.Remove(player);
                 context.SaveChanges();
             }
+
         }
 
         public Player FindOne(int id)
@@ -65,5 +90,7 @@ namespace Infrastructure.cs
             return players;
 
         }
+
+
     }
 }

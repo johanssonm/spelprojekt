@@ -14,7 +14,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpelprojektTester", "Spelpr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{5C1304AA-E45E-447C-8064-A360F8687408}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBRepository", "Infrastructure.cs\DBRepository.csproj", "{BBF9AF0F-2EE2-4948-819E-5312F73D31B6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Infrastructure.cs\Repositories.csproj", "{BBF9AF0F-2EE2-4948-819E-5312F73D31B6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business.cs\Business.csproj", "{905C1DC2-9DD9-4EC7-919C-5E916FF88BFB}"
 EndProject
@@ -22,7 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{26730B7E-2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{04B2ACC0-0C35-488C-B805-38AAB80E570E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webadmin", "Webadmin\Webadmin.csproj", "{A89F4CE7-6327-43BC-A1CE-B9AD37AC2EC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webadmin", "Webadmin\Webadmin.csproj", "{A89F4CE7-6327-43BC-A1CE-B9AD37AC2EC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

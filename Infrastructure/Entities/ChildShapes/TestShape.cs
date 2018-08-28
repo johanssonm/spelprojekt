@@ -1,19 +1,24 @@
-﻿using TetrisUI;
+﻿using Infrastructure.Entities;
+using TetrisUI;
 
 namespace Spelprojekt
 {
-    public class TestShape : Shape
+    public class testShape : Shape, IShape
     {
-        public TestShape() : base(ShapeColor.Purple, true)
+        public testShape() : base(ShapeColor.Purple, true)
         {
-            ShapeGrid = new bool[2, 2];
+            ShapeGrid = new bool[,]
+            {
+                {true, true, true},
+                {false, true, false},
+                {false, true, false},
+                {false, true, false},
 
-            //ShapeGrid[0, 0] = true;
-            //ShapeGrid[0, 1] = true;
-            //ShapeGrid[1, 1] = true;
-            //ShapeGrid[1, 0] = true;
+            };
 
-            CanBeRotated = false;
+            GameGridXPosition = 1;
+            GameGridXPosition = 1;
+
 
 
         }

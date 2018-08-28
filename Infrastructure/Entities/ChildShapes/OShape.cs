@@ -1,11 +1,12 @@
-﻿using TetrisUI;
+﻿using Infrastructure.Entities;
+using TetrisUI;
 
 namespace Spelprojekt
 {
-    public class OShape : Shape
+    public class oShape : Shape, IShape
     {
 
-        public OShape() : base(ShapeColor.Yellow, false)
+        public oShape() : base(ShapeColor.Yellow, false)
         {
             ShapeGrid = new bool[3, 4];
 

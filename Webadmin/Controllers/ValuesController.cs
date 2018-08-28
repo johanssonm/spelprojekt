@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using Infrastructure.cs;
-using Spelprojekt.Entities;
+﻿using Infrastructure.cs.Contracts;
+using Microsoft.AspNetCore.Mvc;
+using Repositories;
+using Spelprojekt.Services;
 
 namespace Webadmin.Controllers
 {
@@ -13,9 +13,9 @@ namespace Webadmin.Controllers
         public IActionResult JsonFeed()
         {
 
-            var dbservice = new DBRepoService();
+            IPlayerRepository repoService = new SqlRepository();
 
-            var result = dbservice.FindAll();
+            var result = repoService.FindAll();
 
             return Json(new
             {
@@ -30,7 +30,8 @@ namespace Webadmin.Controllers
         [HttpGet("{id}")]
         public JsonResult Get(int id)
         {
-            var dbservice = new DBRepoService();
+            var dbservice = new SqlRepository();
+
 
             var result = dbservice.FindOne(id);
 

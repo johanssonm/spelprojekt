@@ -10,7 +10,10 @@ using System.Net.Mime;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using Infrastructure.cs.Contracts;
+using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
+using Repositories;
 using TetrisUI;
 
 namespace Spelprojekt
@@ -25,7 +28,7 @@ namespace Spelprojekt
         private Game _game;
         private int _gameover { get; set; }
 
-        private Shape _shape => _game.ShapeInPlay;
+        private IShape _shape => _game.ShapeInPlay;
 
         private Button NewGame;
         private Button HighScore;
@@ -54,7 +57,8 @@ namespace Spelprojekt
 
         private void AskUserForName()
         {
-            var dataservice = new DatabaseService();
+            var repo = new SqlRepository();
+
             var message = "Game over";
 
             MessageBox.Show(message);
@@ -64,7 +68,7 @@ namespace Spelprojekt
             player.Identity.Name = App.Prompt.ShowDialog("Enter your name", "Enter your name");
             player.Scores.Add(_game.Score);
 
-            dataservice.Save(player);
+            repo.Save(player);
         }
 
         private void InitButtons()
@@ -186,7 +190,7 @@ namespace Spelprojekt
 
         protected override void Render(IRender render)
         {
-            _shapeService?.RenderShapes(render, _game);
+            _shapeService.RenderShapes(render, _game);
         }
 
         protected override void Rotate()

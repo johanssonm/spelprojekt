@@ -1,10 +1,10 @@
-﻿using System.ComponentModel;
+﻿using Infrastructure.Entities;
 using TetrisUI;
 
 namespace Spelprojekt
 {
 
-    public abstract class Shape
+    public abstract class Shape : IShape
     {
         public int Id { get; set; }
         public bool IsInPlay { get; set; }
@@ -22,9 +22,13 @@ namespace Spelprojekt
             
             ShapeColor = shapecolor;
             CanBeRotated = canBeRotated;
-            GameGridXPosition = 4;
+            GameGridXPosition = 3;
             GameGridYPosition = 0;
 
+        }
+
+        protected Shape()
+        {
         }
     }
 }

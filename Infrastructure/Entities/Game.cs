@@ -1,43 +1,43 @@
-﻿using System;
+﻿using Infrastructure.Entities;
 using System.Collections.Generic;
-using System.Dynamic;
+using Business.Contracts;
+using Spelprojekt.Services;
 
 namespace Spelprojekt.Entities
 {
-    public class Game
+    public class Game : IGame
     {
         public int Id { get; set; }
         public bool InPlay { get; set; }
-
-        public Shape ShapeInPlay { get; set; }
 
         public int ShapesPlayed { get; set; }
 
         public int GameSpeed { get; set; }
 
-        public bool GameOver { get; set; } 
-    
-        public List<Shape> Shapes { get; set; }
+        public bool GameOver { get; set; }
 
-        public GameGrid GameGrid { get; set; }
+        public IShape ShapeInPlay { get; set; }
 
-        public Score Score { get; set; }
-        public Player Player { get; set; }
+        public IEnumerable<IShape> Shapes { get; set; }
+
+        public IGameGrid GameGrid { get; set; }
+
+        public IScore Score { get; set; }
+        public IPlayer Player { get; set; }
 
         public Game()
         {
             InPlay = true;
 
-            var tmpShapes = new List<Shape>
+            var tmpShapes = new List<IShape>
             {
-                new IShape(),
-                new JShape(),
-                new LShape(),
-                new OShape(),
-                new SShape(),
-                new TShape(),
-                new ZShape()
-
+                ShapeFactory.MakeShape("i"),
+                ShapeFactory.MakeShape("j"),
+                ShapeFactory.MakeShape("l"),
+                ShapeFactory.MakeShape("o"),
+                ShapeFactory.MakeShape("s"),
+                ShapeFactory.MakeShape("t"),
+                ShapeFactory.MakeShape("z")
 
             };
 

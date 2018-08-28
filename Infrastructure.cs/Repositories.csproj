@@ -126,8 +126,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\IPersonRepository.cs" />
     <Compile Include="Data\GameContext.cs" />
-    <Compile Include="DBRepoService.cs" />
+    <Compile Include="SqlRepository.cs" />
     <Compile Include="Migrations\20180824074027_1.cs" />
     <Compile Include="Migrations\20180824074027_1.designer.cs">
       <DependentUpon>20180824074027_1.cs</DependentUpon>
