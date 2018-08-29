@@ -1,6 +1,6 @@
 ﻿using TetrisUI;
 
-namespace Infrastructure.Entities
+namespace Infrastructure.Contracts
 {
     public interface IShape
     {

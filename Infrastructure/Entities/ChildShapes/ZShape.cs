@@ -1,4 +1,4 @@
-﻿using Infrastructure.Entities;
+﻿using Infrastructure.Contracts;
 using TetrisUI;
 
 namespace Spelprojekt

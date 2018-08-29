@@ -1,5 +1,4 @@
-﻿using Business.Contracts;
-using Infrastructure.Entities;
+﻿using Infrastructure.Contracts;
 using System;
 using TetrisUI;
 
@@ -7,10 +6,18 @@ namespace Business
 {
     public class ShapeManager
     {
-        private GameLogicManager gameLogic = new GameLogicManager();
+        private readonly GameLogicManager _gameLogic = new GameLogicManager();
         public void RotateShape(IShape shape, IGame game)
         {
-            RotateShape(shape, game);
+            try
+            {
+                _gameLogic.RotateShape(shape, game);
+            }
+            catch (StackOverflowException e)
+            {
+
+            }
+
         }
 
         public void DropShape(IShape shape, IGame game)
@@ -21,12 +28,12 @@ namespace Business
                 {
                     game.ShapeInPlay.GameGridYPosition++;
 
-                    if (gameLogic.CheckForBlockYAxisCollisions(shape, game))
+                    if (_gameLogic.CheckForBlockYAxisCollisions(shape, game))
                     {
                         shape.IsInPlay = false;
                     }
 
-                    if (gameLogic.CollisionBottomLine(game)) // TODO: Lägg med i update
+                    if (_gameLogic.CollisionBottomLine(game)) // TODO: Lägg med i update
                     {
                         shape.IsInPlay = false;
                     }
@@ -36,6 +43,14 @@ namespace Business
                 game.ShapeInPlay.IsInPlay = false;
 
             }
+        }
+
+        public IShape MakeRandomShape()
+        {
+            IShape shape = null;
+
+
+            return shape;
         }
 
         public void RenderShapes(IRender render, IGame game)
@@ -68,8 +83,8 @@ namespace Business
 
         public void MoveShapeRight(IShape shape, IGame game)
         {
-            if (shape.IsInPlay && !gameLogic.CollisionRightSide(game) &&
-                !gameLogic.CheckForBlockRightMovementCollisions(shape, game)
+            if (shape.IsInPlay && !_gameLogic.CollisionRightSide(game) &&
+                !_gameLogic.CheckForBlockRightMovementCollisions(shape, game)
                 && game.InPlay)
 
                 shape.GameGridXPosition++;
@@ -77,8 +92,8 @@ namespace Business
 
         public void MoveShapeLeft(IShape shape, IGame game)
         {
-            if (shape.IsInPlay && !gameLogic.CollisionLeftSide(game) &&
-                !gameLogic.CheckForBlockLeftMovementCollisions(shape, game)
+            if (shape.IsInPlay && !_gameLogic.CollisionLeftSide(game) &&
+                !_gameLogic.CheckForBlockLeftMovementCollisions(shape, game)
                 && game.InPlay)
 
                 shape.GameGridXPosition--;

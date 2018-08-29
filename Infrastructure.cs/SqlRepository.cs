@@ -5,16 +5,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Infrastructure.cs.Contracts;
+using Infrastructure.Contracts;
+using Infrastructure.Entities.Contracts;
 
 namespace Repositories
 {
-    public class SqlRepository : IPlayerRepository
+    public class SqlRepository : IRepository
     {
         public void Save(Player player)
         {
             using (var context = new GameContext())
             {
-                context.Add(player);
+                context.Add((Player)player);
                 context.SaveChanges();
             }
         }
@@ -51,15 +53,42 @@ namespace Repositories
 
         }
 
+        public void Save<T>(T obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update<T>(T obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete<T>(T obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        object IRepository.FindOne(int objId)
+        {
+            return FindOne(objId);
+        }
+
+        public IEnumerable<T> FindAll<T>()
+        {
+            throw new NotImplementedException();
+        }
+
         public Player FindOne(int id)
         {
             var player = new Player();
+            IIdentity identity = new Identity();
+            IScore scores = new Score();
 
             using (var context = new GameContext())
             {
                player = context.Players.Where(x => x.Id == id).FirstOrDefault();
-               player.Identity = context.Identity.Where(x => x.PlayerId == id).FirstOrDefault();
-               player.Scores = context.Scores.Where(x => x.PlayerId == id).ToList();
+             //  player.Identity = context.Identity.Where(x => x.PlayerId == id).FirstOrDefault();
+             //  player.Scores = context.Scores.Where(x => x.PlayerId == id).ToList();
 
             }
 
@@ -68,7 +97,7 @@ namespace Repositories
 
         }
 
-        public IEnumerable<Player> FindAll()
+        public IEnumerable<IPlayer> FindAll()
         {
             var players = new List<Player>();
 
@@ -87,7 +116,7 @@ namespace Repositories
 
             }
 
-            return players;
+            return new List<IPlayer>(players);
 
         }
 

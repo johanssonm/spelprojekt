@@ -1,6 +1,5 @@
 ﻿using Business;
-using Business.Contracts;
-using Infrastructure.Entities;
+using Infrastructure.Contracts;
 using TetrisUI;
 
 namespace Spelprojekt.Services

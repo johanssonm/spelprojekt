@@ -128,6 +128,10 @@
   <ItemGroup>
     <Compile Include="Contracts\IPersonRepository.cs" />
     <Compile Include="Data\GameContext.cs" />
+    <Compile Include="Migrations\20180829093129_inter.cs" />
+    <Compile Include="Migrations\20180829093129_inter.designer.cs">
+      <DependentUpon>20180829093129_inter.cs</DependentUpon>
+    </Compile>
     <Compile Include="SqlRepository.cs" />
     <Compile Include="Migrations\20180824074027_1.cs" />
     <Compile Include="Migrations\20180824074027_1.designer.cs">

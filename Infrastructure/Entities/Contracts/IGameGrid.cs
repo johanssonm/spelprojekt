@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Business.Contracts
+namespace Infrastructure.Contracts
 {
     public interface IGameGrid
     {

@@ -1,7 +1,6 @@
-﻿using Infrastructure.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Business.Contracts
+namespace Infrastructure.Contracts
 {
     public interface IGame
     {
@@ -21,6 +20,5 @@ namespace Business.Contracts
         IGameGrid GameGrid { get; set; }
 
         IScore Score { get; set; }
-        IPlayer Player { get; set; }
     }
 }

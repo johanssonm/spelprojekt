@@ -1,5 +1,5 @@
-﻿using Infrastructure.Entities;
-using System;
+﻿using System;
+using Infrastructure.Contracts;
 using TetrisUI;
 
 namespace Spelprojekt.Services

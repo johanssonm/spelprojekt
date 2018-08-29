@@ -1,9 +1,8 @@
-﻿using System;
+﻿using Infrastructure.Contracts;
+using Spelprojekt;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Business.Contracts;
-using Infrastructure.Entities;
-using Spelprojekt;
 
 namespace Business
 {
@@ -314,7 +313,7 @@ namespace Business
 
         public void UpdateGame(IShape shape, IGame game)
         {
-            if (game.InPlay)
+            if (game.InPlay && !game.GameOver)
             {
                 if (!CheckForBlockYAxisCollisions(game.ShapeInPlay, game) &&
                     !CollisionBottomLine(game))
@@ -372,14 +371,6 @@ namespace Business
 
 
 
-        }
-
-        public IShape MakeRandomShape()
-        {
-            IShape shape = null;
-
-
-            return shape;
         }
     }
 }

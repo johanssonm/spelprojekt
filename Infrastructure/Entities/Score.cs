@@ -1,4 +1,4 @@
-﻿using Business.Contracts;
+﻿using Infrastructure.Contracts;
 
 namespace Spelprojekt.Entities
 {
@@ -6,7 +6,7 @@ namespace Spelprojekt.Entities
     {
         public int Id { get; set; }
         public int Points { get; set; }
-        public IPlayer Player { get; set; }
+        public Player Player { get; set; }
 
         public int PlayerId { get; set; }
 

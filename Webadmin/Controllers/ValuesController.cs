@@ -13,7 +13,7 @@ namespace Webadmin.Controllers
         public IActionResult JsonFeed()
         {
 
-            IPlayerRepository repoService = new SqlRepository();
+            var repoService = new SqlRepository();
 
             var result = repoService.FindAll();
 

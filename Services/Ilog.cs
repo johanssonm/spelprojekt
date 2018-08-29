@@ -1,4 +1,4 @@
-﻿using Infrastructure.Entities;
+﻿using Infrastructure.Contracts;
 
 namespace Spelprojekt.Services
 {

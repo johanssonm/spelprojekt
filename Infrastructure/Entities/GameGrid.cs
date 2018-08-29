@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Business.Contracts;
+using Infrastructure.Contracts;
 
 namespace Spelprojekt.Entities
 {
@@ -9,7 +9,7 @@ namespace Spelprojekt.Entities
         public int Height  { get; set; }
         public bool[,] GameGridArray { get; set; }
 
-        public IEnumerable<IBlock> Blocks { get; set; }
+        public List<IBlock> Blocks { get; set; }
 
         public GameGrid(int width, int height)
         {

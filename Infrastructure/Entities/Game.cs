@@ -1,7 +1,6 @@
-﻿using Infrastructure.Entities;
-using System.Collections.Generic;
-using Business.Contracts;
+﻿using Infrastructure.Contracts;
 using Spelprojekt.Services;
+using System.Collections.Generic;
 
 namespace Spelprojekt.Entities
 {
@@ -23,7 +22,6 @@ namespace Spelprojekt.Entities
         public IGameGrid GameGrid { get; set; }
 
         public IScore Score { get; set; }
-        public IPlayer Player { get; set; }
 
         public Game()
         {

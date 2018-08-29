@@ -1,19 +1,12 @@
-﻿using Spelprojekt.Data;
+﻿using Repositories;
 using Spelprojekt.Entities;
 using Spelprojekt.Services;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Net.Mime;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using Infrastructure.cs.Contracts;
-using Infrastructure.Entities;
-using Microsoft.EntityFrameworkCore;
-using Repositories;
+using Infrastructure.Contracts;
 using TetrisUI;
 
 namespace Spelprojekt
@@ -28,7 +21,7 @@ namespace Spelprojekt
         private Game _game;
         private int _gameover { get; set; }
 
-        private IShape _shape => _game.ShapeInPlay;
+        private Shape _shape => (Shape)_game.ShapeInPlay;
 
         private Button NewGame;
         private Button HighScore;
@@ -42,6 +35,7 @@ namespace Spelprojekt
             _gameover = 0;
 
             var _game = new Game();
+
             _game.GameOver = false;
 
             InitButtons();
@@ -66,7 +60,9 @@ namespace Spelprojekt
             var player = new Player();
 
             player.Identity.Name = App.Prompt.ShowDialog("Enter your name", "Enter your name");
-            player.Scores.Add(_game.Score);
+
+            player.Identity.Player = player;
+            player.Scores.Add((Score)_game.Score);
 
             repo.Save(player);
         }
@@ -109,14 +105,11 @@ namespace Spelprojekt
 
             _shapeService = new ShapeService();
 
-
-            _game.Player = new Player();
-
-            _game.Player.Identity = new Identity();
-
             _game.Score = new Score();
 
-            _game.ShapeInPlay = _game.Shapes.PickRandom();
+            var shapelist = _game.Shapes.ToList();
+
+            _game.ShapeInPlay = shapelist.PickRandom();
 
             _game.ShapeInPlay.IsInPlay = true;
         }
@@ -190,7 +183,15 @@ namespace Spelprojekt
 
         protected override void Render(IRender render)
         {
-            _shapeService.RenderShapes(render, _game);
+            try
+            {
+                _shapeService.RenderShapes(render, _game);
+            }
+            catch (Exception e)
+            {
+
+            }
+
         }
 
         protected override void Rotate()

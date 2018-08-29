@@ -1,18 +1,19 @@
 ﻿using Spelprojekt.Entities;
 using System.Collections.Generic;
+using Infrastructure.Contracts;
 
 namespace Infrastructure.cs.Contracts
 {
-    public interface IPlayerRepository
+    public interface IRepository
     {
-        void Save(Player player);
+        void Save<T>(T obj);
 
-        void Update(Player player);
+        void Update<T>(T obj);
 
-        void Delete(Player player);
+        void Delete<T>(T obj);
 
-        Player FindOne(int playerId);
+        object FindOne(int objId);
 
-        IEnumerable<Player> FindAll();
+        IEnumerable<T> FindAll<T>();
     }
 }

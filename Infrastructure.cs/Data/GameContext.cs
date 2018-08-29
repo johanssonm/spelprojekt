@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Infrastructure.Contracts;
+using Infrastructure.Entities.Contracts;
+using Microsoft.EntityFrameworkCore;
 using Spelprojekt.Entities;
 
 namespace Spelprojekt.Data

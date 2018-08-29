@@ -1,11 +1,7 @@
-﻿using Spelprojekt.Data;
+﻿using Business;
 using Spelprojekt.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using Business;
-using Business.Contracts;
-using Infrastructure.Entities;
+using Infrastructure.Contracts;
 
 namespace Spelprojekt.Services
 {

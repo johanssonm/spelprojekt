@@ -1,7 +1,7 @@
-﻿using System.ComponentModel;
-using System.IO;
-using Infrastructure.Entities;
+﻿using Infrastructure.Contracts;
 using Spelprojekt.Services;
+using System.ComponentModel;
+using System.IO;
 
 namespace Spelprojekt.Data
 {
@@ -18,9 +18,7 @@ namespace Spelprojekt.Data
                 sr.WriteLine($"{name}, {shape.ShapeColor}");
             }
 
-
-
-
         }
+
     }
 }

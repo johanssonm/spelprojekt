@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using Infrastructure.Contracts;
+using Infrastructure.Entities.Contracts;
 
 namespace Spelprojekt.Entities
 {
-    public class Player
+    public class Player : IPlayer
     {
         public int Id { get; set; }
         public Identity Identity { get; set; }
