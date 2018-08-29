@@ -51,7 +51,7 @@ namespace Spelprojekt
 
         private void AskUserForName()
         {
-            var repo = new SqlRepository();
+            var repo = new EfCoreSqlRepository();
 
             var message = "Game over";
 

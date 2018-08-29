@@ -1,11 +1,9 @@
-﻿using Infrastructure.Contracts;
-using Infrastructure.Entities.Contracts;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Spelprojekt.Entities;
 
 namespace Spelprojekt.Data
 {
-    public class GameContext : DbContext
+    public class EfCoreContext : DbContext
     {
         public DbSet<Player> Players { get; set; }
         public DbSet<Score> Scores { get; set; }

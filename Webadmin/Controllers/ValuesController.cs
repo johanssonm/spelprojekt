@@ -1,7 +1,5 @@
-﻿using Infrastructure.cs.Contracts;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Repositories;
-using Spelprojekt.Services;
 
 namespace Webadmin.Controllers
 {
@@ -12,8 +10,7 @@ namespace Webadmin.Controllers
         [HttpGet]
         public IActionResult JsonFeed()
         {
-
-            var repoService = new SqlRepository();
+            var repoService = new EfCoreSqlRepository();
 
             var result = repoService.FindAll();
 
@@ -22,6 +19,7 @@ namespace Webadmin.Controllers
                 success = true,
                 Message = result
             });
+
         }
 
 
@@ -30,7 +28,7 @@ namespace Webadmin.Controllers
         [HttpGet("{id}")]
         public JsonResult Get(int id)
         {
-            var dbservice = new SqlRepository();
+            var dbservice = new EfCoreSqlRepository();
 
 
             var result = dbservice.FindOne(id);

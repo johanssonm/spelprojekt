@@ -10,20 +10,20 @@ using Infrastructure.Entities.Contracts;
 
 namespace Repositories
 {
-    public class SqlRepository : IRepository
+    public class EfCoreSqlRepository : IRepository
     {
         public void Save(Player player)
         {
-            using (var context = new GameContext())
+            using (var context = new EfCoreContext())
             {
-                context.Add((Player)player);
+                context.Add(player);
                 context.SaveChanges();
             }
         }
 
         public void Update(Player player)
         {
-            using (var context = new GameContext())
+            using (var context = new EfCoreContext())
             {
                 try
                 {
@@ -45,7 +45,7 @@ namespace Repositories
 
         public void Delete(Player player)
         {
-            using (var context = new GameContext())
+            using (var context = new EfCoreContext())
             {
                 context.Remove(player);
                 context.SaveChanges();
@@ -84,7 +84,7 @@ namespace Repositories
             IIdentity identity = new Identity();
             IScore scores = new Score();
 
-            using (var context = new GameContext())
+            using (var context = new EfCoreContext())
             {
                player = context.Players.Where(x => x.Id == id).FirstOrDefault();
              //  player.Identity = context.Identity.Where(x => x.PlayerId == id).FirstOrDefault();
@@ -101,7 +101,7 @@ namespace Repositories
         {
             var players = new List<Player>();
 
-            using (var context = new GameContext())
+            using (var context = new EfCoreContext())
             {
                 players = context.Players
                     .Include(i => i.Identity)

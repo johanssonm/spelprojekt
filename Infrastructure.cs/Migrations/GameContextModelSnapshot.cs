@@ -7,7 +7,7 @@ using Spelprojekt.Data;
 
 namespace Infrastructure.cs.Migrations
 {
-    [DbContext(typeof(GameContext))]
+    [DbContext(typeof(EfCoreContext))]
     partial class GameContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

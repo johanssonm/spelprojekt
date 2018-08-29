@@ -1,7 +1,7 @@
 function getNews(callback) {
     $.ajax({
         type: "GET",
-        url: "../news/JsonFeed/",
+        url: "../api/values/",
         success: function(response){
             callback(response);
         }

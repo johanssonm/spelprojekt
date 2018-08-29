@@ -8,7 +8,7 @@ using Spelprojekt.Data;
 
 namespace Infrastructure.cs.Migrations
 {
-    [DbContext(typeof(GameContext))]
+    [DbContext(typeof(EfCoreContext))]
     [Migration("20180829093129_inter")]
     partial class inter
     {

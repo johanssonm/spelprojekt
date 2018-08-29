@@ -56,9 +56,9 @@
       <Project>{905C1DC2-9DD9-4EC7-919C-5E916FF88BFB}</Project>
       <Name>Business</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Infrastructure.cs\Repositories.csproj">
+    <ProjectReference Include="..\Infrastructure.cs\EfCoreRepository.csproj">
       <Project>{BBF9AF0F-2EE2-4948-819E-5312F73D31B6}</Project>
-      <Name>Repositories</Name>
+      <Name>EfCoreRepository</Name>
     </ProjectReference>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
       <Project>{04b2acc0-0c35-488c-b805-38aab80e570e}</Project>
