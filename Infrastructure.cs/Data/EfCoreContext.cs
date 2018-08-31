@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Infrastructure.Entities.Contracts;
+using Microsoft.EntityFrameworkCore;
 using Spelprojekt.Entities;
 
 namespace Spelprojekt.Data
@@ -20,9 +21,12 @@ namespace Spelprojekt.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-
+                
         }
 
 
     }
+
+
+    
 }

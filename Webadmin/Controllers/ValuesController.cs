@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Repositories;
+using Spelprojekt.Entities;
 
 namespace Webadmin.Controllers
 {
@@ -42,20 +43,37 @@ namespace Webadmin.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult Post([FromBody]Player player)
         {
+            var dbservice = new EfCoreSqlRepository();
+
+
+            dbservice.Save(player);
+
+            return Ok("Player was saved.");
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult Put(int id, [FromBody]Player player)
         {
+            var dbservice = new EfCoreSqlRepository();
+
+            dbservice.Update(player);
+
+            return Ok("Player was updated.");
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+
+            var dbservice = new EfCoreSqlRepository();
+
+            dbservice.Delete(id);
+
+            return Ok("Player was deleted.");
         }
     }
 }

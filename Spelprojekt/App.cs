@@ -161,7 +161,6 @@ namespace Spelprojekt
                     AskUserForName();
                     _game = new Game();
                     ShowHighScore(null, null);
-                    Thread.Sleep(5000);
                     ShowMenuItems(null, null);
                     
 

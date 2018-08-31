@@ -36,7 +36,6 @@ namespace Spelprojekt.Entities
                 ShapeFactory.MakeShape("s"),
                 ShapeFactory.MakeShape("t"),
                 ShapeFactory.MakeShape("z")
-
             };
 
             // var types = new ExpandoObject(); TODO: Fixa så alla shapes skapas vid runtime

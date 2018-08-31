@@ -58,12 +58,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\IRepository.cs" />
-    <Compile Include="Data\GameContext.cs" />
+    <Compile Include="Data\Ef6Repository.cs" />
     <Compile Include="Migrations\201808291212131_init.cs" />
     <Compile Include="Migrations\201808291212131_init.Designer.cs">
       <DependentUpon>201808291212131_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Data\ApiQueryPlayerResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ef6SqlRepository.cs" />
   </ItemGroup>

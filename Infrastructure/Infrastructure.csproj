@@ -43,6 +43,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\ApiQueryPlayerResult.cs" />
     <Compile Include="Entities\Block.cs" />
     <Compile Include="Entities\ChildShapes\iShape.cs" />
     <Compile Include="Entities\ChildShapes\jShape.cs" />

@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using Infrastructure.Contracts;
 
-namespace Infrastructure.cs.Contracts
+namespace Infrastructure.Contracts
 {
-    public interface IRepository
+    public interface IPlayerRepository
     {
-        void Save<T>(T obj);
+        void Save(IPlayer player);
 
-        void Update<T>(T obj);
+        void Update(IPlayer player);
 
-        void Delete<T>(T obj);
+        void Delete(int id);
 
-        object FindOne(int objId);
+        IPlayer FindOne(int objId);
 
-        IEnumerable<T> FindAll<T>();
+        IEnumerable<IPlayer> FindAll();
     }
 }

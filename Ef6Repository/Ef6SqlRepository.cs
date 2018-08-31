@@ -1,89 +1,129 @@
-﻿using Infrastructure.cs.Contracts;
+﻿using Infrastructure.Contracts;
+using Spelprojekt.Data;
+using Spelprojekt.Entities;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using Infrastructure.Contracts;
-using Spelprojekt.Data;
-using Spelprojekt.Entities;
 
 namespace Repositories
 {
-    public class Ef6SqlRepository : IRepository
+    public class Ef6SqlRepository : IPlayerRepository
     {
-        public void Save<T>(T obj)
+        public void Save(Player player)
         {
-            throw new NotImplementedException();
-        }
-
-        public void Update<T>(T obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete<T>(T obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public object FindOne(int objId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<T> FindAll<T>()
-        {
-            var players = new List<Player>();
-
             using (var context = new Ef6Context())
             {
-                players = context.Players
-                    .Include(i => i.Identity)
-                    .Include(s => s.Scores)
-                    .Select(p => new Player
-                        {
-                            Id = p.Id,
-                            Identity = p.Identity,
-                            Scores = p.Scores
-                        }
-                    ).ToList();
+                context.Players.Add(player);
+                context.SaveChanges();
+            }
+        }
+
+        public void Update(IPlayer player)
+        {
+            using (var context = new Ef6Context())
+            {
+                try
+                {
+                    var oldPlayer = context.Players.Where(p => p.Id == player.Id).SingleOrDefault();
+
+                    oldPlayer = (Player)player;
+
+                    context.Players.Add(oldPlayer);
+                    context.SaveChanges();
+
+                }
+                catch (ArgumentException e)
+                {
+                    throw new ArgumentException(e + " Player was not found");
+                }
+
+            }
+        }
+
+        public void Save(IPlayer player)
+        {
+            using (var context = new Ef6Context())
+            {
+                context.Players.Add(player as Player);
+                context.SaveChanges();
+            }
+        }
+
+        public void Delete(int id)
+        {
+            using (var context = new Ef6Context())
+            {
+                try
+                {
+                    var result = context.Players.Where(p => p.Identity.Id == id).SingleOrDefault();
+
+                    context.Players.Remove(result);
+                    context.SaveChanges();
+
+                }
+
+                catch (NullReferenceException e)
+                {
+                    throw new ArgumentException(e.Message + $" Player with {id} was not found");
+                }
 
             }
 
-            return (IEnumerable<T>)players;
-
         }
 
-        public List<PlayerQuery> FindAll()
+        public IPlayer FindOne(int id)
         {
-            var players = new List<PlayerQuery>();
-
             using (var context = new Ef6Context())
             {
-                players = context.Players
-                    .Include(i => i.Identity)
-                    .Include(s => s.Scores)
-                    .Select(p => new PlayerQuery
+                try
+                {
+                    return context.Players.Where(p => p.Id == id)
+                        .Include(s => s.Scores)
+                        .Select(p => new ApiQueryPlayerResult
                         {
                             Id = p.Id,
                             Name = p.Identity.Name,
                             Scores = p.Scores
                         }
-                    ).ToList();
+                        ) as Player;
+
+                }
+
+                catch (NullReferenceException e)
+                {
+                    throw new ArgumentException(e.Message + $" Player with {id} was not found");
+                }
 
             }
+        }
 
+        public IEnumerable<IPlayer> FindAll()
+        {
+            var players = new List<ApiQueryPlayerResult>();
+
+            using (var context = new Ef6Context())
+            {
+                players = context.Players
+                    .Include(i => i.Identity)
+                    .Include(s => s.Scores)
+                    .Select(p => new ApiQueryPlayerResult
+                    {
+                        Id = p.Id,
+                        Name = p.Identity.Name,
+                        Scores = p.Scores
+                    }
+                     ).ToList();
+
+            }
 
             return players;
 
         }
-    }
 
-    public class PlayerQuery
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public IEnumerable<Score> Scores { get; set; }
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

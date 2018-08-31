@@ -1,16 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Infrastructure.Contracts;
+using Microsoft.EntityFrameworkCore;
 using Spelprojekt.Data;
 using Spelprojekt.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Infrastructure.cs.Contracts;
-using Infrastructure.Contracts;
-using Infrastructure.Entities.Contracts;
 
 namespace Repositories
 {
-    public class EfCoreSqlRepository : IRepository
+    public class EfCoreSqlRepository : IPlayerRepository
     {
         public void Save(Player player)
         {
@@ -21,17 +19,17 @@ namespace Repositories
             }
         }
 
-        public void Update(Player player)
+        public void Update(IPlayer player)
         {
             using (var context = new EfCoreContext())
             {
                 try
                 {
-                    var oldPlayer = context.Players.Where(p => p.Identity.Name.ToLower() == player.Identity.Name.ToLower()).SingleOrDefault();
+                    var oldPlayer = context.Players.Where(p => p.Id == player.Id).SingleOrDefault();
 
-                    oldPlayer.Scores.Add(player.Scores.FirstOrDefault());
+                    oldPlayer = (Player)player;
 
-                    context.Update(player);
+                    context.Update(oldPlayer);
                     context.SaveChanges();
 
                 }
@@ -43,80 +41,83 @@ namespace Repositories
             }
         }
 
-        public void Delete(Player player)
+        public void Save(IPlayer player)
         {
             using (var context = new EfCoreContext())
             {
-                context.Remove(player);
+                context.Add(player);
                 context.SaveChanges();
             }
-
         }
 
-        public void Save<T>(T obj)
+        public void Delete(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public void Update<T>(T obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete<T>(T obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        object IRepository.FindOne(int objId)
-        {
-            return FindOne(objId);
-        }
-
-        public IEnumerable<T> FindAll<T>()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Player FindOne(int id)
-        {
-            var player = new Player();
-            IIdentity identity = new Identity();
-            IScore scores = new Score();
-
             using (var context = new EfCoreContext())
             {
-               player = context.Players.Where(x => x.Id == id).FirstOrDefault();
-             //  player.Identity = context.Identity.Where(x => x.PlayerId == id).FirstOrDefault();
-             //  player.Scores = context.Scores.Where(x => x.PlayerId == id).ToList();
+                try
+                {
+                    var result = context.Players.Where(p => p.Identity.Id == id).SingleOrDefault();
+
+                    context.Remove(result);
+                    context.SaveChanges();
+
+                }
+
+                catch (NullReferenceException e)
+                {
+                    throw new ArgumentException(e.Message + $" Player with {id} was not found");
+                }
 
             }
 
-            return player;
+        }
 
+        public IPlayer FindOne(int id)
+        {
+            using (var context = new EfCoreContext())
+            {
+                try
+                {
+                    return context.Players.Where(p => p.Id == id)
+                        .Include(s => s.Scores)
+                        .Select(p => new ApiQueryPlayerResult
+                            {
+                                Id = p.Id,
+                                Name = p.Identity.Name,
+                                Scores = p.Scores
+                            }
+                        ) as IPlayer;
 
+                }
+
+                catch (NullReferenceException e)
+                {
+                    throw new ArgumentException(e.Message + $" Player with {id} was not found");
+                }
+
+            }
         }
 
         public IEnumerable<IPlayer> FindAll()
         {
-            var players = new List<Player>();
+            var players = new List<ApiQueryPlayerResult>();
 
             using (var context = new EfCoreContext())
             {
                 players = context.Players
                     .Include(i => i.Identity)
                     .Include(s => s.Scores)
-                    .Select(p => new Player
+                    .Select(p => new ApiQueryPlayerResult
                         {
                             Id = p.Id,
-                            Identity = p.Identity,
+                            Name = p.Identity.Name,
                             Scores = p.Scores
                         }
                      ).ToList();
 
             }
 
-            return new List<IPlayer>(players);
+            return players;
 
         }
 

@@ -20,7 +20,8 @@ namespace Spelprojekt.Data
             modelBuilder.Entity<Identity>()
                 .HasRequired(a => a.Player)
                 .WithMany()
-                .HasForeignKey(a => a.PlayerId);
+                .HasForeignKey(a => a.PlayerId)
+                .WillCascadeOnDelete(true);
         }
 
     }
